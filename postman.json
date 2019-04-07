@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "f6b88365-1d49-4f53-a79f-b7911d901582",
+		"name": "UMS",
+		"description": "Sistem Informasi Service Online",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nik",
+							"value": "06142",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "4dm1n",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/ums/api/auth/login_user",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"auth",
+						"login_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost/ums/api/auth/logout_user/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"auth",
+						"logout_user",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ganti Password User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "password_lama",
+							"value": "haviz123",
+							"type": "text"
+						},
+						{
+							"key": "password_baru",
+							"value": "4dm1n",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/ums/api/auth/password_user/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"auth",
+						"password_user",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show Log",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/log/show/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"log",
+						"show",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
