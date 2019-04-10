@@ -123,6 +123,243 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Show Divisi",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/divisi/show/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"divisi",
+						"show",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Divisi",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nama_divisi",
+							"value": "Merchandise",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/ums/api/divisi/add/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"divisi",
+						"add",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Divisi",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/divisi/delete/37403280b6e8573?id_divisi=DV0005",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"divisi",
+						"delete",
+						"37403280b6e8573"
+					],
+					"query": [
+						{
+							"key": "id_divisi",
+							"value": "DV0005"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Karyawan",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/karyawan/delete/37403280b6e8573?nik=06144",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"karyawan",
+						"delete",
+						"37403280b6e8573"
+					],
+					"query": [
+						{
+							"key": "nik",
+							"value": "06144"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show Karyawan",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/karyawan/show/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"karyawan",
+						"show",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Karyawan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nik",
+							"value": "06144",
+							"type": "text"
+						},
+						{
+							"key": "nama",
+							"value": "Kalyssa Innara Putri",
+							"type": "text"
+						},
+						{
+							"key": "tmp_lahir",
+							"value": "Jakarta",
+							"type": "text"
+						},
+						{
+							"key": "tgl_lahir",
+							"value": "1995-11-27",
+							"type": "text"
+						},
+						{
+							"key": "kelamin",
+							"value": "Perempuan",
+							"description": "Laki-laki / Perempuan",
+							"type": "text"
+						},
+						{
+							"key": "status_kawin",
+							"value": "Kawin",
+							"description": "Kawin / Belum Kawin",
+							"type": "text"
+						},
+						{
+							"key": "pendidikan",
+							"value": "D3",
+							"description": "SD / SMP / SMA / SMK / D3 / S1 / S2 / S2",
+							"type": "text"
+						},
+						{
+							"key": "alamat",
+							"value": "Jakarta",
+							"type": "text"
+						},
+						{
+							"key": "telepon",
+							"value": "081355754092",
+							"type": "text"
+						},
+						{
+							"key": "tgl_masuk",
+							"value": "2016-10-11",
+							"type": "text"
+						},
+						{
+							"key": "status_karyawan",
+							"value": "Aktif",
+							"description": "Aktif / Nonaktif",
+							"type": "text"
+						},
+						{
+							"key": "jabatan",
+							"value": "Staff Accounting",
+							"type": "text"
+						},
+						{
+							"key": "id_divisi",
+							"value": "DV0002",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "dianratna1995@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "level",
+							"value": "Karyawan",
+							"description": "Karyawan / Admin / Kabag / Direksi",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/ums/api/karyawan/add/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"karyawan",
+						"add",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
