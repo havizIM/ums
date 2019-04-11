@@ -50,8 +50,9 @@ class Auth extends CI_Controller {
             $log = array(
               'nik'         => $key->nik,
               'id_ref'      => '-',
-              'keterangan'  => 'User login',
-              'kategori'    => 'Login'
+              'refrensi'    => 'Auth',
+              'kategori'    => 'Login',
+              'keterangan'  => 'User login'
             );
           }
 
@@ -108,8 +109,9 @@ class Auth extends CI_Controller {
           $log = array(
             'nik'         => $otorisasi->nik,
             'id_ref'      => '-',
-            'keterangan'  => 'User login',
-            'kategori'    => 'Login'
+            'refrensi'    => 'Auth',
+            'kategori'    => 'Logout',
+            'keterangan'  => 'User logout'
           );
 
           $add = $this->LogModel->add($log);
@@ -171,8 +173,9 @@ class Auth extends CI_Controller {
               $log = array(
                 'nik'         => $otorisasi->nik,
                 'id_ref'      => '-',
-                'keterangan'  => 'Mengganti password lama menjadi password baru',
-                'kategori'    => 'Ganti Password'
+                'refrensi'    => 'Auth',
+                'kategori'    => 'Change Password',
+                'keterangan'  => 'Mengganti password lama menjadi password baru'
               );
 
               $pass = $this->AuthModel->gantiPass($otorisasi->nik, $data, $log);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 07, 2019 at 09:31 AM
+-- Generation Time: Apr 10, 2019 at 07:12 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 5.6.35
 
@@ -135,9 +135,8 @@ CREATE TABLE `karyawan` (
   `tgl_lahir` date NOT NULL,
   `kelamin` enum('Laki-laki','Perempuan','','') NOT NULL,
   `status_kawin` enum('Kawin','Belum Kawin','','') NOT NULL,
-  `pendidikan` enum('SD','SMP','SMA/SMK','S1','S2','S3','D3') NOT NULL,
+  `pendidikan` enum('SD','SMP','SMA','S1','S2','S3','D3','SMK') NOT NULL,
   `alamat` varchar(200) NOT NULL,
-  `email` varchar(50) NOT NULL,
   `telepon` varchar(15) NOT NULL,
   `tgl_masuk` date NOT NULL,
   `status_karyawan` enum('Aktif','Nonaktif','','') NOT NULL,
@@ -149,8 +148,36 @@ CREATE TABLE `karyawan` (
 -- Dumping data for table `karyawan`
 --
 
-INSERT INTO `karyawan` (`nik`, `nama`, `tmp_lahir`, `tgl_lahir`, `kelamin`, `status_kawin`, `pendidikan`, `alamat`, `email`, `telepon`, `tgl_masuk`, `status_karyawan`, `jabatan`, `id_divisi`) VALUES
-('06142', 'Haviz Indra Maulana', 'Jakarta', '1992-10-10', 'Laki-laki', 'Kawin', 'S1', 'Jl. Gg Vanilli No.19f Rt 010', 'viz.ndinq@gmail.com', '08987748441', '2019-04-06', 'Aktif', 'Administrator', 'DV0001');
+INSERT INTO `karyawan` (`nik`, `nama`, `tmp_lahir`, `tgl_lahir`, `kelamin`, `status_kawin`, `pendidikan`, `alamat`, `telepon`, `tgl_masuk`, `status_karyawan`, `jabatan`, `id_divisi`) VALUES
+('06142', 'Haviz Indra Maulana', 'Jakarta', '1992-10-10', 'Laki-laki', 'Kawin', 'S1', 'Jl. Gg Vanilli No.19f Rt 010', '08987748441', '2019-04-06', 'Aktif', 'Administrator', 'DV0001'),
+('06143', 'Dian Ratna Sari', 'Jakarta', '1995-11-27', 'Perempuan', 'Kawin', 'D3', 'Jakarta', '081355754092', '2016-10-11', 'Aktif', '', 'DV0001'),
+('06144', 'Kalyssa Innara Putri', 'Jakarta', '1995-11-27', 'Perempuan', 'Kawin', 'D3', 'Jakarta', '081355754092', '2016-10-11', 'Aktif', 'Staff Accounting', 'DV0002');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lampiran_cuti`
+--
+
+CREATE TABLE `lampiran_cuti` (
+  `id_lampiran_cuti` int(11) NOT NULL,
+  `id_pcuti` varchar(11) NOT NULL,
+  `nama_lampiran` varchar(30) NOT NULL,
+  `lampiran_cuti` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lampiran_izin`
+--
+
+CREATE TABLE `lampiran_izin` (
+  `id_lampiran_izin` int(11) NOT NULL,
+  `id_pizin` varchar(11) NOT NULL,
+  `nama_lampiran` varchar(30) NOT NULL,
+  `lampiran_izin` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -179,7 +206,13 @@ INSERT INTO `log` (`id_log`, `nik`, `id_ref`, `keterangan`, `kategori`, `tgl_log
 (5, '06142', '-', 'User login', 'Login', '2019-04-06 10:31:24'),
 (6, '06142', '-', 'User login', 'Login', '2019-04-06 10:32:27'),
 (7, '06142', '-', 'Mengganti password lama menjadi password baru', 'Ganti Password', '2019-04-06 10:32:49'),
-(8, '06142', '-', 'User login', 'Login', '2019-04-06 10:33:10');
+(8, '06142', '-', 'User login', 'Login', '2019-04-06 10:33:10'),
+(9, '06142', '-', 'User login', 'Login', '2019-04-10 12:59:24'),
+(10, '06142', '', 'Menambah Divisi DVS0005', 'Divisi', '2019-04-10 13:08:39'),
+(11, '06142', '', 'Menambah Divisi DV0005', 'Divisi', '2019-04-10 13:32:06'),
+(12, '06142', '', 'Menghapus Divisi DV0005', 'Divisi', '2019-04-10 13:39:02'),
+(13, '06142', '-', 'Menambah Karyawan 06143', 'Karyawan', '2019-04-10 16:53:32'),
+(14, '06142', '-', 'Menambah Karyawan 06144', 'Karyawan', '2019-04-10 17:00:04');
 
 -- --------------------------------------------------------
 
@@ -207,6 +240,7 @@ CREATE TABLE `revisi_absen` (
 
 CREATE TABLE `user` (
   `nik` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `password` varchar(15) NOT NULL,
   `level` enum('Karyawan','Admin','Kabag','Direksi') NOT NULL,
   `tgl_registrasi` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -218,8 +252,10 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`nik`, `password`, `level`, `tgl_registrasi`, `foto`, `token`) VALUES
-('06142', '4dm1n', 'Admin', '2019-04-05 23:59:15', 'user.jpg', '37403280b6e8573');
+INSERT INTO `user` (`nik`, `email`, `password`, `level`, `tgl_registrasi`, `foto`, `token`) VALUES
+('06142', 'umsosella@gmail.com', '4dm1n', 'Admin', '2019-04-05 23:59:15', 'user.jpg', '37403280b6e8573'),
+('06143', 'dianratna19@gmail.com', '06143', 'Karyawan', '2019-04-10 16:53:32', 'user.jpg', '839ce9d4eb060fd'),
+('06144', 'dianratna1995@gmail.com', '06144', 'Karyawan', '2019-04-10 17:00:04', 'user.jpg', 'e2cbc18a8ee9f4a');
 
 --
 -- Indexes for dumped tables
@@ -269,6 +305,20 @@ ALTER TABLE `karyawan`
   ADD KEY `divisi` (`id_divisi`);
 
 --
+-- Indexes for table `lampiran_cuti`
+--
+ALTER TABLE `lampiran_cuti`
+  ADD PRIMARY KEY (`id_lampiran_cuti`),
+  ADD KEY `id_pcuti` (`id_pcuti`);
+
+--
+-- Indexes for table `lampiran_izin`
+--
+ALTER TABLE `lampiran_izin`
+  ADD PRIMARY KEY (`id_lampiran_izin`),
+  ADD KEY `id_pizin` (`id_pizin`);
+
+--
 -- Indexes for table `log`
 --
 ALTER TABLE `log`
@@ -287,17 +337,30 @@ ALTER TABLE `revisi_absen`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`nik`);
+  ADD PRIMARY KEY (`nik`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `lampiran_cuti`
+--
+ALTER TABLE `lampiran_cuti`
+  MODIFY `id_lampiran_cuti` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lampiran_izin`
+--
+ALTER TABLE `lampiran_izin`
+  MODIFY `id_lampiran_izin` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
@@ -324,10 +387,22 @@ ALTER TABLE `karyawan`
   ADD CONSTRAINT `karyawan_ibfk_1` FOREIGN KEY (`id_divisi`) REFERENCES `divisi` (`id_divisi`);
 
 --
+-- Constraints for table `lampiran_cuti`
+--
+ALTER TABLE `lampiran_cuti`
+  ADD CONSTRAINT `lampiran_cuti_ibfk_1` FOREIGN KEY (`id_pcuti`) REFERENCES `cuti` (`id_pcuti`);
+
+--
+-- Constraints for table `lampiran_izin`
+--
+ALTER TABLE `lampiran_izin`
+  ADD CONSTRAINT `lampiran_izin_ibfk_1` FOREIGN KEY (`id_pizin`) REFERENCES `izin` (`id_pizin`);
+
+--
 -- Constraints for table `log`
 --
 ALTER TABLE `log`
-  ADD CONSTRAINT `log_ibfk_1` FOREIGN KEY (`nik`) REFERENCES `user` (`nik`);
+  ADD CONSTRAINT `log_ibfk_1` FOREIGN KEY (`nik`) REFERENCES `user` (`nik`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `revisi_absen`

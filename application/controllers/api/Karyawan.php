@@ -79,9 +79,10 @@ class Karyawan extends CI_Controller {
 
               $log = array(
                 'nik'         => $otorisasi->nik,
-                'id_ref'      => '-',
-                'keterangan'  => 'Menambah Karyawan '.$nik,
-                'kategori'    => 'Karyawan'
+                'id_ref'      => $nik,
+                'refrensi'    => 'Karyawan',
+                'kategori'    => 'Add',
+                'keterangan'  => 'Menambah Karyawan Baru'
               );
 
               $add = $this->KaryawanModel->add($karyawan, $user, $log);
@@ -193,9 +194,10 @@ class Karyawan extends CI_Controller {
             } else {
               $log = array(
                 'nik'         => $otorisasi->nik,
-                'id_ref'      => '-',
-                'keterangan'  => 'Menghapus Karyawan '.$nik,
-                'kategori'    => 'Karyawan'
+                'id_ref'      => $nik,
+                'refrensi'    => 'Karyawan',
+                'kategori'    => 'Delete',
+                'keterangan'  => 'Menghapus data karyawan'
               );
 
               $delete = $this->KaryawanModel->delete($nik, $log);

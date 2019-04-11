@@ -45,10 +45,11 @@ class Divisi extends CI_Controller {
               );
 
               $log = array(
-                'nik'        => $otorisasi->nik,
-                'id_ref'      => '-',
-                'keterangan'  => 'Menambah Divisi '.$id_divisi,
-                'kategori'    => 'Divisi'
+                'nik'         => $otorisasi->nik,
+                'id_ref'      => $id_divisi,
+                'refrensi'    => 'Divisi',
+                'kategori'    => 'Add',
+                'keterangan'  => 'Menambahkan divisi baru'
               );
 
               $add = $this->DivisiModel->add($data, $log);
@@ -141,9 +142,10 @@ class Divisi extends CI_Controller {
             } else {
               $log = array(
                 'nik'         => $otorisasi->nik,
-                'id_ref'      => '-',
-                'keterangan'  => 'Menghapus Divisi '.$id_divisi,
-                'kategori'    => 'Divisi'
+                'id_ref'      => $id_divisi,
+                'refrensi'    => 'Divisi',
+                'kategori'    => 'Delete',
+                'keterangan'  => 'Menghapus salah satu divisi'
               );
 
               $delete = $this->DivisiModel->delete($id_divisi, $log);
