@@ -46,6 +46,7 @@ class Divisi extends CI_Controller {
 
               $log = array(
                 'nik'        => $otorisasi->nik,
+                'id_ref'      => '-',
                 'keterangan'  => 'Menambah Divisi '.$id_divisi,
                 'kategori'    => 'Divisi'
               );
@@ -55,6 +56,18 @@ class Divisi extends CI_Controller {
               if(!$add){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menambah data divisi'));
               } else {
+                $options = array(
+                  'cluster' => 'ap1',
+                  'useTLS' => true
+                );
+                $pusher = new Pusher\Pusher(
+                  '9f324d52d4872168e514',
+                  '0bc1f341940046001b79',
+                  '752686',
+                  $options
+                );
+
+                $pusher->trigger('ums', 'divisi', $log);
                 json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menambah data divisi'));
               }
             }
@@ -128,6 +141,7 @@ class Divisi extends CI_Controller {
             } else {
               $log = array(
                 'nik'         => $otorisasi->nik,
+                'id_ref'      => '-',
                 'keterangan'  => 'Menghapus Divisi '.$id_divisi,
                 'kategori'    => 'Divisi'
               );
@@ -137,6 +151,18 @@ class Divisi extends CI_Controller {
               if(!$delete){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menghapus divisi'));
               } else {
+                $options = array(
+                  'cluster' => 'ap1',
+                  'useTLS' => true
+                );
+                $pusher = new Pusher\Pusher(
+                  '9f324d52d4872168e514',
+                  '0bc1f341940046001b79',
+                  '752686',
+                  $options
+                );
+
+                $pusher->trigger('ums', 'divisi', $log);
                 json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menghapus divisi'));
               }
             }

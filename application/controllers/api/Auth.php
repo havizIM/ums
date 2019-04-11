@@ -47,7 +47,7 @@ class Auth extends CI_Controller {
               'divisi'         => $key->nama_divisi
             );
 
-            $data = array(
+            $log = array(
               'nik'         => $key->nik,
               'id_ref'      => '-',
               'keterangan'  => 'User login',
@@ -60,24 +60,23 @@ class Auth extends CI_Controller {
               json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'User sudah tidak aktif' ));
             } else {
 
-              $log = $this->LogModel->add($data);
+              $add = $this->LogModel->add($log);
 
-              $options = array(
-                'cluster' => 'ap1',
-                'useTLS' => true
-              );
-              $pusher = new Pusher\Pusher(
-                '9f324d52d4872168e514',
-                '0bc1f341940046001b79',
-                '752686',
-                $options
-              );
-
-              $pusher->trigger('ums', 'log', $data);
-
-              if(!$log){
+              if(!$add){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal melakukan login' ));
               } else {
+                $options = array(
+                  'cluster' => 'ap1',
+                  'useTLS' => true
+                );
+                $pusher = new Pusher\Pusher(
+                  '9f324d52d4872168e514',
+                  '0bc1f341940046001b79',
+                  '752686',
+                  $options
+                );
+
+                $pusher->trigger('ums', 'log', $log);
                 json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil melakukan login', 'data' => $session ));
               }
             }
@@ -106,31 +105,30 @@ class Auth extends CI_Controller {
         } else {
           $otorisasi = $auth->row();
 
-          $data = array(
+          $log = array(
             'nik'         => $otorisasi->nik,
             'id_ref'      => '-',
             'keterangan'  => 'User login',
             'kategori'    => 'Login'
           );
 
-          $log = $this->LogModel->add($data);
+          $add = $this->LogModel->add($log);
 
-          $options = array(
-            'cluster' => 'ap1',
-            'useTLS' => true
-          );
-          $pusher = new Pusher\Pusher(
-            '9f324d52d4872168e514',
-            '0bc1f341940046001b79',
-            '752686',
-            $options
-          );
-
-          $pusher->trigger('ums', 'log', $data);
-
-          if(!$log){
+          if(!$add){
             json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal Logout'));
           } else {
+            $options = array(
+              'cluster' => 'ap1',
+              'useTLS' => true
+            );
+            $pusher = new Pusher\Pusher(
+              '9f324d52d4872168e514',
+              '0bc1f341940046001b79',
+              '752686',
+              $options
+            );
+
+            $pusher->trigger('ums', 'log', $log);
             json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil logout'));
           }
         }
@@ -179,22 +177,21 @@ class Auth extends CI_Controller {
 
               $pass = $this->AuthModel->gantiPass($otorisasi->nik, $data, $log);
 
-              $options = array(
-                'cluster' => 'ap1',
-                'useTLS' => true
-              );
-              $pusher = new Pusher\Pusher(
-                '9f324d52d4872168e514',
-                '0bc1f341940046001b79',
-                '752686',
-                $options
-              );
-
-              $pusher->trigger('ums', 'log', $data);
-
               if(!$pass){
                 json_output(500, array('status' => 500, 'description' => 'Gagal', 'message' => 'Gagal mengganti password'));
               } else {
+                $options = array(
+                  'cluster' => 'ap1',
+                  'useTLS' => true
+                );
+                $pusher = new Pusher\Pusher(
+                  '9f324d52d4872168e514',
+                  '0bc1f341940046001b79',
+                  '752686',
+                  $options
+                );
+
+                $pusher->trigger('ums', 'log', $log);
                 json_output(200, array('status' => 200, 'description' => 'Gagal', 'message' => 'Berhasil mengganti password'));
               }
             }
