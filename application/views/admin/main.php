@@ -139,6 +139,10 @@
                   <li>
                     <a href="#/divisi"><i class="icon-briefcase"></i><span>Divisi</span></a>
                   </li>
+
+                  <li>
+                    <a href="#/karyawan"><i class="icon-briefcase"></i><span>Karyawan</span></a>
+                  </li>
                 </ul>
               </nav>
             </div>
@@ -192,6 +196,12 @@
     <script src="<?= base_url(''); ?>assets/bundles/jvectormap.bundle.js"></script>
 
     <script src="<?= base_url(''); ?>assets/bundles/knob.bundle.js"></script>
+
+    <script src="<?= base_url(''); ?>assets/vendor/jquery-validation/jquery.validate.js"></script>
+
+    <script src="<?= base_url(''); ?>assets/vendor/jquery-steps/jquery.steps.js"></script>
+
+    <script src="<?= base_url(''); ?>assets/js/pages/forms/form-wizard.js"></script>
 
     <script src="<?= base_url(''); ?>assets/bundles/mainscripts.bundle.js"></script>
 

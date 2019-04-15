@@ -29,4 +29,14 @@ class Admin extends CI_Controller{
     $this->load->view('admin/divisi');
   }
 
+  function karyawan()
+  {
+    $this->load->view('admin/karyawan');
+  }
+
+  function add_karyawan()
+  {
+    $this->load->view('admin/add_karyawan');
+  }
+
 }

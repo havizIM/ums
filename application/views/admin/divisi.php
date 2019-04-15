@@ -27,7 +27,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="title" id="defaultModalLabel">Tambah Divisi</h4>
+        <h4 class="title" id="defaultModalLabel">Tambah Data Divisi</h4>
       </div>
 
       <form class="form-horizontal" id="form_add" method="post">
