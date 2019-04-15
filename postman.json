@@ -76,12 +76,12 @@
 					"formdata": [
 						{
 							"key": "password_lama",
-							"value": "haviz123",
+							"value": "4dm1n",
 							"type": "text"
 						},
 						{
 							"key": "password_baru",
-							"value": "4dm1n",
+							"value": "admin",
 							"type": "text"
 						}
 					]
@@ -156,7 +156,7 @@
 					"formdata": [
 						{
 							"key": "nama_divisi",
-							"value": "Merchandise",
+							"value": "Coba Divisi",
 							"type": "text"
 						}
 					]
@@ -212,7 +212,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "localhost/ums/api/karyawan/delete/37403280b6e8573?nik=06144",
+					"raw": "localhost/ums/api/karyawan/delete/37403280b6e8573?nik=06145",
 					"host": [
 						"localhost"
 					],
@@ -226,7 +226,7 @@
 					"query": [
 						{
 							"key": "nik",
-							"value": "06144"
+							"value": "06145"
 						}
 					]
 				}
@@ -265,7 +265,7 @@
 					"formdata": [
 						{
 							"key": "nik",
-							"value": "06144",
+							"value": "06145",
 							"type": "text"
 						},
 						{
@@ -334,7 +334,7 @@
 						},
 						{
 							"key": "email",
-							"value": "dianratna1995@gmail.com",
+							"value": "dianratna1996@gmail.com",
 							"type": "text"
 						},
 						{

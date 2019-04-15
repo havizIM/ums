@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 10, 2019 at 07:12 PM
+-- Generation Time: Apr 11, 2019 at 09:30 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 5.6.35
 
@@ -150,8 +150,7 @@ CREATE TABLE `karyawan` (
 
 INSERT INTO `karyawan` (`nik`, `nama`, `tmp_lahir`, `tgl_lahir`, `kelamin`, `status_kawin`, `pendidikan`, `alamat`, `telepon`, `tgl_masuk`, `status_karyawan`, `jabatan`, `id_divisi`) VALUES
 ('06142', 'Haviz Indra Maulana', 'Jakarta', '1992-10-10', 'Laki-laki', 'Kawin', 'S1', 'Jl. Gg Vanilli No.19f Rt 010', '08987748441', '2019-04-06', 'Aktif', 'Administrator', 'DV0001'),
-('06143', 'Dian Ratna Sari', 'Jakarta', '1995-11-27', 'Perempuan', 'Kawin', 'D3', 'Jakarta', '081355754092', '2016-10-11', 'Aktif', '', 'DV0001'),
-('06144', 'Kalyssa Innara Putri', 'Jakarta', '1995-11-27', 'Perempuan', 'Kawin', 'D3', 'Jakarta', '081355754092', '2016-10-11', 'Aktif', 'Staff Accounting', 'DV0002');
+('06143', 'Dian Ratna Sari', 'Jakarta', '1995-11-27', 'Perempuan', 'Kawin', 'D3', 'Jakarta', '081355754092', '2016-10-11', 'Aktif', '', 'DV0001');
 
 -- --------------------------------------------------------
 
@@ -189,8 +188,9 @@ CREATE TABLE `log` (
   `id_log` bigint(20) NOT NULL,
   `nik` varchar(20) NOT NULL,
   `id_ref` varchar(11) NOT NULL,
-  `keterangan` varchar(50) NOT NULL,
+  `refrensi` varchar(30) NOT NULL,
   `kategori` varchar(30) NOT NULL,
+  `keterangan` varchar(50) NOT NULL,
   `tgl_log` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -198,21 +198,15 @@ CREATE TABLE `log` (
 -- Dumping data for table `log`
 --
 
-INSERT INTO `log` (`id_log`, `nik`, `id_ref`, `keterangan`, `kategori`, `tgl_log`) VALUES
-(1, '06142', '-', 'User login', 'Login', '2019-04-06 10:15:29'),
-(2, '06142', '-', 'User login', 'Login', '2019-04-06 10:16:39'),
-(3, '06142', '-', 'User login', 'Login', '2019-04-06 10:18:04'),
-(4, '06142', '-', 'Mengganti password lama menjadi password baru', 'Ganti Password', '2019-04-06 10:19:38'),
-(5, '06142', '-', 'User login', 'Login', '2019-04-06 10:31:24'),
-(6, '06142', '-', 'User login', 'Login', '2019-04-06 10:32:27'),
-(7, '06142', '-', 'Mengganti password lama menjadi password baru', 'Ganti Password', '2019-04-06 10:32:49'),
-(8, '06142', '-', 'User login', 'Login', '2019-04-06 10:33:10'),
-(9, '06142', '-', 'User login', 'Login', '2019-04-10 12:59:24'),
-(10, '06142', '', 'Menambah Divisi DVS0005', 'Divisi', '2019-04-10 13:08:39'),
-(11, '06142', '', 'Menambah Divisi DV0005', 'Divisi', '2019-04-10 13:32:06'),
-(12, '06142', '', 'Menghapus Divisi DV0005', 'Divisi', '2019-04-10 13:39:02'),
-(13, '06142', '-', 'Menambah Karyawan 06143', 'Karyawan', '2019-04-10 16:53:32'),
-(14, '06142', '-', 'Menambah Karyawan 06144', 'Karyawan', '2019-04-10 17:00:04');
+INSERT INTO `log` (`id_log`, `nik`, `id_ref`, `refrensi`, `kategori`, `keterangan`, `tgl_log`) VALUES
+(16, '06142', '-', 'Auth', 'Login', 'User login', '2019-04-11 19:21:49'),
+(17, '06142', '-', 'Auth', 'Login', 'User login', '2019-04-11 19:22:29'),
+(18, '06142', '-', 'Auth', 'Logout', 'User logout', '2019-04-11 19:23:01'),
+(19, '06142', '-', 'Auth', 'Change Password', 'Mengganti password lama menjadi password baru', '2019-04-11 19:23:33'),
+(20, '06142', 'DV0005', 'Divisi', 'Add', 'Menambahkan divisi baru', '2019-04-11 19:25:06'),
+(21, '06142', 'DV0005', 'Divisi', 'Delete', 'Menghapus salah satu divisi', '2019-04-11 19:25:50'),
+(22, '06142', '06145', 'Karyawan', 'Add', 'Menambah Karyawan Baru', '2019-04-11 19:27:32'),
+(23, '06142', '06145', 'Karyawan', 'Delete', 'Menghapus data karyawan', '2019-04-11 19:28:11');
 
 -- --------------------------------------------------------
 
@@ -253,9 +247,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`nik`, `email`, `password`, `level`, `tgl_registrasi`, `foto`, `token`) VALUES
-('06142', 'umsosella@gmail.com', '4dm1n', 'Admin', '2019-04-05 23:59:15', 'user.jpg', '37403280b6e8573'),
-('06143', 'dianratna19@gmail.com', '06143', 'Karyawan', '2019-04-10 16:53:32', 'user.jpg', '839ce9d4eb060fd'),
-('06144', 'dianratna1995@gmail.com', '06144', 'Karyawan', '2019-04-10 17:00:04', 'user.jpg', 'e2cbc18a8ee9f4a');
+('06142', 'umsosella@gmail.com', 'admin', 'Admin', '2019-04-05 23:59:15', 'user.jpg', '37403280b6e8573'),
+('06143', 'dianratna19@gmail.com', '06143', 'Karyawan', '2019-04-10 16:53:32', 'user.jpg', '839ce9d4eb060fd');
 
 --
 -- Indexes for dumped tables
@@ -360,7 +353,7 @@ ALTER TABLE `lampiran_izin`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables
