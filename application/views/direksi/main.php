@@ -9,7 +9,7 @@
   <meta name="author" content=""/>
   <title>UMS - Direksi</title>
   <!--favicon-->
-  <link rel="icon" href="<?= base_url() ?>assets/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="<?= base_url() ?>assets/images/logo-osella.png" type="image/x-icon">
   <!--Full Calendar Css-->
   <link href="<?= base_url() ?>assets/plugins/fullcalendar/css/fullcalendar.min.css" rel='stylesheet'/>
   <!-- simplebar CSS-->
@@ -55,7 +55,7 @@
    <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
      <div class="brand-logo">
       <a href="index.html">
-       <img src="<?= base_url() ?>assets/images/logo1.jpg" class="logo-icon" alt="logo icon">
+       <img src="<?= base_url() ?>assets/images/logo-osella.png" class="logo-icon" alt="logo icon">
        <h5 class="logo-text"><img src="<?= base_url() ?>assets/images/logo1.jpg" class="img" alt="logo icon" style="width: 150px; height: 50px"></h5>
      </a>
 	 </div>
@@ -66,7 +66,7 @@
           <i class="icon-home"></i> <span>Dashboard</span>
         </a>
       </li>
-      
+
       <li>
         <a href="#/log" class="waves-effect">
           <i class="icon-layers"></i> <span>Log</span>
@@ -170,7 +170,7 @@
 	<footer class="footer">
       <div class="container">
         <div class="text-center">
-          made with Love by Rizka
+          PT. CKMS User Management System | By Riska
         </div>
       </div>
     </footer>

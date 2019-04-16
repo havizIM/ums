@@ -49,7 +49,7 @@
 	    		<div class="card-body">
 	    			<div class="card-content p-3">
 	    				<div class="text-center">
-					 		<img src="<?= base_url() ?>assets/images/logo1.jpg">
+					 		<img src="<?= base_url() ?>assets/images/logo-login.png" style="width: 70%;">
 					 	</div>
 					 <div class="card-title text-uppercase text-center py-3">Log In</div>
 					   <form id="form_login">
