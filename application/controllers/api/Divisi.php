@@ -97,7 +97,7 @@ class Divisi extends CI_Controller {
 
           $otorisasi  = $auth->row();
           $id_divisi  = $this->input->get('id_divisi');
-          $show       = $this->DivisiModel->show($id_user);
+          $show       = $this->DivisiModel->show($id_divisi);
           $divisi     = array();
 
           foreach($show->result() as $key){

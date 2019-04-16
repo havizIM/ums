@@ -1,217 +1,170 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <title>UMS - Login</title>
+  <!--favicon-->
+  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+  <!-- Bootstrap core CSS-->
+  <link href="<?= base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="<?= base_url() ?>assets/plugins/toastr/toastr.min.css" rel="stylesheet"/>
+  <!-- animate CSS-->
+  <link href="<?= base_url() ?>assets/css/animate.css" rel="stylesheet" type="text/css"/>
+  <!-- Icons CSS-->
+  <link href="<?= base_url() ?>assets/css/icons.css" rel="stylesheet" type="text/css"/>
+  <!-- Custom Style-->
+  <link href="<?= base_url() ?>assets/css/app-style.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <script type="text/javascript">
+    var session = localStorage.getItem('lion_membership');
+    var auth = JSON.parse(session);
 
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    if(session){
+      window.location.replace(`<?= base_url() ?>${auth.level}/`)
+    }
+  </script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
 
-    <meta name="csrf-token" content="oJVKx8hnoXL22ZOMImzRqBMj084VTP0IxISsCdbg">
+<body>
+ <!-- Start wrapper-->
+ <div id="wrapper">
+	   <div class="card-authentication2 mx-auto my-5">
+	    <div class="card-group">
+	    	<div class="card mb-0">
+	    	   <div class="bg-signin2"></div>
+	    		<div class="card-img-overlay rounded-left my-5">
+                 <!-- <h2 class="text-white">User Management System</h2> -->
+                 <h1 class="text-white">User Management System</h1>
+                 <p class="card-text text-white pt-3">PT. Cipta Kreasi Sandang Mandiri</p>
+             </div>
+	    	</div>
 
-    <link rel="icon" href="<?= base_url(''); ?>favicon-edit.png" type="image/png"> <!-- Favicon-->
+	    	<div class="card mb-0 ">
+	    		<div class="card-body">
+	    			<div class="card-content p-3">
+	    				<div class="text-center">
+					 		<img src="<?= base_url() ?>assets/images/logo1.jpg">
+					 	</div>
+					 <div class="card-title text-uppercase text-center py-3">Log In</div>
+					   <form id="form_login">
+						  <div class="form-group">
+						   <div class="position-relative has-icon-left">
+							   <label for="nik" class="sr-only">Username</label>
+								 <input type="text" id="nik" name="nik" class="form-control" placeholder="NIK">
+								 <div class="form-control-position">
+									<i class="icon-user"></i>
+								</div>
+						   </div>
+						  </div>
+						  <div class="form-group">
+						   <div class="position-relative has-icon-left">
+							  <label for="password" class="sr-only">Password</label>
+							  <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+							  <div class="form-control-position">
+								  <i class="icon-lock"></i>
+							  </div>
+						   </div>
+						  </div>
+						  <div class="form-row mr-0 ml-0">
+						  <div class="form-group col-6">
+							  <div class="">
+				               <input type="checkbox" id="show_pass" />
+				               <label for="user-checkbox">Show Password</label>
+							 </div>
+							</div>
+							<div class="form-group col-6 text-right">
+							 <a href="javascript:void()" id="forgot_pass">Forgot Password?</a>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-outline-primary btn-block waves-effect waves-light" id="btn_login">Log In</button>
 
-    <title>Login | SI-UMS</title>
+					</form>
+				 </div>
+				</div>
+	    	</div>
+	     </div>
+	    </div>
 
-    <meta name="description" content="Lucid Laravel">
+    <!--End Back To Top Button-->
+	</div><!--wrapper-->
 
-    <meta name="author" content="Lucid Laravel">
+  <!-- Bootstrap core JavaScript-->
+  <script src="<?= base_url() ?>assets/js/jquery.min.js"></script>
+  <script src="<?= base_url() ?>assets/js/popper.min.js"></script>
+  <script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="<?= base_url(''); ?>assets/vendor/bootstrap/css/bootstrap.min.css">
+  <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>
+  <script type="text/javascript">
 
-    <link rel="stylesheet" href="<?= base_url(''); ?>assets/vendor/font-awesome/css/font-awesome.min.css">
+    $(document).ready(function(){
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-full-width",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
 
-    <link rel="stylesheet" href="<?= base_url(''); ?>assets/css/main.css">
-
-    <link rel="stylesheet" href="<?= base_url(''); ?>assets/css/color_skins.css">
-
-    <link rel="stylesheet" href="<?= base_url('assets/vendor/toastr/toastr.min.css'); ?>">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-
-      function cek_auth(){
-        var session = localStorage.getItem('ums');
-        var auth = JSON.parse(session);
-
-        if (session) {
-          window.location.replace('<?= base_url() ?>'+auth.level+'/')
+      $('#show_pass').click(function(){
+        if($(this).is(':checked')){
+          $('#password').attr('type','text');
+        }else{
+          $('#password').attr('type','password');
         };
-      };
-
-      cek_auth();
-
-    </script>
-
-    <style media="screen">
-
-      .btn-show-pass {
-        font-size: 15px;
-        color: #999999;
-
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: flex;
-        align-items: center;
-        position: absolute;
-        height: 100%;
-        top: 0;
-        right: 0;
-        padding-right: 5px;
-        margin-right: 13px;
-        cursor: pointer;
-        -webkit-transition: all 0.4s;
-        -o-transition: all 0.4s;
-        -moz-transition: all 0.4s;
-        transition: all 0.4s;
-      }
-
-      .btn-show-pass:hover {
-        color: #6a7dfe;
-        color: -webkit-linear-gradient(left, #21d4fd, #b721ff);
-        color: -o-linear-gradient(left, #21d4fd, #b721ff);
-        color: -moz-linear-gradient(left, #21d4fd, #b721ff);
-        color: linear-gradient(left, #21d4fd, #b721ff);
-      }
-
-      .btn-show-pass.active {
-        color: #6a7dfe;
-        color: -webkit-linear-gradient(left, #21d4fd, #b721ff);
-        color: -o-linear-gradient(left, #21d4fd, #b721ff);
-        color: -moz-linear-gradient(left, #21d4fd, #b721ff);
-        color: linear-gradient(left, #21d4fd, #b721ff);
-      }
-
-    </style>
-
-  </head>
-
-  <body class="theme-cyan">
-
-    <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="m-t-30"><img src="<?= base_url(''); ?>assets/img/favicon-edit.png" width="48" height="48" alt="Lucid"></div>
-            <p>Harap tunggu...</p>
-        </div>
-    </div>
-
-    <div id="wrapper">
-
-      <div class="vertical-align-wrap">
-      	<div class="vertical-align-middle auth-main">
-      		<div class="auth-box">
-            <div class="top">
-              <img src="<?= base_url(''); ?>assets/img/logo.jpg" alt="osella" style="border-radius: 10px;">
-            </div>
-
-      			<div class="card">
-              <div class="body">
-                <form class="form-auth-small" id="form_login">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="nik" name="nik" placeholder="NIK">
-                  </div>
-                  <div class="form-group">
-                    <span class="btn-show-pass">
-                      <i class="fa fa-fw fa-eye" style="margin-right: 15px; margin-bottom: 9px;"></i>
-                    </span>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-                  </div>
-                  <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn_login">LOGIN</button>
-                </form>
-              </div>
-            </div>
-      		</div>
-      	</div>
-      </div>
-
-    </div>
-
-    <script src="<?= base_url(''); ?>assets/bundles/libscripts.bundle.js"></script>
-
-    <script src="<?= base_url(''); ?>assets/bundles/vendorscripts.bundle.js"></script>
-
-    <script src="<?= base_url(''); ?>assets/bundles/mainscripts.bundle.js"></script>
-
-    <script src="<?= base_url('assets/vendor/toastr/toastr.js'); ?>"></script>
-
-    <script type="text/javascript">
-
-      $(document).ready(function(){
-
-        toastr.options = {
-          "closeButton": false,
-          "debug": false,
-          "newestOnTop": false,
-          "progressBar": false,
-          "positionClass": "toast-top-right",
-          "preventDuplicates": true,
-          "onclick": null,
-          "showDuration": "300",
-          "hideDuration": "1000",
-          "timeOut": "5000",
-          "extendedTimeOut": "1000",
-          "showEasing": "swing",
-          "hideEasing": "linear",
-          "showMethod": "fadeIn",
-          "hideMethod": "fadeOut"
-        }
-
-        var showPass = 0;
-        $('.btn-show-pass').on('click', function(){
-          if(showPass == 0) {
-            $('#password').attr('type', 'text');
-            $(this).find('i').removeClass('fa-eye');
-            $(this).find('i').addClass('fa-eye-slash');
-            showPass = 1;
-          } else {
-            $('#password').attr('type', 'password');
-            $(this).find('i').addClass('fa-eye');
-            $(this).find('i').removeClass('fa-eye-slash');
-            showPass = 0;
-          }
-        });
-
-        $('#form_login').on('submit', function(e){
-          e.preventDefault();
-
-          var nik = $('#nik').val();
-          var password = $('#password').val();
-
-          if (nik === '' || password === ''){
-            toastr.warning(response.message);
-          } else {
-            $.ajax({
-              url: '<?= base_url('api/auth/login_user') ?>',
-              type: 'POST',
-              dataType: 'JSON',
-              beforeSend: function(){
-                $('#btn_login').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-spinner fa-spin"></i>');
-              },
-              data: $('#form_login').serialize(),
-              success: function(response){
-                if(response.status === 200){
-                  localStorage.setItem('ums', JSON.stringify(response.data));
-                  var link = '<?= base_url('') ?>'+response.data.level+'/'
-                  window.location.replace(link);
-                } else {
-                  toastr.error(response.message, response.description);
-                }
-                $('#btn_login').removeClass('disabled').removeAttr('disabled', 'disabled').text('Masuk');
-              },
-              error: function(){
-                toastr.error('Tidak dapat mengakses server');
-                $('#btn_login').removeClass('disabled').removeAttr('disabled', 'disabled').text('Masuk');
-              }
-            });
-          }
-        });
-
       });
 
-    </script>
+      $('#form_login').on('submit', function(e){
+        e.preventDefault();
 
-  </body>
+        var nik = $('#nik').val();
+        var password = $('#password').val();
+
+        if (nik === '' || password === ''){
+          toastr.warning('Field harus diisi dengan lengkap', 'Warning')
+        } else {
+          $.ajax({
+            url: '<?= base_url('api/auth/login_user') ?>',
+            type: 'POST',
+            dataType: 'JSON',
+            beforeSend: function(){
+              $('#btn_login').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-spinner fa-spin"></i>');
+            },
+            data: $('#form_login').serialize(),
+            success: function(response){
+              if(response.status === 200){
+                localStorage.setItem('ums', JSON.stringify(response.data));
+                var link = '<?= base_url('') ?>'+response.data.level+'/'
+                window.location.replace(link);
+              } else {
+                toastr.error(response.message, response.description)
+                $('#btn_login').removeClass('disabled').removeAttr('disabled', 'disabled').text('Log In');
+              }
+
+            },
+            error: function(){
+              toastr.error('Tidak dapat mengakses server', 'Failed')
+              $('#btn_login').removeClass('disabled').removeAttr('disabled', 'disabled').text('Log In');
+            }
+          });
+        }
+      });
+    });
+  </script>
+</body>
 </html>
