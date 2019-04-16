@@ -31,7 +31,7 @@
 
 </head>
 
-<body>
+<body style="background-image: url('<?= base_url('assets/images/login.jpg') ?>'); background-size: cover;">
  <!-- Start wrapper-->
  <div id="wrapper">
 	   <div class="card-authentication2 mx-auto my-5">

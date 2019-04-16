@@ -30,16 +30,18 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
 
   <script type="text/javascript">
-  var session = localStorage.getItem('ums');
-  var auth = JSON.parse(session);
 
-  if(!session) {
-    window.location.replace('<?= base_url().'auth' ?>');
-  } else {
-    if(auth.level !== 'admin'){
-      window.location.replace('<?= base_url().'' ?>'+auth.level+'/');
-    }
-  };
+    var session = localStorage.getItem('ums');
+    var auth = JSON.parse(session);
+
+    if(!session) {
+      window.location.replace('<?= base_url().'auth' ?>');
+    } else {
+      if(auth.level !== 'admin'){
+        window.location.replace('<?= base_url().'' ?>'+auth.level+'/');
+      }
+    };
+
   </script>
 
 </head>
@@ -111,7 +113,7 @@
         <li class="dropdown-divider"></li>
         <li class="dropdown-item"><a href="#/profile"><i class="icon-wallet mr-2"></i> Profile</a></li>
         <li class="dropdown-divider"></li>
-        <li class="dropdown-item"><a href="javaScript:void();" id="ganti_pass"><i class="icon-settings mr-2"></i> Ganti Password</a></li>
+        <li class="dropdown-item"><a href="javaScript:void();" id="ganti_pass" data-toggle="modal" data-target="#modal_ganti"><i class="icon-settings mr-2"></i> Ganti Password</a></li>
         <li class="dropdown-divider"></li>
         <li class="dropdown-item"><a href="javaScript:void();" id="logout"><i class="icon-power mr-2"></i> Logout</a></li>
       </ul>
@@ -129,6 +131,40 @@
 
     </div>
    </div>
+
+   <div class="modal fade" id="modal_ganti">
+    <div class="modal-dialog">
+      <div class="modal-content animated slideInUp">
+        <div class="modal-header">
+          <h5 class="modal-title"> Ganti Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <form class="form-horizontal" id="form_ganti" method="post">
+          <div class="modal-body form-group">
+            <div class="form-group">
+              <input type="password" class="form-control" id="password_lama" name="password_lama" placeholder="Password Lama">
+            </div>
+
+            <div class="form-group">
+              <input type="password" class="form-control" id="password_baru" name="password_baru" placeholder="Password Baru">
+            </div>
+
+            <div class="form-group">
+              <input type="password" class="form-control" id="re_password" name="re_password" placeholder="Konfirmasi Password">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
+            <button type="submit" id="simpan_pass" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!--Start Back To Top Button-->
     <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
@@ -167,6 +203,9 @@
   <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
   <link href="<?= base_url() ?>assets/plugins/toastr/toastr.min.css" rel="stylesheet"/>
 
+  <script src="<?= base_url() ?>assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+  <script src="<?= base_url() ?>assets/plugins/alerts-boxes/js/sweet-alert-script.js"></script>
+
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
@@ -175,6 +214,7 @@
   <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>
 
   <script type="text/javascript">
+
     function load_content(link){
 
       $.get(`<?= base_url('admin/'); ?>${link}`, function(response){
@@ -217,6 +257,75 @@
         link = location.hash.substr(2);
         load_content(link);
       })
+
+      $('#logout').on('click', function(){
+
+        swal({
+          title: "Apa Anda yakin ingin keluar?",
+          icon: "warning",
+          buttons: ["Tidak", "Ya"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+              url: '<?= base_url('api/auth/logout_user/') ?>'+auth.token,
+              type: 'GET',
+              dataType: 'JSON',
+              success: function(response){
+                localStorage.clear();
+                window.location.replace('<?= base_url().'auth' ?>');
+              }
+            });
+          }
+        })
+      });
+
+      $('#ganti_pass').on('click', function(){
+        $('#modal_ganti').modal('show');
+      })
+
+      $('#form_ganti').on('submit', function(e){
+        e.preventDefault();
+
+        var password_lama = $('#password_lama').val();
+        var password_baru = $('#password_baru').val();
+        var re_password = $('#re_password').val();
+
+        if(password_lama === '' || password_baru === '') {
+          toastr.warning('Mohon isi datanya');
+        } else if (password_baru !== re_password) {
+          toastr.warning('Password belum sama');
+        } else {
+          $.ajax({
+            url: '<?= base_url('api/auth/password_user/') ?>'+auth.token,
+            type: 'POST',
+            dataType: 'JSON',
+            beforeSend: function(){
+              $('#simpan_pass').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-spinner fa-spin"></i>');
+            },
+            data: {
+              password_lama: password_lama,
+              password_baru: password_baru
+            },
+            success: function(response){
+              if(response.status === 200){
+                toastr.success(response.message);
+                $('#form_ganti')[0].reset();
+                $('#modal_ganti').modal('hide');
+              } else {
+                toastr.error('Tidak dapat mengakses server');
+              }
+              $('#simpan_pass').removeClass('disabled').removeAttr('disabled', 'disabled').text('Ganti');
+            },
+            error: function(){
+              toastr.error('Tidak dapat mengakses server');
+            }
+          })
+        }
+      })
+
+
     })
 
   </script>

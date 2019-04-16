@@ -1,149 +1,148 @@
+
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <title>UMS - Kabag</title>
+  <!--favicon-->
+  <link rel="icon" href="<?= base_url() ?>assets/images/favicon.ico" type="image/x-icon">
+  <!--Full Calendar Css-->
+  <link href="<?= base_url() ?>assets/plugins/fullcalendar/css/fullcalendar.min.css" rel='stylesheet'/>
+  <!-- simplebar CSS-->
+  <link href="<?= base_url() ?>assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+  <!-- Bootstrap core CSS-->
+  <link href="<?= base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- animate CSS-->
+  <link href="<?= base_url() ?>assets/css/animate.css" rel="stylesheet" type="text/css"/>
+  <!-- Icons CSS-->
+  <link href="<?= base_url() ?>assets/css/icons.css" rel="stylesheet" type="text/css"/>
+  <!-- Sidebar CSS-->
+  <link href="<?= base_url() ?>assets/css/sidebar-menu.css" rel="stylesheet"/>
+  <!-- Custom Style-->
+  <link href="<?= base_url() ?>assets/css/app-style.css" rel="stylesheet"/>
+  <link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet"/>
 
-  <head>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
 
-    <meta charset="utf-8">
+  <script type="text/javascript">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    var session = localStorage.getItem('ums');
+    var auth = JSON.parse(session);
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    if(!session) {
+      window.location.replace('<?= base_url().'auth' ?>');
+    } else {
+      if(auth.level !== 'kabag'){
+        window.location.replace('<?= base_url().'' ?>'+auth.level+'/');
+      }
+    };
 
-    <meta name="csrf-token" content="oJVKx8hnoXL22ZOMImzRqBMj084VTP0IxISsCdbg">
+  </script>
 
-    <link rel="icon" href="<?= base_url(''); ?>favicon.ico" type="image/x-icon"> <!-- Favicon-->
+</head>
 
-    <title>KaBag - UMS</title>
+<body>
 
-    <meta name="description" content="Lucid Laravel">
+<!-- Start wrapper-->
+ <div id="wrapper">
 
-    <meta name="author" content="Lucid Laravel">
+   <!--Start sidebar-wrapper-->
+   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+     <div class="brand-logo">
+      <a href="index.html">
+       <img src="<?= base_url() ?>assets/images/logo1.jpg" class="logo-icon" alt="logo icon">
+       <h5 class="logo-text"><img src="<?= base_url() ?>assets/images/logo1.jpg" class="img" alt="logo icon" style="width: 150px; height: 50px"></h5>
+     </a>
+	 </div>
+	 <ul class="sidebar-menu do-nicescrol">
+      <li class="sidebar-header">MAIN NAVIGATION</li>
+      <li>
+        <a href="#/dashboard" class="waves-effect">
+          <i class="icon-home"></i> <span>Dashboard</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="#/log" class="waves-effect">
+          <i class="icon-layers"></i> <span>Log</span>
+        </a>
+      </li>
 
-    <link rel="stylesheet" href="<?= base_url(''); ?>assets/vendor/bootstrap/css/bootstrap.min.css">
+    </ul>
 
-    <link rel="stylesheet" href="<?= base_url(''); ?>assets/vendor/font-awesome/css/font-awesome.min.css">
+   </div>
+   <!--End sidebar-wrapper-->
 
-    <link rel="stylesheet" href="<?= base_url(''); ?>assets/vendor/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
+<!--Start topbar header-->
+<header class="topbar-nav">
+ <nav class="navbar navbar-expand fixed-top gradient-scooter">
+  <ul class="navbar-nav mr-auto align-items-center">
+    <li class="nav-item">
+      <a class="nav-link toggle-menu" href="javascript:void();">
+       <i class="icon-menu menu-icon"></i>
+     </a>
+    </li>
+  </ul>
 
-    <link rel="stylesheet" href="<?= base_url(''); ?>assets/vendor/morrisjs/morris.min.css" />
+  <ul class="navbar-nav align-items-center right-nav-link">
+    <li class="nav-item">
+      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="calendar.html#">
+        <span class="user-profile"><img src="<?= base_url() ?>assets/images/avatars/avatar-17.png" class="img-circle" alt="user avatar"></span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right">
+       <li class="dropdown-item user-details">
+        <a href="javaScript:void();">
+           <div class="media">
+             <div class="avatar"><img class="align-self-start mr-3" src="<?= base_url() ?>assets/images/avatars/avatar-17.png" alt="user avatar"></div>
+            <div class="media-body">
+            <h6 class="mt-2 user-title" id="session_name"></h6>
+            <p class="user-subtitle" id="session_jabatan"></p>
+            </div>
+           </div>
+          </a>
+        </li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item"><a href="#/profile"><i class="icon-wallet mr-2"></i> Profile</a></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item"><a href="javaScript:void();" id="ganti_pass" data-toggle="modal" data-target="#modal_ganti"><i class="icon-settings mr-2"></i> Ganti Password</a></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item"><a href="javaScript:void();" id="logout"><i class="icon-power mr-2"></i> Logout</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</header>
+<!--End topbar header-->
 
-    <link rel="stylesheet" href="<?= base_url(''); ?>assets/css/main.css">
+<div class="clearfix"></div>
 
-    <link rel="stylesheet" href="<?= base_url(''); ?>assets/css/color_skins.css">
+  <div class="content-wrapper">
+    <div class="container-fluid" id="content">
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css"/>
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
-
-    <link rel="stylesheet" href="<?= base_url('assets/vendor/toastr/toastr.min.css'); ?>">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-
-      function cek_auth(){
-        var session = localStorage.getItem('ums');
-        var auth = JSON.parse(session);
-
-        if(!session) {
-          window.location.replace('<?= base_url().'auth' ?>');
-        } else {
-          if(auth.level !== 'kabag'){
-            window.location.replace('<?= base_url().'' ?>'+auth.level+'/');
-          }
-        };
-      };
-
-      cek_auth();
-
-    </script>
-
-  </head>
-
-  <body class="theme-cyan">
-
-    <!-- Page Loader -->
-    <div class="page-loader-wrapper">
-      <div class="loader">
-        <div class="m-t-30"><img src="<?= base_url(''); ?>assets/img/favicon-edit.png" width="48" height="48" alt="ums"></div>
-        <p>Harap Tunggu...</p>
-      </div>
     </div>
+   </div>
 
-    <div id="wrapper">
-
-      <nav class="navbar navbar-fixed-top">
-        <div class="container-fluid">
-          <div class="navbar-btn">
-            <button type="button" class="btn-toggle-offcanvas" style="cursor: pointer;"><i class="lnr lnr-menu fa fa-bars"></i></button>
-          </div>
-
-        <div class="navbar-brand">
-          <a href="#/dashboard"><img src="<?= base_url(''); ?>assets/img/logo.svg" alt="Lucid Logo" class="img-responsive logo"></a>
+   <div class="modal fade" id="modal_ganti">
+    <div class="modal-dialog">
+      <div class="modal-content animated slideInUp">
+        <div class="modal-header">
+          <h5 class="modal-title"> Ganti Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
 
-        <div class="navbar-right">
-          <a class="btn btn-xs btn-link btn-toggle-fullwidth" style="margin-top: 9px; margin-left: 10px;"><i class="fa fa-bars"></i></a>
-          <div id="navbar-menu">
-            <ul class="nav navbar-nav">
-                <li>
-                  <a id="btn_logout" class="icon-menu" style="cursor: pointer;"><i class="icon-login"></i></a>
-                </li>
-              </ul>
+        <form class="form-horizontal" id="form_ganti" method="post">
+          <div class="modal-body form-group">
+            <div class="form-group">
+              <input type="password" class="form-control" id="password_lama" name="password_lama" placeholder="Password Lama">
             </div>
-          </div>
-        </div>
-      </nav>
-
-      <div id="left-sidebar" class="sidebar">
-        <div class="sidebar-scroll">
-          <div class="user-account">
-            <img src="<?= base_url(''); ?>assets/img/user.png" class="rounded-circle user-photo" alt="User Profile Picture">
-            <div class="dropdown">
-              <span>Halo,</span>
-              <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong class="nama"></strong></a>
-              <ul class="dropdown-menu dropdown-menu-right account">
-                <li><a href="profile1.html"><i class="icon-user"></i>Profil Saya</a></li>
-                <li><a href="javascript:void(0);" id="btn_ganti"><i class="icon-settings"></i>Password</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="tab-content p-l-0 p-r-0" style="margin-top: -25px;">
-            <div class="tab-pane active" id="menu">
-              <nav id="left-sidebar-nav" class="sidebar-nav">
-                <ul id="main-menu" class="metismenu">
-                  <li class="">
-                    <a href="#/dashboard"><i class="icon-home"></i> <span>Dashboard</span></a>
-                  </li>
-                  <li>
-                    <a href="#/log"><i class="icon-list"></i><span>Log</span></a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="main-content">
-        <div class="container-fluid" id="content">
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="modal_ganti" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="title" id="defaultModalLabel">Ganti Password</h4>
-          </div>
-
-          <form class="form-horizontal" id="form_ganti" method="post">
-            <div class="modal-body form-group">
-              <div class="form-group">
-                <input type="password" class="form-control" id="password_lama" name="password_lama" placeholder="Password Lama">
-              </div>
 
             <div class="form-group">
               <input type="password" class="form-control" id="password_baru" name="password_baru" placeholder="Password Baru">
@@ -155,146 +154,177 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-            <button type="submit" id="simpan_pass" class="btn btn-primary">Simpan</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
+            <button type="submit" id="simpan_pass" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Simpan</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-    <script src="<?= base_url(''); ?>assets/bundles/libscripts.bundle.js"></script>
+  <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
 
-    <script src="<?= base_url(''); ?>assets/bundles/vendorscripts.bundle.js"></script>
+	<!--Start footer-->
+	<footer class="footer">
+      <div class="container">
+        <div class="text-center">
+          made with Love by Rizka
+        </div>
+      </div>
+    </footer>
+	<!--End footer-->
 
-    <script src="<?= base_url(''); ?>assets/bundles/morrisscripts.bundle.js"></script>
+  </div><!--End wrapper-->
 
-    <script src="<?= base_url(''); ?>assets/bundles/jvectormap.bundle.js"></script>
 
-    <script src="<?= base_url(''); ?>assets/bundles/knob.bundle.js"></script>
+  <!-- Bootstrap core JavaScript-->
 
-    <script src="<?= base_url(''); ?>assets/bundles/mainscripts.bundle.js"></script>
+  <script src="<?= base_url() ?>assets/js/jquery.min.js"></script>
+  <script src="<?= base_url() ?>assets/js/popper.min.js"></script>
+  <script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
 
-    <script src="<?= base_url('assets/vendor/moment/moment.js'); ?>"></script>
+  <!-- simplebar js -->
+  <script src="<?= base_url() ?>assets/plugins/simplebar/js/simplebar.js"></script>
+  <!-- waves effect js -->
+  <script src="<?= base_url() ?>assets/js/waves.js"></script>
+  <!-- sidebar-menu js -->
+  <script src="<?= base_url() ?>assets/js/sidebar-menu.js"></script>
+  <!-- Custom scripts -->
+  <script src="<?= base_url() ?>assets/js/app-script.js"></script>
 
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+  <!-- Full Calendar -->
+  <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/moment.min.js'></script>
+  <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
+  <link href="<?= base_url() ?>assets/plugins/toastr/toastr.min.css" rel="stylesheet"/>
 
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url() ?>assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+  <script src="<?= base_url() ?>assets/plugins/alerts-boxes/js/sweet-alert-script.js"></script>
 
-    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
 
-    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
+  <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>
 
-    <!-- <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script> -->
+  <script type="text/javascript">
 
-    <script src="<?= base_url('assets/vendor/toastr/toastr.js'); ?>"></script>
+    function load_content(link){
 
-    <script type="text/javascript">
+      $.get(`<?= base_url('kabag/'); ?>${link}`, function(response){
+        $('#content').html(response);
+      })
+    }
 
-      function load_content(link){
+    $(document).ready(function(){
+      var link;
 
-        $.get(`<?= base_url('kabag/'); ?>${link}`, function(response){
-          $('#content').html(response);
-        })
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
       }
 
-      $(document).ready(function(){
+      $('#session_name').text(auth.nama_user)
+      $('#session_jabatan').text(auth.jabatan)
 
-        toastr.options = {
-          "closeButton": false,
-          "debug": false,
-          "newestOnTop": false,
-          "progressBar": false,
-          "positionClass": "toast-top-right",
-          "preventDuplicates": true,
-          "onclick": null,
-          "showDuration": "300",
-          "hideDuration": "1000",
-          "timeOut": "5000",
-          "extendedTimeOut": "1000",
-          "showEasing": "swing",
-          "hideEasing": "linear",
-          "showMethod": "fadeIn",
-          "hideMethod": "fadeOut"
-        }
+      if(location.hash){
+        link = location.hash.substr(2);
+        load_content(link);
+      } else {
+        location.hash = '#/dashboard'
+      }
 
-        var link;
-        var session = localStorage.getItem('ums');
-        var auth = JSON.parse(session);
+      $(window).on('hashchange', function(){
+        link = location.hash.substr(2);
+        load_content(link);
+      })
 
-        $('.nama').text(auth.nama_user);
+      $('#logout').on('click', function(){
 
-        if(location.hash){
-          link = location.hash.substr(2);
-          load_content(link);
-        } else {
-          location.hash = '#/dashboard'
-        }
-
-        $(window).on('hashchange', function(){
-          link = location.hash.substr(2);
-          load_content(link);
+        swal({
+          title: "Apa Anda yakin ingin keluar?",
+          icon: "warning",
+          buttons: ["Tidak", "Ya"],
+          dangerMode: true,
         })
-
-        $('#btn_logout').on('click', function(){
-          $.ajax({
-            url: '<?= base_url('api/auth/logout_user/') ?>'+auth.token,
-            type: 'GET',
-            dataType: 'JSON',
-            success: function(response){
-              localStorage.clear();
-              window.location.replace('<?= base_url().'auth' ?>');
-            }
-          });
-        });
-
-        $('#btn_ganti').on('click', function(){
-          $('#modal_ganti').modal('show');
-        });
-
-        $('#form_ganti').on('submit', function(e){
-          e.preventDefault();
-
-          var password_lama = $('#password_lama').val();
-          var password_baru = $('#password_baru').val();
-          var re_password = $('#re_password').val();
-
-          if(password_lama === '' || password_baru === '') {
-            toastr.warning(response.message);
-          } else if (password_baru !== re_password) {
-            toastr.warning('Password belum sama');
-          } else {
+        .then((willDelete) => {
+          if (willDelete) {
             $.ajax({
-              url: '<?= base_url('api/auth/password_user/') ?>'+auth.token,
-              type: 'POST',
+              url: '<?= base_url('api/auth/logout_user/') ?>'+auth.token,
+              type: 'GET',
               dataType: 'JSON',
-              beforeSend: function(){
-                $('#simpan_pass').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-spinner fa-spin"></i>');
-              },
-              data: {
-                password_lama: password_lama,
-                password_baru: password_baru
-              },
               success: function(response){
-                if(response.status === 200){
-                  toastr.success(response.message);
-                  $('#form_ganti')[0].reset();
-                  $('#modal_ganti').modal('hide');
-                } else {
-                  toastr.error(response.message);
-                }
-                $('#simpan_pass').removeClass('disabled').removeAttr('disabled', 'disabled').text('Ganti');
-              },
-              error: function(){
-                toastr.error('Tidak dapat mengakses server');
+                localStorage.clear();
+                window.location.replace('<?= base_url().'auth' ?>');
               }
             });
           }
-        });
-
+        })
       });
 
-    </script>
+      $('#ganti_pass').on('click', function(){
+        $('#modal_ganti').modal('show');
+      })
 
-  </body>
+      $('#form_ganti').on('submit', function(e){
+        e.preventDefault();
+
+        var password_lama = $('#password_lama').val();
+        var password_baru = $('#password_baru').val();
+        var re_password = $('#re_password').val();
+
+        if(password_lama === '' || password_baru === '') {
+          toastr.warning('Mohon isi datanya');
+        } else if (password_baru !== re_password) {
+          toastr.warning('Password belum sama');
+        } else {
+          $.ajax({
+            url: '<?= base_url('api/auth/password_user/') ?>'+auth.token,
+            type: 'POST',
+            dataType: 'JSON',
+            beforeSend: function(){
+              $('#simpan_pass').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-spinner fa-spin"></i>');
+            },
+            data: {
+              password_lama: password_lama,
+              password_baru: password_baru
+            },
+            success: function(response){
+              if(response.status === 200){
+                toastr.success(response.message);
+                $('#form_ganti')[0].reset();
+                $('#modal_ganti').modal('hide');
+              } else {
+                toastr.error('Tidak dapat mengakses server');
+              }
+              $('#simpan_pass').removeClass('disabled').removeAttr('disabled', 'disabled').text('Ganti');
+            },
+            error: function(){
+              toastr.error('Tidak dapat mengakses server');
+            }
+          })
+        }
+      })
+
+
+    })
+
+  </script>
+
+</body>
 </html>
