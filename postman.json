@@ -147,6 +147,50 @@
 			"response": []
 		},
 		{
+			"name": "Show Jenis Izin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/jenis_izin/show/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"jenis_izin",
+						"show",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show Jenis Cuti",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/jenis_cuti/show/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"jenis_cuti",
+						"show",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Add Divisi",
 			"request": {
 				"method": "POST",
@@ -178,6 +222,89 @@
 			"response": []
 		},
 		{
+			"name": "Add Jenis Izin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "keperluan",
+							"value": "Test",
+							"type": "text"
+						},
+						{
+							"key": "keterangan_izin",
+							"value": "Test",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/ums/api/jenis_izin/add/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"jenis_izin",
+						"add",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Jenis Cuti",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nama_cuti",
+							"value": "Coba Cuti",
+							"type": "text"
+						},
+						{
+							"key": "banyak_cuti",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "format_cuti",
+							"value": "Hari",
+							"description": "Hari / Bulan / Tahun",
+							"type": "text"
+						},
+						{
+							"key": "keterangan",
+							"value": "Coba Cuti",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/ums/api/jenis_cuti/add/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"jenis_cuti",
+						"add",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete Divisi",
 			"request": {
 				"method": "GET",
@@ -199,6 +326,62 @@
 						{
 							"key": "id_divisi",
 							"value": "DV0005"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Jenis Izin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/jenis_izin/delete/37403280b6e8573?id_izin=IZ0004",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"jenis_izin",
+						"delete",
+						"37403280b6e8573"
+					],
+					"query": [
+						{
+							"key": "id_izin",
+							"value": "IZ0004"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Jenis Cuti",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/jenis_cuti/delete/37403280b6e8573?id_cuti=CT0003",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"jenis_cuti",
+						"delete",
+						"37403280b6e8573"
+					],
+					"query": [
+						{
+							"key": "id_cuti",
+							"value": "CT0003"
 						}
 					]
 				}
@@ -265,7 +448,7 @@
 					"formdata": [
 						{
 							"key": "nik",
-							"value": "06145",
+							"value": "06149",
 							"type": "text"
 						},
 						{
