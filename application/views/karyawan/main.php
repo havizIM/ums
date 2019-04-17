@@ -55,8 +55,8 @@
    <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
      <div class="brand-logo">
       <a href="index.html">
-       <img src="<?= base_url() ?>assets/images/logo-osella.png" class="logo-icon" alt="logo icon">
-       <h5 class="logo-text"><img src="<?= base_url() ?>assets/images/logo1.jpg" class="img" alt="logo icon" style="width: 150px; height: 50px"></h5>
+       <img src="<?= base_url() ?>assets/images/logo-osella.png" class="logo-icon" alt="logo icon" style="width: 10%;">
+       <h5 class="logo-text"><img src="<?= base_url() ?>assets/images/logo1.jpg" class="img" alt="logo icon" style="width: 160px; height: 45px;"></h5>
      </a>
 	 </div>
 	 <ul class="sidebar-menu do-nicescrol">
