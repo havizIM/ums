@@ -30,7 +30,7 @@
     top: 0;
     left: 0;
     height: 1px;
-    background: green;
+    background: linear-gradient(45deg, #17ead9, #6078ea)!important;
 }
 .form-wizard{
     position: relative;
@@ -54,15 +54,15 @@
 }
 .form-wizard.activated .wizard-icon{
     background: #fff;
-    border: 1px solid green;
-    color: green;
+    background: linear-gradient(45deg, #17ead9, #6078ea)!important;
+    background: linear-gradient(45deg, #17ead9, #6078ea)!important;
     line-height: 38px;
 }
 .form-wizard.active .wizard-icon{
     width: 48px;
     height: 48px;
     margin-top: 0;
-    background: green;
+    background: linear-gradient(45deg, #17ead9, #6078ea)!important;
     font-size: 22px;
     line-height: 48px;
 }
@@ -70,10 +70,10 @@
     color: #ccc;
 }
 .form-wizard.activated p {
-    color: green;
+    color: #4bb3ffe0;
 }
 .form-wizard.active p {
-    color: green;
+    color: #4bb3ffe0;
 }
 fieldset {
     display: none;
@@ -108,7 +108,7 @@ fieldset {
     background-color: lightgrey;
 }
 .btn-next{
-    background-color: green;
+    background: linear-gradient(45deg, #17ead9, #6078ea)!important;
     color: white;
 }
 iframe{

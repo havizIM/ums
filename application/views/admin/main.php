@@ -54,7 +54,7 @@
    <!--Start sidebar-wrapper-->
    <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
      <div class="brand-logo">
-      <a href="index.html">
+      <a href="">
        <img src="<?= base_url() ?>assets/images/logo-osella.png" class="logo-icon" alt="logo icon" style="width: 10%;">
        <h5 class="logo-text"><img src="<?= base_url() ?>assets/images/logo1.jpg" class="img" alt="logo icon" style="width: 160px; height: 45px;"></h5>
      </a>
@@ -66,14 +66,28 @@
           <i class="icon-home"></i> <span>Dashboard</span>
         </a>
       </li>
+
       <li>
         <a href="#/karyawan" class="waves-effect">
           <i class="icon-user"></i> <span>Karyawan</span>
         </a>
       </li>
+
       <li>
         <a href="#/log" class="waves-effect">
           <i class="icon-layers"></i> <span>Log</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#/cuti" class="waves-effect">
+          <i class="icon-notebook"></i> <span>Cuti</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#/izin" class="waves-effect">
+          <i class="icon-book-open"></i> <span>Izin</span>
         </a>
       </li>
 
@@ -316,7 +330,7 @@
               } else {
                 toastr.error('Tidak dapat mengakses server');
               }
-              $('#simpan_pass').removeClass('disabled').removeAttr('disabled', 'disabled').text('Ganti');
+              $('#simpan_pass').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan');
             },
             error: function(){
               toastr.error('Tidak dapat mengakses server');
