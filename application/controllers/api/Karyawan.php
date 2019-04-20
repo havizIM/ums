@@ -133,7 +133,7 @@ class Karyawan extends CI_Controller {
           $nik   = $this->input->get('nik');
           $nama  = $this->input->get('nama');
 
-          $show       = $this->KaryawanModel->show($nik);
+          $show       = $this->KaryawanModel->show($nik, $nama);
           $karyawan   = array();
 
           foreach($show->result() as $key){
@@ -218,6 +218,95 @@ class Karyawan extends CI_Controller {
 
                 $pusher->trigger('ums', 'karyawan', $log);
                 json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menghapus karyawan'));
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function edit($token = null){
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'POST') {
+			json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi = $auth->row();
+
+          if($otorisasi->level != 'Admin'){
+            json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Hak akses tidak disetujui'));
+          } else {
+            $nik             = $this->input->get('nik');
+            $nama            = $this->input->post('nama');
+            $tmp_lahir       = $this->input->post('tmp_lahir');
+            $tgl_lahir       = $this->input->post('tgl_lahir');
+            $kelamin         = $this->input->post('kelamin');
+            $tgl_masuk       = $this->input->post('tgl_masuk');
+            $status_karyawan = $this->input->post('status_karyawan');
+            $jabatan         = $this->input->post('jabatan');
+            $id_divisi       = $this->input->post('id_divisi');
+            $level           = $this->input->post('level');
+
+            if($nik == null){
+              json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'NIK tidak ditemukan'));
+            } else {
+              if($nama == null || $tmp_lahir == null || $tgl_lahir == null || $kelamin == null || $tgl_masuk == null || $status_karyawan == null || $jabatan == null || $id_divisi == null || $level == null){
+                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Data yang dikirim tidak lengkap'));
+              } else {
+
+                $karyawan = array(
+                  'nama'            => $nama,
+                  'tmp_lahir'       => $tmp_lahir,
+                  'tgl_lahir'       => $tgl_lahir,
+                  'kelamin'         => $kelamin,
+                  'tgl_masuk'       => $tgl_masuk,
+                  'status_karyawan' => $status_karyawan,
+                  'jabatan'         => $jabatan,
+                  'id_divisi'       => $id_divisi
+                );
+
+                $user = array(
+                  'level'    => $level
+                );
+
+                $log = array(
+                  'nik'         => $otorisasi->nik,
+                  'id_ref'      => $nik,
+                  'refrensi'    => 'Karyawan',
+                  'kategori'    => 'Edit',
+                  'keterangan'  => 'Mengirim Karyawan Baru'
+                );
+
+                $edit = $this->KaryawanModel->edit($nik, $karyawan, $user, $log);
+
+                if(!$edit){
+                  json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengedit data karyawan'));
+                } else {
+                  $options = array(
+                    'cluster' => 'ap1',
+                    'useTLS' => true
+                  );
+                  $pusher = new Pusher\Pusher(
+                    '9f324d52d4872168e514',
+                    '0bc1f341940046001b79',
+                    '752686',
+                    $options
+                  );
+
+                  $pusher->trigger('ums', 'karyawan', $log);
+                  json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengedit data karyawan'));
+                }
               }
             }
           }

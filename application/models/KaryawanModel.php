@@ -53,6 +53,23 @@ class KaryawanModel extends CI_Model {
     }
   }
 
+  function edit($nik, $karyawan, $user, $log)
+  {
+    $this->db->trans_start();
+    $this->db->where('nik', $nik)->update('karyawan', $karyawan);
+    $this->db->where('nik', $nik)->update('user', $user);
+    $this->db->insert('log', $log);
+    $this->db->trans_complete();
+
+    if ($this->db->trans_status() === FALSE){
+      $this->db->trans_rollback();
+      return false;
+    } else {
+      $this->db->trans_commit();
+      return true;
+    }
+  }
+
 
 }
 

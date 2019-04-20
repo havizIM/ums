@@ -103,6 +103,81 @@
 			"response": []
 		},
 		{
+			"name": "Profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/auth/profile/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"auth",
+						"profile",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Profile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "dianratna91@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "status_kawin",
+							"value": "Belum Kawin",
+							"description": "Kawin / Belum Kawin",
+							"type": "text"
+						},
+						{
+							"key": "pendidikan",
+							"value": "S2",
+							"description": "SD / SMP / SMA / SMK / D3 / S1 / S2 / S2",
+							"type": "text"
+						},
+						{
+							"key": "alamat",
+							"value": "Bogor",
+							"type": "text"
+						},
+						{
+							"key": "telepon",
+							"value": "08987748441",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/ums/api/auth/edit_profile/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"auth",
+						"edit_profile",
+						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Show Log",
 			"request": {
 				"method": "GET",
@@ -539,6 +614,91 @@
 						"karyawan",
 						"add",
 						"37403280b6e8573"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Karyawan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nik",
+							"value": "06149",
+							"type": "text"
+						},
+						{
+							"key": "nama",
+							"value": "Kalyssa IP",
+							"type": "text"
+						},
+						{
+							"key": "tmp_lahir",
+							"value": "Bogor",
+							"type": "text"
+						},
+						{
+							"key": "tgl_lahir",
+							"value": "1995-11-20",
+							"type": "text"
+						},
+						{
+							"key": "kelamin",
+							"value": "Perempuan",
+							"description": "Laki-laki / Perempuan",
+							"type": "text"
+						},
+						{
+							"key": "tgl_masuk",
+							"value": "2016-10-12",
+							"type": "text"
+						},
+						{
+							"key": "status_karyawan",
+							"value": "Nonaktif",
+							"description": "Aktif / Nonaktif",
+							"type": "text"
+						},
+						{
+							"key": "jabatan",
+							"value": "Staff Accounting Seniour",
+							"type": "text"
+						},
+						{
+							"key": "id_divisi",
+							"value": "DV0001",
+							"type": "text"
+						},
+						{
+							"key": "level",
+							"value": "Admin",
+							"description": "Karyawan / Admin / Kabag / Direksi",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/ums/api/karyawan/edit/37403280b6e8573?nik=06149",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"karyawan",
+						"edit",
+						"37403280b6e8573"
+					],
+					"query": [
+						{
+							"key": "nik",
+							"value": "06149"
+						}
 					]
 				}
 			},
