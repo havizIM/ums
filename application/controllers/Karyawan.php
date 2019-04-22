@@ -24,4 +24,8 @@ class Karyawan extends CI_Controller{
     $this->load->view('karyawan/log');
   }
 
+  function profil()
+  {
+    $this->load->view('karyawan/profil');
+  }
 }

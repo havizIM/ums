@@ -24,4 +24,9 @@ class Direksi extends CI_Controller{
     $this->load->view('direksi/log');
   }
 
+  function profil()
+  {
+    $this->load->view('direksi/profil');
+  }
+
 }

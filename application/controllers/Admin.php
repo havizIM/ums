@@ -49,4 +49,14 @@ class Admin extends CI_Controller{
     $this->load->view('admin/cuti');
   }
 
+  function edit_karyawan($id)
+  {
+    $this->load->view('admin/edit_karyawan');
+  }
+
+  function profil()
+  {
+    $this->load->view('admin/profil');
+  }
+
 }

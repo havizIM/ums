@@ -125,7 +125,7 @@
           </a>
         </li>
         <li class="dropdown-divider"></li>
-        <li class="dropdown-item"><a href="#/profile"><i class="icon-wallet mr-2"></i> Profile</a></li>
+        <li class="dropdown-item"><a href="#/profil"><i class="zmdi zmdi-accounts-list"></i> Profil</a></li>
         <li class="dropdown-divider"></li>
         <li class="dropdown-item"><a href="javaScript:void();" id="ganti_pass" data-toggle="modal" data-target="#modal_ganti"><i class="icon-settings mr-2"></i> Ganti Password</a></li>
         <li class="dropdown-divider"></li>

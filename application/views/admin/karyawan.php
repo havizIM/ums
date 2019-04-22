@@ -101,7 +101,7 @@
         {"data": 'telepon'},
         {"data": 'email'},
         {"data": null, 'render': function(data, type, row){
-          return `<button class="btn btn-md btn-danger" id="hapus_karyawan" data-id="${row.nik}"><i class="fa fa-trash"></i></button>`
+          return `<a href="#/edit_karyawan/${row.nik}" class="btn btn-md btn-info" id="edit_karyawan" data-id="${row.nik}">Ubah</a> <button class="btn btn-md btn-danger" id="hapus_karyawan" data-id="${row.nik}">Hapus</button>`
           }
         }
       ],

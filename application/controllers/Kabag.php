@@ -24,4 +24,9 @@ class Kabag extends CI_Controller{
     $this->load->view('kabag/log');
   }
 
+  function profil()
+  {
+    $this->load->view('kabag/profil');
+  }
+
 }
