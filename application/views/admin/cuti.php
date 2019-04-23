@@ -130,6 +130,7 @@
           },
           error: function(){
             toastr.error('Tidak dapat mengakses server');
+            $('#simpan_cuti').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan');
           }
         })
       }

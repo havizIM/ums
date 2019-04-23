@@ -197,7 +197,7 @@
   </div>
 
  <script type="text/javascript">
- 
+
    function scroll_to_class(element_class, removed_height) {
      var scroll_to = $(element_class).offset().top - removed_height;
      if($(window).scrollTop() != scroll_to) {
@@ -384,9 +384,8 @@
             location.hash = '#/karyawan';
           } else {
             toastr.error(response.message, response.description)
+            $('#submit_karyawan').removeClass('disabled').html(`<i class="fa fa-check" ></i> Simpan`)
           }
-          $('#submit_karyawan').removeClass('disabled').html(`<i class="fa fa-check" ></i> Simpan`)
-          console.log(response);
         },
         error: function(){
           toastr.error('Tidak dapat mengakses server', 'Error')
@@ -396,4 +395,5 @@
       })
      });
    })
+   
  </script>

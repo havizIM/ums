@@ -106,11 +106,12 @@
               table.ajax.reload();
             } else {
               toastr.error(response.message);
+              $('#simpan_izin').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan');
             }
-            $('#simpan_izin').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan');
           },
           error: function(){
             toastr.error('Tidak dapat mengakses server');
+            $('#simpan_izin').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan');
           }
         })
       }

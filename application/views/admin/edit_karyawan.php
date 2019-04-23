@@ -288,8 +288,8 @@
               table.ajax.reload();
             } else {
               toastr.error(response.message);
+              $('#submit_edit').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan')
             }
-            $('#submit_edit').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan')
           },
           error: function(){
             toastr.error('Tidak dapat mengakses server');

@@ -21,7 +21,7 @@
   <link href="<?= base_url() ?>assets/css/app-style.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <script type="text/javascript">
-    var session = localStorage.getItem('lion_membership');
+    var session = localStorage.getItem('ums');
     var auth = JSON.parse(session);
 
     if(session){
@@ -100,6 +100,13 @@
   <script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
 
   <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>
+  <script src="<?= base_url() ?>assets/plugins/simplebar/js/simplebar.js"></script>
+  <!-- waves effect js -->
+  <script src="<?= base_url() ?>assets/js/waves.js"></script>
+	<!-- sidebar-menu js -->
+	<script src="<?= base_url() ?>assets/js/sidebar-menu.js"></script>
+  <!-- Custom scripts -->
+  <script src="<?= base_url() ?>assets/js/app-script.js"></script>
   <script type="text/javascript">
 
     $(document).ready(function(){
@@ -143,7 +150,7 @@
             type: 'POST',
             dataType: 'JSON',
             beforeSend: function(){
-              $('#btn_login').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-spinner fa-spin"></i>');
+              $('#btn_login').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-spinner fa-spin"></i>');
             },
             data: $('#form_login').serialize(),
             success: function(response){
@@ -155,7 +162,6 @@
                 toastr.error(response.message, response.description)
                 $('#btn_login').removeClass('disabled').removeAttr('disabled', 'disabled').text('Log In');
               }
-
             },
             error: function(){
               toastr.error('Tidak dapat mengakses server', 'Failed')
