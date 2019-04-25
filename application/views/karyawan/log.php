@@ -75,6 +75,16 @@
        order: [[0, 'desc']]
      });
 
+     var pusher = new Pusher('9f324d52d4872168e514', {
+      cluster: 'ap1',
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe('ums');
+    channel.bind('log', function(data) {
+      table.ajax.reload();
+    });
+
    });
 
  </script>

@@ -105,7 +105,7 @@
           }
         }
       ],
-      order: [[1, 'desc']]
+      order: [[1, 'asc']]
     })
 
     $(document).on('click', '#hapus_karyawan', function(){
@@ -126,7 +126,6 @@
             dataType: 'JSON',
             success: function(response){
               if(response.status === 200){
-                table.ajax.reload();
               } else {
                 toastr.error(response.message);
               }
@@ -138,6 +137,16 @@
         }
       })
     })
+
+    var pusher = new Pusher('9f324d52d4872168e514', {
+     cluster: 'ap1',
+     forceTLS: true
+   });
+
+   var channel = pusher.subscribe('ums');
+   channel.bind('karyawan', function(data) {
+     table.ajax.reload();
+   });
 
   })
 

@@ -285,7 +285,6 @@
               toastr.success(response.message);
               $('#form_edit')[0].reset();
               location.hash = '#/karyawan';
-              table.ajax.reload();
             } else {
               toastr.error(response.message);
               $('#submit_edit').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan')

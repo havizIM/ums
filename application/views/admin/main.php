@@ -195,14 +195,12 @@
 	<!--End footer-->
 
   </div><!--End wrapper-->
-
-
   <!-- Bootstrap core JavaScript-->
-
   <script src="<?= base_url() ?>assets/js/jquery.min.js"></script>
-  <script src="<?= base_url() ?>assets/js/popper.min.js"></script>
-  <script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
 
+  <script src="<?= base_url() ?>assets/js/popper.min.js"></script>
+
+  <script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
   <!-- simplebar js -->
   <script src="<?= base_url() ?>assets/plugins/simplebar/js/simplebar.js"></script>
   <!-- waves effect js -->
@@ -214,18 +212,26 @@
 
   <!-- Full Calendar -->
   <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/moment.min.js'></script>
+
   <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
+
   <link href="<?= base_url() ?>assets/plugins/toastr/toastr.min.css" rel="stylesheet"/>
 
   <script src="<?= base_url() ?>assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+
   <script src="<?= base_url() ?>assets/plugins/alerts-boxes/js/sweet-alert-script.js"></script>
 
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
+
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
 
   <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>
+
+  <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 
   <script type="text/javascript">
 

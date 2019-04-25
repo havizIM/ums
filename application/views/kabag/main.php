@@ -209,6 +209,8 @@
 
   <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>
 
+  <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+
   <script type="text/javascript">
 
     function load_content(link){

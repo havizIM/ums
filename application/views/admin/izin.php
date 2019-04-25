@@ -103,7 +103,6 @@
               toastr.success(response.message);
               $('#form_add')[0].reset();
               $('#modal_add').modal('hide');
-              table.ajax.reload();
             } else {
               toastr.error(response.message);
               $('#simpan_izin').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan');
@@ -167,7 +166,6 @@
             dataType: 'JSON',
             success: function(response){
               if(response.status === 200){
-                table.ajax.reload();
               } else {
                 toastr.error(response.message);
               }
@@ -179,6 +177,16 @@
         }
       })
     })
+
+    var pusher = new Pusher('9f324d52d4872168e514', {
+     cluster: 'ap1',
+     forceTLS: true
+   });
+
+   var channel = pusher.subscribe('ums');
+   channel.bind('jenis_izin', function(data) {
+     table.ajax.reload();
+   });
 
   })
 
