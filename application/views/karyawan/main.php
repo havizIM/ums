@@ -26,6 +26,8 @@
   <link href="<?= base_url() ?>assets/css/app-style.css" rel="stylesheet"/>
   <link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet"/>
 
+  <link rel="stylesheet" href="<?= base_url('assets/plugins/sweetalert/sweetalert.css') ?>">
+
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css"/>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
 
@@ -199,8 +201,7 @@
   <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
   <link href="<?= base_url() ?>assets/plugins/toastr/toastr.min.css" rel="stylesheet"/>
 
-  <script src="<?= base_url() ?>assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
-  <script src="<?= base_url() ?>assets/plugins/alerts-boxes/js/sweet-alert-script.js"></script>
+  <script src="<?= base_url() ?>assets/plugins/sweetalert/sweetalert.min.js"></script>
 
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
@@ -261,11 +262,16 @@
         swal({
           title: "Apa Anda yakin ingin keluar?",
           icon: "warning",
-          buttons: ["Tidak", "Ya"],
           dangerMode: true,
-        })
-        .then((willDelete) => {
-          if (willDelete) {
+          showCancelButton: true,
+          closeOnConfirm: false,
+          closeOnCancel: true,
+          confirmButtonColor: "#DD6B55",
+          cancelButtonText: "Tidak",
+          confirmButtonText: "Ya",
+          showLoaderOnConfirm: true
+        }, function (isConfirm){
+          if (isConfirm) {
             $.ajax({
               url: '<?= base_url('api/auth/logout_user/') ?>'+auth.token,
               type: 'GET',

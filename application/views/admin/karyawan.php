@@ -112,27 +112,31 @@
       var nik = $(this).attr('data-id');
 
       swal({
-        title: "Apa Anda yakin?",
-        text: "Data akan terhapus permanen",
+        title: "Apa Anda yakin ingin hapus?",
+        text: "Data akan terhapus secara permanen"
         icon: "warning",
-        buttons: ["Tidak", "Ya"],
         dangerMode: true,
-        showSpinner: true
-      })
-      .then((willDelete) => {
-        if (willDelete) {
+        showCancelButton: true,
+        closeOnConfirm: false,
+        closeOnCancel: true,
+        confirmButtonColor: "#DD6B55",
+        cancelButtonText: "Tidak",
+        confirmButtonText: "Ya",
+        showLoaderOnConfirm: true
+      }, function (isConfirm){
+        if (isConfirm) {
           $.ajax({
-            url: `<?= base_url('api/karyawan/delete/'); ?>${auth.token}?nik=${nik}`,
+            url: '<?= base_url('api/karyawan/delete/') ?>'+auth.token,
             type: 'GET',
             dataType: 'JSON',
             success: function(response){
               if(response.status === 200){
               } else {
-                toastr.error(response.message);
+                toastr.error(response.message)
               }
             },
             error: function(){
-              toastr.error('Tidak dapat mengakses server');
+              toastr.error(response.message)
             }
           });
         }
