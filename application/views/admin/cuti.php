@@ -177,7 +177,8 @@
         icon: "warning",
         buttons: ["Tidak", "Ya"],
         confirmButtonColor: '#8CD4F5',
-        cancelButtonColor: '#fd3550'
+        cancelButtonColor: '#fd3550',
+        showLoaderOnConfirm: true
       })
       .then((willDelete) => {
         if (willDelete) {

@@ -117,6 +117,7 @@
         icon: "warning",
         buttons: ["Tidak", "Ya"],
         dangerMode: true,
+        showSpinner: true
       })
       .then((willDelete) => {
         if (willDelete) {
