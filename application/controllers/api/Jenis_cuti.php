@@ -7,6 +7,18 @@ class Jenis_cuti extends CI_Controller {
   function __construct(){
     parent::__construct();
 
+    $this->options = array(
+      'cluster' => 'ap1',
+      'useTLS' => true
+    );
+
+    $this->pusher = new Pusher\Pusher(
+      '9f324d52d4872168e514',
+      '0bc1f341940046001b79',
+      '752686',
+      $this->options
+    );
+
 		$this->load->model('JcutiModel');
   }
 
@@ -63,18 +75,7 @@ class Jenis_cuti extends CI_Controller {
               if(!$add){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menambah jenis cuti'));
               } else {
-                $options = array(
-                  'cluster' => 'ap1',
-                  'useTLS' => true
-                );
-                $pusher = new Pusher\Pusher(
-                  '9f324d52d4872168e514',
-                  '0bc1f341940046001b79',
-                  '752686',
-                  $options
-                );
-
-                $pusher->trigger('ums', 'jenis_cuti', $log);
+                $this->pusher->trigger('ums', 'jenis_cuti', $log);
                 json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menambah jenis cuti'));
               }
             }
@@ -162,18 +163,7 @@ class Jenis_cuti extends CI_Controller {
               if(!$delete){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menghapus jenis cuti'));
               } else {
-                $options = array(
-                  'cluster' => 'ap1',
-                  'useTLS' => true
-                );
-                $pusher = new Pusher\Pusher(
-                  '9f324d52d4872168e514',
-                  '0bc1f341940046001b79',
-                  '752686',
-                  $options
-                );
-
-                $pusher->trigger('ums', 'jenis_cuti', $log);
+                $this->pusher->trigger('ums', 'jenis_cuti', $log);
                 json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menghapus jenis cuti'));
               }
             }

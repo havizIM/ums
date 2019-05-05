@@ -37,7 +37,8 @@
 						"auth",
 						"login_user"
 					]
-				}
+				},
+				"description": "Link : \n- localhost/ums/api/auth/login_user\n\n\nMethod :\n- POST\n\n\nData : \n- nik\n- password\n\n\nHak Akses :\n- Karyawan\n- Kabag\n- Direksi\n- Admin\n\n\nNote : \n- Response berupa data user\n- Didalam response terdapat token yang digunakan untuk akses API lainnya\n- Masukan response ke session localStorage"
 			},
 			"response": []
 		},
@@ -62,7 +63,8 @@
 						"logout_user",
 						"37403280b6e8573"
 					]
-				}
+				},
+				"description": "Link :\n- localhost/ums/api/auth/logout_user/--token--\n\n\nMethod :\n- GET\n\n\nHak Akses :\n- Karyawan\n- Kabag\n- Admin\n- Direksi\n\n\nNote : \n- Token bisa didapatkan dari localStorage"
 			},
 			"response": []
 		},
@@ -98,7 +100,8 @@
 						"password_user",
 						"37403280b6e8573"
 					]
-				}
+				},
+				"description": "Link :\n- localhost/ums/api/auth/password_user/--token--\n\nMethod :\n- POST\n\nData :\n- password_lama\n- password_baru\n\nHak Akses : \n- Karyawan\n- Kabag\n- Admin\n- Direksi\n\nNote :\n- Token bisa didapatkan dari localStorage"
 			},
 			"response": []
 		},
@@ -120,7 +123,8 @@
 						"profile",
 						"37403280b6e8573"
 					]
-				}
+				},
+				"description": "Link: \n- localhost/ums/api/auth/profile/--token--\n\nMethod : \n- GET\n\nHak Akses :\n- Karyawan\n- Admin\n- Kabag\n- Direksi\n\nNote :\n- Token bisa didapatkan dari localStorage\n- Param bersifat optional, digunakan untuk menggunakan data yang lebih spesifik"
 			},
 			"response": []
 		},
@@ -173,7 +177,8 @@
 						"edit_profile",
 						"37403280b6e8573"
 					]
-				}
+				},
+				"description": "Link: \n- localhost/ums/api/auth/edit_profile/--token--\n\nMethod : \n- POST\n\nData : \n- email\n- status_kawin (Kawin / Belum Kawin)\n- pendidikan\n- alamat\n- telepon\n\nHak Akses :\n- Karyawan\n- Admin\n- Kabag\n- Direksi\n\nNote :\n- Token bisa didapatkan dari localStorage"
 			},
 			"response": []
 		},
@@ -195,7 +200,8 @@
 						"show",
 						"37403280b6e8573"
 					]
-				}
+				},
+				"description": "Link: \n- localhost/ums/api/log/show/--token--\n\nMethod : \n- GET\n\nHak Akses :\n- Karyawan\n- Kabag\n- Direksi\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage"
 			},
 			"response": []
 		},
@@ -217,7 +223,8 @@
 						"show",
 						"37403280b6e8573"
 					]
-				}
+				},
+				"description": "Link: \n- localhost/ums/api/divisi/show/--token--\n\nMethod : \n- GET\n\nParams :\n- id_divisi\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage\n- Param bersifat optional, digunakan untuk menggunakan data yang lebih spesifik"
 			},
 			"response": []
 		},
@@ -239,7 +246,8 @@
 						"show",
 						"37403280b6e8573"
 					]
-				}
+				},
+				"description": "Link: \n- localhost/ums/api/jenis_izin/show/--token--\n\nMethod : \n- GET\n\nParams :\n- id_izin\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage\n- Param bersifat optional, digunakan untuk menggunakan data yang lebih spesifik"
 			},
 			"response": []
 		},
@@ -261,7 +269,8 @@
 						"show",
 						"37403280b6e8573"
 					]
-				}
+				},
+				"description": "Link: \n- localhost/ums/api/jenis_cuti/show/--token--\n\nMethod : \n- GET\n\nParams :\n- id_cuti\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage\n- Param bersifat optional, digunakan untuk menggunakan data yang lebih spesifik"
 			},
 			"response": []
 		},
@@ -292,7 +301,8 @@
 						"add",
 						"37403280b6e8573"
 					]
-				}
+				},
+				"description": "Link: \n- localhost/ums/api/divisi/add/--token--\n\nMethod : \n- POST\n\nData : \n- nama_divisi\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage"
 			},
 			"response": []
 		},
@@ -328,7 +338,8 @@
 						"add",
 						"37403280b6e8573"
 					]
-				}
+				},
+				"description": "Link: \n- localhost/ums/api/jenis_izin/add/--token--\n\nMethod : \n- POST\n\nData : \n- keperluan\n- keterangan_izin\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage"
 			},
 			"response": []
 		},
@@ -375,141 +386,8 @@
 						"add",
 						"37403280b6e8573"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Divisi",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "localhost/ums/api/divisi/delete/37403280b6e8573?id_divisi=DV0005",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"ums",
-						"api",
-						"divisi",
-						"delete",
-						"37403280b6e8573"
-					],
-					"query": [
-						{
-							"key": "id_divisi",
-							"value": "DV0005"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Jenis Izin",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "localhost/ums/api/jenis_izin/delete/37403280b6e8573?id_izin=IZ0004",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"ums",
-						"api",
-						"jenis_izin",
-						"delete",
-						"37403280b6e8573"
-					],
-					"query": [
-						{
-							"key": "id_izin",
-							"value": "IZ0004"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Jenis Cuti",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "localhost/ums/api/jenis_cuti/delete/37403280b6e8573?id_cuti=CT0003",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"ums",
-						"api",
-						"jenis_cuti",
-						"delete",
-						"37403280b6e8573"
-					],
-					"query": [
-						{
-							"key": "id_cuti",
-							"value": "CT0003"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Karyawan",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "localhost/ums/api/karyawan/delete/37403280b6e8573?nik=06145",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"ums",
-						"api",
-						"karyawan",
-						"delete",
-						"37403280b6e8573"
-					],
-					"query": [
-						{
-							"key": "nik",
-							"value": "06145"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Show Karyawan",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "localhost/ums/api/karyawan/show/37403280b6e8573",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"ums",
-						"api",
-						"karyawan",
-						"show",
-						"37403280b6e8573"
-					]
-				}
+				},
+				"description": "Link: \n- localhost/ums/api/jenis_cuti/add/--token--\n\nMethod : \n- POST\n\nData : \n- nama_cuti\n- banyak_cuti\n- format_cuti (Hari / Bulan / Tahun)\n- keterangan\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage"
 			},
 			"response": []
 		},
@@ -615,7 +493,147 @@
 						"add",
 						"37403280b6e8573"
 					]
-				}
+				},
+				"description": "Link: \n- localhost/ums/api/karyawan/add/--token--\n\nMethod : \n- POST\n\nData : \n- nik\n- nama\n- tmp_lahir\n- tgl_lahir\n- kelamin (Laki-laki / Perempuan)\n- status_kawin (Kawin / Belum Kawin)\n- pendidikan ( SD / SMP / SMA / SMK / D3 / S1 / S2 / S3)\n- alamat\n- telepon\n- tgl_masuk\n- status_karyawan (Aktif / Nonaktif)\n- jabatan\n- id_divisi (relational input)\n- email\n- level (Karyawan / Admin / Kabag / Direksi)\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Divisi",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/divisi/delete/37403280b6e8573?id_divisi=DV0005",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"divisi",
+						"delete",
+						"37403280b6e8573"
+					],
+					"query": [
+						{
+							"key": "id_divisi",
+							"value": "DV0005"
+						}
+					]
+				},
+				"description": "Link: \n- localhost/ums/api/divisi/delete/--token--\n\nMethod : \n- GET\n\nParams :\n- id_divisi\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage\n- Params bersifat wajib, digunakan untuk mengidentifikasi data yang dihapus"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Jenis Izin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/jenis_izin/delete/37403280b6e8573?id_izin=IZ0004",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"jenis_izin",
+						"delete",
+						"37403280b6e8573"
+					],
+					"query": [
+						{
+							"key": "id_izin",
+							"value": "IZ0004"
+						}
+					]
+				},
+				"description": "Link: \n- localhost/ums/api/karyawan/delete/--token--\n\nMethod : \n- GET\n\nParams :\n- id_divisi\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage\n- Params bersifat wajib, digunakan untuk mengidentifikasi data yang dihapus"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Jenis Cuti",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/jenis_cuti/delete/37403280b6e8573?id_cuti=CT0003",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"jenis_cuti",
+						"delete",
+						"37403280b6e8573"
+					],
+					"query": [
+						{
+							"key": "id_cuti",
+							"value": "CT0003"
+						}
+					]
+				},
+				"description": "Link: \n- localhost/ums/api/jenis_cuti/delete/--token--\n\nMethod : \n- GET\n\nParams :\n- id_cuti\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage\n- Params bersifat wajib, digunakan untuk mengidentifikasi data yang dihapus"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Karyawan",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/karyawan/delete/37403280b6e8573?nik=06145",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"karyawan",
+						"delete",
+						"37403280b6e8573"
+					],
+					"query": [
+						{
+							"key": "nik",
+							"value": "06145"
+						}
+					]
+				},
+				"description": "Link: \n- localhost/ums/api/karyawan/delete/--token--\n\nMethod :\n- GET\n\nParams :\n- nik\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage\n- Params bersifat WAJIB, digunakan untuk mengidentifikasi data mana yang dihapus"
+			},
+			"response": []
+		},
+		{
+			"name": "Show Karyawan",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost/ums/api/karyawan/show/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"karyawan",
+						"show",
+						"37403280b6e8573"
+					]
+				},
+				"description": "Link: \n- localhost/ums/api/karyawan/show/--token--\n\nMethod : \n- GET\n\nParams :\n- nik\n- nama\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage\n- Params bersifat optional, digunakan untuk mendapatkan data yang spesifik"
 			},
 			"response": []
 		},
@@ -627,11 +645,6 @@
 				"body": {
 					"mode": "formdata",
 					"formdata": [
-						{
-							"key": "nik",
-							"value": "06149",
-							"type": "text"
-						},
 						{
 							"key": "nama",
 							"value": "Kalyssa IP",
@@ -700,7 +713,8 @@
 							"value": "06149"
 						}
 					]
-				}
+				},
+				"description": "Link: \n- localhost/ums/api/karyawan/edit/--token--\n\nMethod : \n- POST\n\nParams : \n- nik\n\nData : \n- nama\n- tmp_lahir\n- tgl_lahir\n- kelamin (Laki-laki / Perempuan)\n- tgl_masuk\n- status_karyawan (Aktif / Nonaktif)\n- jabatan\n- id_divisi (relational input)\n- level (Karyawan / Admin / Kabag / Direksi)\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage"
 			},
 			"response": []
 		}

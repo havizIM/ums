@@ -9,6 +9,18 @@ class Auth extends CI_Controller {
   {
     parent::__construct();
 
+    $this->options = array(
+      'cluster' => 'ap1',
+      'useTLS' => true
+    );
+
+    $this->pusher = new Pusher\Pusher(
+      '9f324d52d4872168e514',
+      '0bc1f341940046001b79',
+      '752686',
+      $this->options
+    );
+
 		$this->load->model('AuthModel');
     $this->load->model('KaryawanModel');
   }
@@ -67,18 +79,7 @@ class Auth extends CI_Controller {
               if(!$add){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal melakukan login' ));
               } else {
-                $options = array(
-                  'cluster' => 'ap1',
-                  'useTLS' => true
-                );
-                $pusher = new Pusher\Pusher(
-                  '9f324d52d4872168e514',
-                  '0bc1f341940046001b79',
-                  '752686',
-                  $options
-                );
-
-                $pusher->trigger('ums', 'log', $log);
+                $this->pusher->trigger('ums', 'log', $log);
                 json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil melakukan login', 'data' => $session ));
               }
             }
@@ -120,18 +121,7 @@ class Auth extends CI_Controller {
           if(!$add){
             json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal Logout'));
           } else {
-            $options = array(
-              'cluster' => 'ap1',
-              'useTLS' => true
-            );
-            $pusher = new Pusher\Pusher(
-              '9f324d52d4872168e514',
-              '0bc1f341940046001b79',
-              '752686',
-              $options
-            );
-
-            $pusher->trigger('ums', 'log', $log);
+            $this->pusher->trigger('ums', 'log', $log);
             json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil logout'));
           }
         }
@@ -184,18 +174,7 @@ class Auth extends CI_Controller {
               if(!$pass){
                 json_output(500, array('status' => 500, 'description' => 'Gagal', 'message' => 'Gagal mengganti password'));
               } else {
-                $options = array(
-                  'cluster' => 'ap1',
-                  'useTLS' => true
-                );
-                $pusher = new Pusher\Pusher(
-                  '9f324d52d4872168e514',
-                  '0bc1f341940046001b79',
-                  '752686',
-                  $options
-                );
-
-                $pusher->trigger('ums', 'log', $log);
+                $this->pusher->trigger('ums', 'log', $log);
                 json_output(200, array('status' => 200, 'description' => 'Gagal', 'message' => 'Berhasil mengganti password'));
               }
             }
@@ -309,18 +288,7 @@ class Auth extends CI_Controller {
             if(!$edit){
               json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengedit data karyawan'));
             } else {
-              $options = array(
-                'cluster' => 'ap1',
-                'useTLS' => true
-              );
-              $pusher = new Pusher\Pusher(
-                '9f324d52d4872168e514',
-                '0bc1f341940046001b79',
-                '752686',
-                $options
-              );
-
-              $pusher->trigger('ums', 'karyawan', $log);
+              $this->pusher->trigger('ums', 'karyawan', $log);
               json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengedit data karyawan'));
             }
           }

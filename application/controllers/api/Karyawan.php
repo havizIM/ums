@@ -7,6 +7,18 @@ class Karyawan extends CI_Controller {
   function __construct(){
     parent::__construct();
 
+    $this->options = array(
+      'cluster' => 'ap1',
+      'useTLS' => true
+    );
+
+    $this->pusher = new Pusher\Pusher(
+      '9f324d52d4872168e514',
+      '0bc1f341940046001b79',
+      '752686',
+      $this->options
+    );
+
 		$this->load->model('KaryawanModel');
   }
 
@@ -90,18 +102,7 @@ class Karyawan extends CI_Controller {
               if(!$add){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menambah data karyawan'));
               } else {
-                $options = array(
-                  'cluster' => 'ap1',
-                  'useTLS' => true
-                );
-                $pusher = new Pusher\Pusher(
-                  '9f324d52d4872168e514',
-                  '0bc1f341940046001b79',
-                  '752686',
-                  $options
-                );
-
-                $pusher->trigger('ums', 'karyawan', $log);
+                $this->pusher->trigger('ums', 'karyawan', $log);
                 json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menambah data karyawan'));
               }
             }
@@ -205,18 +206,7 @@ class Karyawan extends CI_Controller {
               if(!$delete){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menghapus karyawan'));
               } else {
-                $options = array(
-                  'cluster' => 'ap1',
-                  'useTLS' => true
-                );
-                $pusher = new Pusher\Pusher(
-                  '9f324d52d4872168e514',
-                  '0bc1f341940046001b79',
-                  '752686',
-                  $options
-                );
-
-                $pusher->trigger('ums', 'karyawan', $log);
+                $this->pusher->trigger('ums', 'karyawan', $log);
                 json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menghapus karyawan'));
               }
             }
@@ -293,18 +283,7 @@ class Karyawan extends CI_Controller {
                 if(!$edit){
                   json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengedit data karyawan'));
                 } else {
-                  $options = array(
-                    'cluster' => 'ap1',
-                    'useTLS' => true
-                  );
-                  $pusher = new Pusher\Pusher(
-                    '9f324d52d4872168e514',
-                    '0bc1f341940046001b79',
-                    '752686',
-                    $options
-                  );
-
-                  $pusher->trigger('ums', 'karyawan', $log);
+                  $this->pusher->trigger('ums', 'karyawan', $log);
                   json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengedit data karyawan'));
                 }
               }
