@@ -131,10 +131,16 @@ class Karyawan extends CI_Controller {
 
           $otorisasi  = $auth->row();
 
-          $nik   = $this->input->get('nik');
-          $nama  = $this->input->get('nama');
+          $where  = array(
+            'a.nik'       => $this->input->get('nik'),
+            'a.id_divisi' => $this->input->get('id_divisi')
+          );
 
-          $show       = $this->KaryawanModel->show($nik, $nama);
+          $like   = array(
+            'a.nama' => $this->input->get('nama')
+          );
+
+          $show       = $this->KaryawanModel->show($where, $like);
           $karyawan   = array();
 
           foreach($show->result() as $key){

@@ -72,26 +72,63 @@
       </li>
 
       <li>
-        <a href="#/karyawan" class="waves-effect">
-          <i class="icon-user"></i> <span>Karyawan</span>
+        <a href="#" class="waves-effect">
+          <i class="icon-layers"></i> <span>Master</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
+        <ul class="sidebar-submenu">
+          <li><a href="#/karyawan"><i class="fa fa-circle-o"></i> Master Karyawan</a></li>
+          <li><a href="#/master_cuti"><i class="fa fa-circle-o"></i> Master Cuti</a></li>
+          <li><a href="#/master_izin"><i class="fa fa-circle-o"></i> Master Izin</a></li>
+          <li><a href="#/master_cuti_bersama"><i class="fa fa-circle-o"></i> Master Cuti Bersama</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#" class="waves-effect">
+          <i class="icon-layers"></i> <span>Pengajuan</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="sidebar-submenu">
+          <li><a href="#/cuti"><i class="fa fa-circle-o"></i> Cuti</a></li>
+          <li><a href="#/izin"><i class="fa fa-circle-o"></i> Izin</a></li>
+          <li><a href="#/revisi_absen"><i class="fa fa-circle-o"></i> Revisi Absen</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#" class="waves-effect">
+          <i class="icon-layers"></i> <span>Approval</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="sidebar-submenu">
+          <li><a href="#/approval_pengganti"><i class="fa fa-circle-o"></i> Approval Pengganti</a></li>
+          <li><a href="#/approval_cuti"><i class="fa fa-circle-o"></i> Approval Cuti</a></li>
+          <li><a href="#/approval_izin"><i class="fa fa-circle-o"></i> Approval Izin</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#" class="waves-effect">
+          <i class="icon-layers"></i> <span>Laporan</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="sidebar-submenu">
+          <li><a href="#/laporan_cuti"><i class="fa fa-circle-o"></i> Laporan Pengajuan Cuti</a></li>
+          <li><a href="#/laporan_izin"><i class="fa fa-circle-o"></i> Laporan Pengajuan Izin</a></li>
+          <li><a href="#/laporan_revisi"><i class="fa fa-circle-o"></i> Laporan Koreksi Absen</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#" class="waves-effect">
+          <i class="icon-layers"></i> <span>Absensi</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="sidebar-submenu">
+          <li><a href="#/import_absensi"><i class="fa fa-circle-o"></i> Import Absensi</a></li>
+          <li><a href="#/absensi"><i class="fa fa-circle-o"></i> Cetak Absensi</a></li>
+        </ul>
       </li>
 
       <li>
         <a href="#/log" class="waves-effect">
-          <i class="icon-layers"></i> <span>Log</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#/cuti" class="waves-effect">
-          <i class="icon-notebook"></i> <span>Cuti</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#/izin" class="waves-effect">
-          <i class="icon-book-open"></i> <span>Izin</span>
+          <i class="icon-support"></i> <span>Log</span>
         </a>
       </li>
 

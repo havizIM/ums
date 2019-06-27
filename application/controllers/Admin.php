@@ -39,14 +39,14 @@ class Admin extends CI_Controller{
     $this->load->view('admin/add_karyawan');
   }
 
-  function izin()
+  function master_izin()
   {
-    $this->load->view('admin/izin');
+    $this->load->view('admin/master_izin');
   }
 
-  function cuti()
+  function master_cuti()
   {
-    $this->load->view('admin/cuti');
+    $this->load->view('admin/master_cuti');
   }
 
   function edit_karyawan($id)

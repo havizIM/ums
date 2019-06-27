@@ -16,6 +16,8 @@
   <link href="<?= base_url() ?>assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
   <!-- Bootstrap core CSS-->
   <link href="<?= base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <!--Bootstrap Datepicker-->
+  <link href="<?= base_url() ?>assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
   <!-- animate CSS-->
   <link href="<?= base_url() ?>assets/css/animate.css" rel="stylesheet" type="text/css"/>
   <!-- Icons CSS-->
@@ -62,16 +64,43 @@
      </a>
 	 </div>
 	 <ul class="sidebar-menu do-nicescrol">
-      <li class="sidebar-header">MAIN NAVIGATION</li>
+      <li class="sidebar-header">MAIN MENU</li>
       <li>
         <a href="#/dashboard" class="waves-effect">
           <i class="icon-home"></i> <span>Dashboard</span>
         </a>
       </li>
+      
+      <li>
+        <a href="#" class="waves-effect">
+          <i class="icon-layers"></i> <span>Pengajuan</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="sidebar-submenu">
+          <li><a href="#/cuti"><i class="fa fa-circle-o"></i> Cuti</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#" class="waves-effect">
+          <i class="icon-layers"></i> <span>Approval</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="sidebar-submenu">
+          <li><a href="#/approval_pengganti"><i class="fa fa-circle-o"></i> Approval Pengganti</a></li>
+          <li><a href="#/approval_cuti"><i class="fa fa-circle-o"></i> Approval Cuti</a></li>
+          <li><a href="#/approval_izin"><i class="fa fa-circle-o"></i> Approval Izin</a></li>
+          <li><a href="#/approval_revisi"><i class="fa fa-circle-o"></i> Approval Koreksi Absen</a></li>
+        </ul>
+      </li>
 
       <li>
         <a href="#/log" class="waves-effect">
           <i class="icon-layers"></i> <span>Log</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#/absensi" class="waves-effect">
+          <i class="icon-layers"></i> <span>Absensi</span>
         </a>
       </li>
 
@@ -203,10 +232,15 @@
 
   <script src="<?= base_url() ?>assets/plugins/sweetalert/sweetalert.min.js"></script>
 
+  
+  <!--Bootstrap Datepicker Js-->
+  <script src="<?= base_url() ?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
   <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>
 

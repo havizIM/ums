@@ -20,8 +20,6 @@
              <thead>
                <tr>
                  <th>Tanggal</th>
-                 <th>NIK</th>
-                 <th>Nama</th>
                  <th>Keterangan</th>
                  <th>ID Referensi</th>
                  <th>Kategori</th>
@@ -46,7 +44,7 @@
 
      var table = $('#table_log').DataTable({
        columnDefs: [{
-         targets: [0, 1, 2, 3, 4, 5],
+         targets: [0, 1, 2],
          searchable: true
        }],
        autoWidth: false,
@@ -66,8 +64,6 @@
        ajax: '<?= base_url('api/log/show/'); ?>'+auth.token,
        columns: [
          {"data": 'tgl_log'},
-         {"data": 'nik'},
-         {"data": 'nama'},
          {"data": 'keterangan'},
          {"data": 'id_ref'},
          {"data": 'kategori'}

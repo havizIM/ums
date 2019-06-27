@@ -3,17 +3,25 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class KaryawanModel extends CI_Model {
-  function show($nik = null, $nama = null){
+  function show($where, $like){
 
       $this->db->select('*')->from('karyawan a')->join('user b', 'b.nik = a.nik')->join('divisi c', 'c.id_divisi = a.id_divisi');
 
-      if($nik != null){
-        $this->db->where('a.nik', $nik);
-      }
+     if(!empty($where)){
+            foreach($where as $key => $value){
+                if($value != null){
+                    $this->db->where($key, $value);
+                }
+            }
+        }
 
-      if($nama != null){
-        $this->db->like('a.nama', $nama);
-      }
+        if(!empty($like)){
+            foreach($like as $key => $value){
+                if($value != null){
+                    $this->db->like($key, $value);
+                }
+            }
+        }
 
       $this->db->order_by('b.tgl_registrasi', 'desc');
       return $this->db->get();

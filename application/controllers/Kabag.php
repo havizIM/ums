@@ -29,4 +29,61 @@ class Kabag extends CI_Controller{
     $this->load->view('kabag/profil');
   }
 
+  function cuti($id = null)
+  {
+    if($id == null){
+       $this->load->view('kabag/cuti');
+    } else {
+       $this->load->view('kabag/detail_cuti');
+    }
+  }
+
+  function add_cuti()
+  {
+    $this->load->view('kabag/add_cuti');
+  }
+
+  function edit_cuti($id = null)
+  {
+    $this->load->view('kabag/edit_cuti');
+  }
+
+  function approval_pengganti($id = null)
+  {
+    if($id == null){
+       $this->load->view('kabag/approval_pengganti');
+    } else {
+       $this->load->view('kabag/detail_approval_pengganti');
+    }
+  }
+
+  function approval_cuti($id = null){
+    if($id == null){
+       $this->load->view('kabag/approval_cuti');
+    } else {
+       $this->load->view('kabag/detail_approval_cuti');
+    }
+  }
+
+  function approval_izin($id = null){
+    if($id == null){
+       $this->load->view('kabag/approval_izin');
+    } else {
+       $this->load->view('kabag/detail_approval_izin');
+    }
+  }
+
+  function approval_revisi($id = null){
+    if($id == null){
+       $this->load->view('kabag/approval_revisi');
+    } else {
+       $this->load->view('kabag/detail_approval_revisi');
+    }
+  }
+
+  function absensi()
+  {
+    $this->load->view('kabag/absensi');
+  }
+
 }

@@ -57,6 +57,7 @@ class Auth extends CI_Controller {
               'level'          => $level,
               'token'          => $key->token,
               'jabatan'        => $key->jabatan,
+              'id_divisi'      => $key->id_divisi,
               'divisi'         => $key->nama_divisi
             );
 
@@ -201,8 +202,11 @@ class Auth extends CI_Controller {
         } else {
 
           $otorisasi  = $auth->row();
+          $where = array(
+            'a.nik' => $otorisasi->nik
+          );
 
-          $show       = $this->KaryawanModel->show($otorisasi->nik, null);
+          $show       = $this->KaryawanModel->show($where, FALSE);
           $karyawan   = array();
 
           foreach($show->result() as $key){

@@ -113,7 +113,7 @@
 
       swal({
         title: "Apa Anda yakin ingin hapus?",
-        text: "Data akan terhapus secara permanen"
+        text: "Data akan terhapus secara permanen",
         icon: "warning",
         dangerMode: true,
         showCancelButton: true,
