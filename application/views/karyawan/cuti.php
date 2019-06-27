@@ -43,7 +43,7 @@
    </div>
  </div>
 
- 
+
  <script type="text/javascript">
 
    $(document).ready(function(){
@@ -101,7 +101,7 @@
     });
 
     var channel = pusher.subscribe('ums');
-    channel.bind('log', function(data) {
+    channel.bind('cuti', function(data) {
       table.ajax.reload();
     });
 

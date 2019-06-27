@@ -174,7 +174,7 @@
 	<footer class="footer">
       <div class="container">
         <div class="text-center">
-          PT. CKMS User Management System | By Riska
+          PT. CKSM User Management System | By Riska
         </div>
       </div>
     </footer>

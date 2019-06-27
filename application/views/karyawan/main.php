@@ -199,7 +199,7 @@
 	<footer class="footer">
       <div class="container">
         <div class="text-center">
-          PT. CKMS User Management System | By Riska
+          PT. CKSM User Management System | By Riska
         </div>
       </div>
     </footer>
@@ -237,7 +237,7 @@
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-  
+
   <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/moment.min.js'></script>
 
   <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>

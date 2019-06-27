@@ -70,7 +70,7 @@
           <i class="icon-home"></i> <span>Dashboard</span>
         </a>
       </li>
-      
+
       <li>
         <a href="#" class="waves-effect">
           <i class="icon-layers"></i> <span>Pengajuan</span> <i class="fa fa-angle-left pull-right"></i>
@@ -201,7 +201,7 @@
 	<footer class="footer">
       <div class="container">
         <div class="text-center">
-          PT. CKMS User Management System | By Riska
+          PT. CKSM User Management System | By Riska
         </div>
       </div>
     </footer>
@@ -232,7 +232,7 @@
 
   <script src="<?= base_url() ?>assets/plugins/sweetalert/sweetalert.min.js"></script>
 
-  
+
   <!--Bootstrap Datepicker Js-->
   <script src="<?= base_url() ?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 

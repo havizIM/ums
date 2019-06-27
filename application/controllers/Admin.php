@@ -59,4 +59,88 @@ class Admin extends CI_Controller{
     $this->load->view('admin/profil');
   }
 
+  function cuti($id = null)
+  {
+    if($id == null){
+       $this->load->view('admin/cuti');
+    } else {
+       $this->load->view('admin/detail_cuti');
+    }
+  }
+
+  function approval_cuti($id = null)
+  {
+    if($id == null){
+      $this->load->view('admin/approval_cuti');
+    } else {
+      $this->load->view('admin/detail_approval_cuti');
+    }
+  }
+
+  function approval_izin($id = null)
+  {
+    if($id == null){
+      $this->load->view('admin/approval_izin');
+    } else {
+      $this->load->view('admin/detail_approval_izin');
+    }
+  }
+
+  function add_cuti()
+  {
+    $this->load->view('admin/add_cuti');
+  }
+
+  function edit_cuti()
+  {
+    $this->load->view('admin/edit_cuti');
+  }
+
+  function izin($id = null)
+  {
+    if($id == null){
+       $this->load->view('admin/izin');
+    } else {
+       $this->load->view('admin/detail_izin');
+    }
+  }
+
+  function add_izin()
+  {
+    $this->load->view('admin/add_izin');
+  }
+
+  function edit_izin()
+  {
+    $this->load->view('admin/edit_izin');
+  }
+
+  function revisi_absen($id = null)
+  {
+    if($id == null){
+       $this->load->view('admin/revisi_absen');
+    } else {
+       $this->load->view('admin/detail_revisi');
+    }
+  }
+
+  function add_revisi()
+  {
+    $this->load->view('admin/add_revisi');
+  }
+
+  function edit_revisi()
+  {
+    $this->load->view('admin/edit_revisi');
+  }
+
+  function approval_pengganti($id = null)
+  {
+    if($id == null){
+       $this->load->view('admin/approval_pengganti');
+    } else {
+       $this->load->view('admin/detail_approval_pengganti');
+    }
+  }
+
 }

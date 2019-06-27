@@ -27,11 +27,14 @@
 
   <link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet"/>
 
+  <link href="<?= base_url() ?>assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+
   <link rel="stylesheet" href="<?= base_url('assets/plugins/sweetalert/sweetalert.css') ?>">
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css"/>
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
+
 
   <script type="text/javascript">
 
@@ -229,7 +232,7 @@
 	<footer class="footer">
       <div class="container">
         <div class="text-center">
-          PT. CKMS User Management System | By Riska
+          PT. CKSM User Management System | By Riska
         </div>
       </div>
     </footer>
@@ -251,6 +254,7 @@
   <!-- Custom scripts -->
   <script src="<?= base_url() ?>assets/js/app-script.js"></script>
 
+  <script src="<?= base_url() ?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
   <!-- Full Calendar -->
   <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/moment.min.js'></script>
 
@@ -267,6 +271,9 @@
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
 
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
+
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
   <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>
 
