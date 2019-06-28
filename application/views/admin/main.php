@@ -125,7 +125,7 @@
         </a>
         <ul class="sidebar-submenu">
           <li><a href="#/import_absensi"><i class="fa fa-circle-o"></i> Import Absensi</a></li>
-          <li><a href="#/absensi"><i class="fa fa-circle-o"></i> Cetak Absensi</a></li>
+          <li><a href="#/cetak_absensi"><i class="fa fa-circle-o"></i> Cetak Absensi</a></li>
         </ul>
       </li>
 

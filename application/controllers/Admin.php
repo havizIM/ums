@@ -143,4 +143,9 @@ class Admin extends CI_Controller{
     }
   }
 
+  function cetak_absensi()
+  {
+    $this->load->view('admin/cetak_absensi');
+  }
+
 }
