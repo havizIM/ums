@@ -69,7 +69,7 @@
                   var filter = [];
 
                   $.each(response.data, function(k,v){
-                      if(v.pemohon.id_divisi === auth.id_divisi && v.status === 'Approve 1'){
+                      if(v.pemohon.id_divisi === auth.id_divisi && v.status === 'Approve 2'){
                         filter.push(v);
                       }
                   })
