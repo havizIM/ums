@@ -21,6 +21,7 @@ class Cuti extends CI_Controller {
 
     $this->load->model('CutiModel');
     $this->load->model('ApprovalCutiModel');
+    $this->load->model('LampiranCutiModel');
     $this->load->model('KaryawanModel');
   }
 
@@ -87,6 +88,95 @@ class Cuti extends CI_Controller {
             }
         }
       }
+    }
+  }
+
+  function add_lampiran($token = null)
+  {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'POST') {
+			json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+	  } else {
+
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+            $otorisasi    = $auth->row();
+            
+            $id_pcuti           = $this->input->post('id_pcuti');
+            $nama_lampiran      = $this->input->post('nama_lampiran');
+
+            if($id_pcuti == null || $nama_lampiran == null){
+                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Data yang dikirim tidak lengkap'));
+            } else {
+
+                $lampiran = $this->_upload_file('lampiran_cuti', $id_pcuti.'-'.$nama_lampiran);
+
+                if($lampiran == null){
+                  json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Silahkan pilih dokumen lampiran'));
+                } else {
+                  $data = array(
+                      'id_pcuti'       => $id_pcuti,
+                      'nama_lampiran'  => $nama_lampiran,
+                      'lampiran'       => $lampiran
+                  );
+
+                  $log = array(
+                      'nik'         => $otorisasi->nik,
+                      'id_ref'      => $id_pcuti,
+                      'refrensi'    => 'Lampiran Cuti',
+                      'kategori'    => 'Add',
+                      'keterangan'  => 'Menambahkan lampiran'
+                  );
+
+                  $add = $this->CutiModel->add($data, $log);
+
+                  if(!$add){
+                      json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menambah lampiran cuti'));
+                  } else {
+                      $this->pusher->trigger('ums', 'cuti', $log);
+                      json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menambah lampiran cuti'));
+                  }
+                } 
+            }
+        }
+      }
+    }
+  }
+
+  function _upload_file($name, $id)
+  {
+    if(isset($_FILES[$name]) && $_FILES[$name]['name'] != ""){
+      $files = glob('doc/'.$name.'/'.$id.'.*');
+      foreach ($files as $key) {
+        unlink($key);
+      }
+
+      $config['upload_path']   = './doc/'.$name.'/';
+      $config['allowed_types'] = 'jpg|jpeg|png|pdf|doc|docx';
+      $config['overwrite']     = TRUE;
+      $config['max_size']      = '3048';
+      $config['remove_space']  = TRUE;
+      $config['file_name']     = $id;
+
+      $this->load->library('upload', $config);
+      $this->upload->initialize($config);
+
+      if(!$this->upload->do_upload($name)){
+        return null;
+      } else {
+        $file = $this->upload->data();
+        return $file['file_name'];
+      }
+    } else {
+      return null;
     }
   }
 
@@ -263,8 +353,10 @@ class Cuti extends CI_Controller {
             $json['status']       = $key->status;
             
             $where_approval       = array('a.id_pcuti' => $key->id_pcuti);
-            
             $json['approval']     =  $this->ApprovalCutiModel->show($where_approval, FALSE, FALSE)->result();
+
+            $where_lampiran       = array('id_pcuti' => $key->id_pcuti);
+            $json['lampiran']     =  $this->LampiranCutiModel->show($where_lampiran, FALSE)->result();
             
             $response[] = $json;
         }

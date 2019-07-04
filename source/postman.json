@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f6b88365-1d49-4f53-a79f-b7911d901582",
+		"_postman_id": "624599bc-7951-4ddc-a5ac-340619283774",
 		"name": "UMS",
 		"description": "Sistem Informasi Service Online",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -47,10 +47,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "localhost/ums/api/auth/logout_user/37403280b6e8573",
 					"host": [
@@ -110,7 +106,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "localhost/ums/api/auth/profile/37403280b6e8573",
 					"host": [
@@ -187,7 +182,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "localhost/ums/api/log/show/37403280b6e8573",
 					"host": [
@@ -210,7 +204,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "localhost/ums/api/divisi/show/37403280b6e8573",
 					"host": [
@@ -233,7 +226,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "localhost/ums/api/jenis_izin/show/37403280b6e8573",
 					"host": [
@@ -252,11 +244,32 @@
 			"response": []
 		},
 		{
+			"name": "Show Cuti Bersama",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/ums/api/cuti_bersama/show/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"cuti_bersama",
+						"show",
+						"37403280b6e8573"
+					]
+				},
+				"description": "Link: \n- localhost/ums/api/jenis_izin/show/--token--\n\nMethod : \n- GET\n\nParams :\n- id_izin\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage\n- Param bersifat optional, digunakan untuk menggunakan data yang lebih spesifik"
+			},
+			"response": []
+		},
+		{
 			"name": "Show Jenis Cuti",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "localhost/ums/api/jenis_cuti/show/37403280b6e8573",
 					"host": [
@@ -335,6 +348,43 @@
 						"ums",
 						"api",
 						"jenis_izin",
+						"add",
+						"37403280b6e8573"
+					]
+				},
+				"description": "Link: \n- localhost/ums/api/jenis_izin/add/--token--\n\nMethod : \n- POST\n\nData : \n- keperluan\n- keterangan_izin\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Cuti Bersama",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "keterangan",
+							"value": "Cuti Bersama Lebaran",
+							"type": "text"
+						},
+						{
+							"key": "tgl_cuti_bersama",
+							"value": "2019-10-10",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/ums/api/cuti_bersama/add/37403280b6e8573",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"cuti_bersama",
 						"add",
 						"37403280b6e8573"
 					]
@@ -503,7 +553,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "localhost/ums/api/divisi/delete/37403280b6e8573?id_divisi=DV0005",
 					"host": [
@@ -532,7 +581,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "localhost/ums/api/jenis_izin/delete/37403280b6e8573?id_izin=IZ0004",
 					"host": [
@@ -561,7 +609,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "localhost/ums/api/jenis_cuti/delete/37403280b6e8573?id_cuti=CT0003",
 					"host": [
@@ -586,11 +633,38 @@
 			"response": []
 		},
 		{
+			"name": "Delete Cuti Bersama",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/ums/api/cuti_bersama/delete/37403280b6e8573?id_cuti_bersama=1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"cuti_bersama",
+						"delete",
+						"37403280b6e8573"
+					],
+					"query": [
+						{
+							"key": "id_cuti_bersama",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Link: \n- localhost/ums/api/jenis_cuti/delete/--token--\n\nMethod : \n- GET\n\nParams :\n- id_cuti\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage\n- Params bersifat wajib, digunakan untuk mengidentifikasi data yang dihapus"
+			},
+			"response": []
+		},
+		{
 			"name": "Delete Karyawan",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "localhost/ums/api/karyawan/delete/37403280b6e8573?nik=06145",
 					"host": [
@@ -619,7 +693,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "localhost/ums/api/karyawan/show/37403280b6e8573",
 					"host": [
@@ -715,6 +788,118 @@
 					]
 				},
 				"description": "Link: \n- localhost/ums/api/karyawan/edit/--token--\n\nMethod : \n- POST\n\nParams : \n- nik\n\nData : \n- nama\n- tmp_lahir\n- tgl_lahir\n- kelamin (Laki-laki / Perempuan)\n- tgl_masuk\n- status_karyawan (Aktif / Nonaktif)\n- jabatan\n- id_divisi (relational input)\n- level (Karyawan / Admin / Kabag / Direksi)\n\nHak Akses :\n- Admin\n\nNote :\n- Token bisa didapatkan dari localStorage"
+			},
+			"response": []
+		},
+		{
+			"name": "Show Cuti",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/ums/api/revisi_absen/show/839ce9d4eb060fd",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"revisi_absen",
+						"show",
+						"839ce9d4eb060fd"
+					],
+					"query": [
+						{
+							"key": "id_pcuti",
+							"value": "CTU13431",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Cuti",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_cuti",
+							"value": "C0001",
+							"description": "Relasi ke Master Cuti",
+							"type": "text"
+						},
+						{
+							"key": "tgl_mulai",
+							"value": "2019-10-10",
+							"type": "text"
+						},
+						{
+							"key": "tgl_selesai",
+							"value": "2019-10-15",
+							"type": "text"
+						},
+						{
+							"key": "alamat",
+							"value": "Pekalongan",
+							"type": "text"
+						},
+						{
+							"key": "telepon",
+							"value": "081355754092",
+							"type": "text"
+						},
+						{
+							"key": "pengganti",
+							"value": "5785868",
+							"description": "Relasi ke Karyawan dengan Divisi sama",
+							"type": "text"
+						},
+						{
+							"key": "jumlah_cuti",
+							"value": "5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/ums/api/cuti/add/839ce9d4eb060fd",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"cuti",
+						"add",
+						"839ce9d4eb060fd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show Revisi",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/ums/api/revisi_absen/show/839ce9d4eb060fd",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"ums",
+						"api",
+						"revisi_absen",
+						"show",
+						"839ce9d4eb060fd"
+					]
+				}
 			},
 			"response": []
 		}

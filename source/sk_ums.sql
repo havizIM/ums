@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Jun 2019 pada 14.50
+-- Waktu pembuatan: 04 Jul 2019 pada 10.16
 -- Versi server: 10.1.40-MariaDB
 -- Versi PHP: 7.1.29
 
@@ -77,7 +77,7 @@ INSERT INTO `approval_cuti` (`id_app_cuti`, `id_pcuti`, `nik`, `keterangan`, `tg
 (5, 'PCT000000013', '1703108', 'Approve 1', '2019-06-24 19:31:52'),
 (6, 'PCT000000014', '1234', 'Ditolak', '2019-06-25 06:22:34'),
 (7, 'PCT000000013', '1234', 'Ditolak', '2019-06-25 06:29:29'),
-(8, 'PCT000000012', '1234', 'Approve 2', '2019-06-25 06:35:31'),
+(8, 'PCT000000012', '06143', 'Approve 2', '2019-06-28 04:28:19'),
 (9, 'PCT000000011', '1234', 'Approve 2', '2019-06-25 06:42:07'),
 (10, 'PCT000000015', '1703108', 'Approve 1', '2019-06-25 08:36:07');
 
@@ -155,9 +155,7 @@ INSERT INTO `cuti` (`id_pcuti`, `nik`, `id_cuti`, `tgl_mulai`, `tgl_selesai`, `a
 CREATE TABLE `cuti_bersama` (
   `id_cuti_bersama` int(11) NOT NULL,
   `keterangan` varchar(100) NOT NULL,
-  `tgl_awal` date NOT NULL,
-  `tgl_akhir` date NOT NULL,
-  `jml_hari` int(11) NOT NULL,
+  `tgl_cuti_bersama` date NOT NULL,
   `tgl_input` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -529,7 +527,14 @@ INSERT INTO `log` (`id_log`, `nik`, `id_ref`, `refrensi`, `kategori`, `keteranga
 (202, '06142', '-', 'Auth', 'Logout', 'User logout', '2019-06-27 06:32:14'),
 (203, '06143', '-', 'Auth', 'Login', 'User login', '2019-06-27 12:36:50'),
 (204, '06143', '-', 'Auth', 'Logout', 'User logout', '2019-06-27 12:37:17'),
-(205, '06142', '-', 'Auth', 'Login', 'User login', '2019-06-27 12:37:22');
+(205, '06142', '-', 'Auth', 'Login', 'User login', '2019-06-27 12:37:22'),
+(206, '06142', '-', 'Auth', 'Logout', 'User logout', '2019-06-27 14:25:35'),
+(207, '06143', '-', 'Auth', 'Login', 'User login', '2019-06-27 14:25:45'),
+(208, '06143', '-', 'Auth', 'Logout', 'User logout', '2019-06-28 03:32:50'),
+(209, '06142', '-', 'Auth', 'Login', 'User login', '2019-06-28 03:32:56'),
+(210, '06142', '-', 'Cuti bersama', 'Add', 'Menambahkan jenis cuti bersama', '2019-07-04 08:06:25'),
+(211, '06142', '1', 'Cuti Bersama', 'Delete', 'Menghapus salah satu cuti bersama', '2019-07-04 08:07:10'),
+(212, '06142', '1', 'Cuti Bersama', 'Delete', 'Menghapus salah satu cuti bersama', '2019-07-04 08:08:02');
 
 -- --------------------------------------------------------
 
@@ -744,7 +749,7 @@ ALTER TABLE `approval_izin`
 -- AUTO_INCREMENT untuk tabel `cuti_bersama`
 --
 ALTER TABLE `cuti_bersama`
-  MODIFY `id_cuti_bersama` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cuti_bersama` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `lampiran_cuti`
@@ -762,7 +767,7 @@ ALTER TABLE `lampiran_izin`
 -- AUTO_INCREMENT untuk tabel `log`
 --
 ALTER TABLE `log`
-  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=206;
+  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=213;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
