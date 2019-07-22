@@ -49,6 +49,11 @@ class Admin extends CI_Controller{
     $this->load->view('admin/master_cuti');
   }
 
+  function master_cuti_bersama()
+  {
+    $this->load->view('admin/master_cuti_bersama');
+  }
+
   function edit_karyawan($id)
   {
     $this->load->view('admin/edit_karyawan');
@@ -65,24 +70,6 @@ class Admin extends CI_Controller{
        $this->load->view('admin/cuti');
     } else {
        $this->load->view('admin/detail_cuti');
-    }
-  }
-
-  function approval_cuti($id = null)
-  {
-    if($id == null){
-      $this->load->view('admin/approval_cuti');
-    } else {
-      $this->load->view('admin/detail_approval_cuti');
-    }
-  }
-
-  function approval_izin($id = null)
-  {
-    if($id == null){
-      $this->load->view('admin/approval_izin');
-    } else {
-      $this->load->view('admin/detail_approval_izin');
     }
   }
 
@@ -146,6 +133,11 @@ class Admin extends CI_Controller{
   function cetak_absensi()
   {
     $this->load->view('admin/cetak_absensi');
+  }
+
+  function import_absensi()
+  {
+    $this->load->view('admin/import_absensi');
   }
 
 }

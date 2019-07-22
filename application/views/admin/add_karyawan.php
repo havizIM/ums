@@ -138,7 +138,7 @@
                          <select class="form-control" name="level">
                            <option value=""></option>
                            <option value="Karyawan">Karyawan</option>
-                           <option value="Kabag">Kabag</option>
+                           <option value="Manager">Manager</option>
                            <option value="Direksi">Direksi</option>
                            <option value="Admin">Admin</option>
                          </select>

@@ -3,12 +3,16 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class JcutiModel extends CI_Model {
-  function show($id_cuti = null){
+  function show($where){
 
       $this->db->select('*')->from('jenis_cuti');
 
-      if($id_cuti != null){
-        $this->db->where('id_cuti', $id_cuti);
+      if(!empty($where)){
+          foreach($where as $key => $value){
+              if($value != null){
+                  $this->db->where($key, $value);
+              }
+          }
       }
 
       $this->db->order_by('id_cuti', 'desc');

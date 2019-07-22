@@ -1,10 +1,10 @@
 <!-- Breadcrumb-->
 <div class="row pt-2 pb-2">
   <div class="col-sm-9">
-    <h4 class="page-title">Cuti</h4>
+    <h4 class="page-title">Master Cuti</h4>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="#/dashboard">Dashboard</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Cuti</li>
+      <li class="breadcrumb-item active" aria-current="page">Master Cuti</li>
     </ol>
   </div>
 
@@ -55,24 +55,32 @@
       <form class="form-horizontal" id="form_add" method="post">
         <div class="modal-body form-group">
           <div class="form-group">
-            <input type="text" class="form-control" id="nama_cuti" name="nama_cuti" placeholder="Nama Cuti">
+            <label for="">Nama Cuti</label>
+            <input type="text" class="form-control" id="nama_cuti" name="nama_cuti">
           </div>
 
           <div class="form-group">
-            <input type="text" class="form-control" id="banyak_cuti" name="banyak_cuti" placeholder="Jumlah Cuti">
+            <label for="">Banyak Cuti </label>
+            <input type="number" class="form-control" id="banyak_cuti" name="banyak_cuti">
           </div>
 
           <div class="form-group">
-            <select class="form-control" id="format_cuti" name="format_cuti">
-              <option value="">-- Pilih Format Cuti --</option>
-              <option value="Hari">Hari</option>
-              <option value="Bulan">Bulan</option>
-              <option value="Tahun">Tahun</option>
+            <label for="">Butuh Lampiran</label>
+             <select class="form-control" id="lampiran" name="lampiran">
+              <option value="">-- Pilih Lampiran --</option>
+              <option value="Y">Ya</option>
+              <option value="T">Tidak</option>
             </select>
           </div>
 
           <div class="form-group">
-            <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan">
+            <label for="">Keterangan</label>
+            <select class="form-control" id="keterangan" name="keterangan">
+              <option value="">-- Pilih Keterangan --</option>
+              <option value="Semua">Semua</option>
+              <option value="Laki-laki">Laki-laki</option>
+              <option value="Perempuan">Perempuan</option>
+            </select>
           </div>
         </div>
 
@@ -85,18 +93,24 @@
   </div>
 </div>
 
+
+
 <script type="text/javascript">
   $(document).ready(function(){
+    
+
     $('#btn_add').on('click', function(){
       $('#modal_add').modal('show');
-    })
+    });
+
     $('#form_add').on('submit', function(e){
       e.preventDefault();
       var nama_cuti = $('#nama_cuti').val();
       var banyak_cuti = $('#banyak_cuti').val();
-      var format_cuti = $('#format_cuti').val();
+      var lampiran = $('#lampiran').val();
       var keterangan = $('#keterangan').val();
-      if(nama_cuti === '' || banyak_cuti === '' || format_cuti === '' || keterangan === ''){
+
+      if(nama_cuti === '' || banyak_cuti === '' || keterangan === ''){
         toastr.warning('Mohon isi datanya');
       } else {
         $.ajax({
@@ -106,12 +120,7 @@
           beforeSend: function(){
             $('#simpan_cuti').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-spinner fa-spin"></i>');
           },
-          data: {
-            nama_cuti: nama_cuti,
-            banyak_cuti: banyak_cuti,
-            format_cuti: format_cuti,
-            keterangan: keterangan
-          },
+          data: $(this).serialize(),
           success: function(response){
             if(response.status === 200){
               toastr.success(response.message);
@@ -128,7 +137,8 @@
           }
         })
       }
-    })
+    });
+
     var table = $('#table_cuti').DataTable({
       columnDefs: [{
         targets: [0],
@@ -152,7 +162,7 @@
       columns: [
         {"data": 'nama_cuti'},
         {"data": 'banyak_cuti'},
-        {"data": 'format_cuti'},
+        {"data": 'lampiran'},
         {"data": 'keterangan'},
         {"data": null, 'render': function(data, type, row){
           return `<center><button class="btn btn-md btn-danger" id="hapus_cuti" data-id="${row.id_cuti}"><i class="fa fa-trash"></i></button></center>`
@@ -184,6 +194,8 @@
             dataType: 'JSON',
             success: function(response){
               if(response.status === 200){
+                swal.close();
+                toastr.success(response.message)
               } else {
                 toastr.error(response.message)
               }
@@ -195,6 +207,16 @@
         }
       })
     })
+
+    var pusher = new Pusher('9f324d52d4872168e514', {
+      cluster: 'ap1',
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe('ums');
+      channel.bind('jenis_cuti', function(data) {
+      table.ajax.reload();
+   });
 
   })
 </script>

@@ -13,143 +13,308 @@
      <div class="card">
         <div class="card-header">Filter Absensi</div>
         <div class="card-body">
-            <form id="form_revisi">
+            <form id="form_filter">
                 <div class="form-group row">
                     <label for="alasan" class="col-md-2 col-form-label">Pilih Karyawan</label>
                     <div class="col-md-10">
-                        <select name="alasan" id="alasan" class="form-control">
-                            <option value="">-- Pilih Karyawan --</option>
-                            <option value="Alasan 1">Alasan 1</option>
-                            <option value="Alasan 2">Alasan 2</option>
-                            <option value="Alasan 3">Alasan 3</option>
-                        </select>
-                        <div class="invalid_alasan"></div>
+                        <select name="nik" id="nik" class="form-control"></select>
+                        <div class="invalid_nik"></div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="alasan" class="col-md-2 col-form-label">Pilih Bulan</label>
                     <div class="col-md-10">
-                        <select name="alasan" id="alasan" class="form-control">
+                        <select name="bulan" id="bulan" class="form-control">
                             <option value="">-- Pilih Bulan --</option>
-                            <option value="Alasan 1">Alasan 1</option>
-                            <option value="Alasan 2">Alasan 2</option>
-                            <option value="Alasan 3">Alasan 3</option>
+                            <option value="1">Januari</option>
+                            <option value="2">Februari</option>
+                            <option value="3">Maret</option>
+                            <option value="4">April</option>
+                            <option value="5">Mei</option>
+                            <option value="6">Juni</option>
+                            <option value="7">Juli</option>
+                            <option value="8">Agustus</option>
+                            <option value="9">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
                         </select>
-                        <div class="invalid_alasan"></div>
+                        <div class="invalid_bulan"></div>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="alasan" class="col-md-2 col-form-label">Pilih Tahun</label>
                     <div class="col-md-10">
-                        <select name="alasan" id="alasan" class="form-control">
-                            <option value="">-- Pilih Tahun --</option>
-                            <option value="Alasan 1">Alasan 1</option>
-                            <option value="Alasan 2">Alasan 2</option>
-                            <option value="Alasan 3">Alasan 3</option>
-                        </select>
-                        <div class="invalid_alasan"></div>
+                        <select name="tahun" id="tahun" class="form-control"></select>
+                        <div class="invalid_tahun"></div>
                     </div>
                 </div>
                 <div class="form-group text-right">
-                    <a class="btn btn-danger btn-md" href="#/revisi_absen">Batal</a>
-                    <button class="btn btn-info btn-md" type="submit" id="submit_add">Submit</button>
+                    <button class="btn btn-info btn-md" type="submit" id="submit_filter">Submit</button>
                 </div>
             </form>
         </div>
         </div>
     </div>
 
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                Absensi 12345 - Riska Anggela
-                <div class="btn-group" style="float: right">
-                    <button class="btn btn-success btn-sm">Excel</button>
-                    <button class="btn btn-danger btn-sm">PDF</button>
-                    <button class="btn btn-info btn-sm">Print</button>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12 text-center" style="margin-bottom: 20px;">
-                        <h3>PT. Cipta KreasiSandang Mandiri</h3>
-                        <h4>Jl. Maju Mundur Abadi no. 3F Pluit Jaya</h4>
-                        <h5>Telp. 021-1238219 Fax. 021-1379318</h5>
-                        <hr>
-                    </div>
-                    
-                    <div class="col-md-12">
-                        <center><h5>Absensi Periode Juni 2019</h5></center><br>
-                    </div>
-
-                    <div class="col-md-6">
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>NIK</th>
-                                <td>12345</td>
-                            </tr>
-                            <tr>
-                                <th>Nama</th>
-                                <td>Riska Anggela</td>
-                            </tr>
-                            <tr>
-                                <th>Jabatan</th>
-                                <td>Admin</td>
-                            </tr>
-                            <tr>
-                                <th>Divisi</th>
-                                <td>Finance</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div><br><br>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Jam Masuk</th>
-                                    <th>Jam Pulang</th>
-                                    <th>Cuti</th>
-                                    <th>Keterangan Cuti</th>
-                                    <th>Izin</th>
-                                    <th>Keterangan Izin</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>01-06-2019</td>
-                                    <td>08:30</td>
-                                    <td>17:30</td>
-                                    <td>N</td>
-                                    <td>-</td>
-                                    <td>N</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>02-06-2019</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>Y</td>
-                                    <td>Cuti Tahunan</td>
-                                    <td>N</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>03-06-2019</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>Y</td>
-                                    <td>Cuti Tahunan</td>
-                                    <td>N</td>
-                                    <td>-</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="col-md-12" id="content_absen">
+        
     </div>
 </div>
+
+<script>
+    const DOM = {
+        content: '#content_absen',
+        form: '#form_filter',
+        nik: '#nik',
+        tahun: '#tahun',
+        submit: '#submit_filter'
+    }
+
+    const cetakAbsenUI = (() => {
+        return {
+            renderNoKaryawan: () => {
+                let html = `
+                    <option value="">-- Pilih Karyawan --</option>
+                `;
+
+                $(DOM.nik).html(html);
+            },
+
+            renderNoAbsen: () => {
+               console.log('No Absensi...')
+            },
+            renderKaryawan: (data) => {
+                let html = `
+                    <option value="">-- Pilih Karyawan --</option>
+                `
+
+                $.each(data, function(k,v){
+                    html += `
+                        <option value="${v.nik}">${v.nik} - ${v.nama}</option>
+                    `;
+                })
+
+                $(DOM.nik).html(html);
+            },
+            renderTahun: (data) => {
+                let html = `
+                    <option value="">-- Pilih Tahun --</option>
+                `
+
+                $.each(data, function(k,v){
+                    html += `
+                        <option value="${v}">${v}</option>
+                    `;
+                })
+
+                $(DOM.tahun).html(html);
+            },
+            renderAbsensi: (data) => {
+                let html = '';
+                let bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+                $.each(data, function(k, v){
+
+                    html = `
+                        <div class="card">
+                            <div class="card-header">
+                                Absensi ${v.nik} - ${v.nama}
+                                <div class="btn-group" style="float: right">
+                                    <button class="btn btn-success btn-md" id="print_absen"><i class="fa fa-print"></i> Print</button>
+                                </div>
+                            </div>
+                            <div class="card-body" id="print_area">
+                                <div class="row">
+                                    <div class="col-md-12 text-center" style="margin-bottom: 20px;">
+                                        <h3>PT. Cipta KreasiSandang Mandiri</h3>
+                                        <h4>Jl. Maju Mundur Abadi no. 3F Pluit Jaya</h4>
+                                        <h5>Telp. 021-1238219 Fax. 021-1379318</h5>
+                                        <hr>
+                                    </div>
+                                    
+                                    <div class="col-md-12">
+                                        <center><h5>Absensi Periode ${bulan[v.bulan-1]} ${v.tahun}</h5></center><br>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>NIK</th>
+                                                <td>${v.nik}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nama</th>
+                                                <td>${v.nama}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Jabatan</th>
+                                                <td>${v.jabatan}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Divisi</th>
+                                                <td>${v.divisi}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div><br><br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tanggal</th>
+                                                    <th>Jam Masuk</th>
+                                                    <th>Jam Pulang</th>
+                                                    <th>Cuti</th>
+                                                    <th>Keterangan Cuti</th>
+                                                    <th>Izin</th>
+                                                    <th>Keterangan Izin</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>`
+
+                                            $.each(v.absensi, function(k2, v2){
+                                                html += `
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                `;
+                                            })
+                                                
+                    html +=                 `
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                })
+                
+                $(DOM.content).html(html);
+            }
+        }
+    })();
+
+    const cetakAbsenController = ((UI) => {
+
+        const getKaryawan = () => {
+            $.ajax({
+                url: `<?= base_url('api/karyawan/show/') ?>${auth.token}`,
+                type: 'GET',
+                dataType: 'JSON',
+                success: function(res){
+                    if(res.status === 200){
+                        if(res.data.length === 0){
+                            UI.renderNoKaryawan();
+                        } else {
+                            UI.renderKaryawan(res.data)
+                        }
+                    }else {
+                        UI.renderNoKaryawan();
+                    }
+                },
+                error: function(err){
+                    UI.renderNoKaryawan();
+                }
+            })
+        }
+
+        const getTahun = () => {
+            var currentYear = new Date().getFullYear(), years = [];
+            var startYear = startYear || 2015;
+
+            while ( startYear <= currentYear ) {
+                years.push(startYear++);
+            }   
+            
+            UI.renderTahun(years);
+        }
+
+        const submitFilter = () => {
+            $(DOM.form).validate({
+                rules: {
+                    nik: "required",
+                    bulan: "required",
+                    tahun: "required"
+                },
+                messages: {
+                    nik: "Pilih NIK Karyawan",
+                    bulan: "Pilih Bulan Absensi",
+                    tahun: "Pilih Tahun Absensi"
+                },
+                errorClass: 'is-invalid',
+                errorPlacement: function(error, element) {
+                    var name = $(element).attr("id");
+
+                    error.appendTo($('.invalid_'+name));
+                },
+                submitHandler: function(form){
+                    let nik = $('#nik').val();
+                    let bulan = $('#bulan').val();
+                    let tahun = $('#tahun').val();
+                    
+                    $.ajax({
+                        url: `<?= base_url('api/absensi/show/') ?>${auth.token}?nik=${nik}&bulan=${bulan}&tahun=${tahun}`,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        beforeSend: function(){
+                            $(DOM.submit).html('<i class="fa fa-fw fa-spinner fa-spin"></i>');
+                        },
+                        success: function(response){
+                            if(response.status === 200){
+                                if(response.data.length === 1){
+                                    UI.renderAbsensi(response.data);
+                                } else {
+                                    UI.renderNoAbsen();
+                                }
+                            } else {
+                                UI.renderNoAbsen();
+                            }
+                            $(DOM.submit).html('Submit');
+                        },
+                        error: function(err){
+                            UI.renderNoAbsen();
+                            $(DOM.submit).html('Submit');
+                            toastr.error('Tidak dapat mengakases server', 'Gagal');
+                        }
+                    })
+                }
+            })
+        }
+
+        printAbsen = () => {
+            $(document).on('click', '#print_absen', function(){
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+
+                $('#print_area').printArea(options);
+            })
+        }
+
+        return {
+            init: () => {
+                getKaryawan();
+                getTahun();
+                submitFilter();
+                printAbsen();
+            }
+        }
+    })(cetakAbsenUI);
+
+    $(document).ready(function(){
+        cetakAbsenController.init();
+    })
+
+</script>

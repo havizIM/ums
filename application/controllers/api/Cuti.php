@@ -23,6 +23,7 @@ class Cuti extends CI_Controller {
     $this->load->model('ApprovalCutiModel');
     $this->load->model('LampiranCutiModel');
     $this->load->model('KaryawanModel');
+    $this->load->model('CutiBersamaModel');
   }
 
   function add($token = null)
@@ -77,15 +78,94 @@ class Cuti extends CI_Controller {
                     'keterangan'  => 'Menambahkan cuti baru'
                 );
 
-                $add = $this->CutiModel->add($data, $log);
+
+                $start  = new DateTime($tgl_mulai);
+                $plus    = new DateTime($tgl_selesai);
+                $end     = $plus->modify('+1 days');
+
+                $interval = DateInterval::createFromDateString('1 day');
+                $period = new DatePeriod($start, $interval, $end);
+
+                $detail = array();
+                foreach($period as $dt){
+                  $detail[] = array(
+                    'id_pcuti' => $id_pcuti,
+                    'tanggal_cuti' => $dt->format('Y-m-d')
+                  );
+                }
+
+                $add = $this->CutiModel->add($data, $log, $detail);
 
                 if(!$add){
                     json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menambah data cuti'));
                 } else {
                     $this->pusher->trigger('ums', 'cuti', $log);
-                    json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menambah data cuti'));
+                    json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menambah data cuti', 'data' => $detail));
                 }
             }
+        }
+      }
+    }
+  }
+
+  function sisa_cuti($token = null)
+  {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+      json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi  = $auth->row();
+
+          $where1 = array(
+            'id_cuti' => $this->input->get('id_cuti')
+          );
+          
+          $where2 = array(
+              'tahun'   => date('Y'),
+              'status'  => 'Approve 3',
+              'nik'     => $otorisasi->nik
+          );
+
+          $where_cb = array(
+            'YEAR(tgl_cuti_bersama)' => date('Y')
+          );
+
+          $cuti             = $this->CutiModel->total_cuti($where1, $where2);
+          $jml_cuti_bersama = $this->CutiBersamaModel->show($where_cb, FALSE, FALSE)->num_rows();
+          $response         = array();
+
+          foreach($cuti->result() as $key){
+            $json = array();
+
+            $json['id_cuti']     = $key->id_cuti;
+            $json['nama_cuti']   = $key->nama_cuti;
+            $json['keterangan']  = $key->keterangan;
+            $json['banyak_cuti'] = $key->banyak_cuti;
+            $json['total_cuti']  = $key->total_cuti;
+            $json['jml_cb']      = $jml_cuti_bersama;
+
+            if($key->nama_cuti === 'Cuti Tahunan'){
+              $json['sisa_cuti']   = $key->banyak_cuti - $key->total_cuti - $jml_cuti_bersama;
+            } else {
+              $json['sisa_cuti']   = $key->banyak_cuti - $key->total_cuti;
+            }
+            
+            $response[] = $json;
+          }
+        
+
+          json_output(200, array('status' => 200, 'description' => 'Berhasil', 'data' => $response));
         }
       }
     }
@@ -125,7 +205,7 @@ class Cuti extends CI_Controller {
                   $data = array(
                       'id_pcuti'       => $id_pcuti,
                       'nama_lampiran'  => $nama_lampiran,
-                      'lampiran'       => $lampiran
+                      'lampiran_cuti'  => $lampiran
                   );
 
                   $log = array(
@@ -136,7 +216,7 @@ class Cuti extends CI_Controller {
                       'keterangan'  => 'Menambahkan lampiran'
                   );
 
-                  $add = $this->CutiModel->add($data, $log);
+                  $add = $this->LampiranCutiModel->add($data, $log);
 
                   if(!$add){
                       json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menambah lampiran cuti'));
@@ -146,6 +226,55 @@ class Cuti extends CI_Controller {
                   }
                 } 
             }
+        }
+      }
+    }
+  }
+
+  public function delete_lampiran($token = null){
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+			json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi = $auth->row();
+          $id_lampiran_cuti = $this->input->get('id_lampiran_cuti');
+          $nama_lampiran    = $this->input->get('nama_lampiran');
+
+          if($id_lampiran_cuti == null){
+            json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'ID Izin tidak ditemukan'));
+          } else {
+            $where = array('id_lampiran_cuti' => $id_lampiran_cuti);
+
+            $log = array(
+              'nik'         => $otorisasi->nik,
+              'id_ref'      => $id_lampiran_cuti,
+              'refrensi'    => 'Cuti Bersama',
+              'kategori'    => 'Delete',
+              'keterangan'  => 'Menghapus salah satu cuti bersama'
+            );
+
+            $id_file = $id_lampiran_cuti.'-'.$nama_lampiran;
+            $this->_delete_file('lampiran_cuti', $id_file);
+
+            $delete = $this->LampiranCutiModel->delete($where, $log);
+
+            if(!$delete){
+              json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menghapus cuti bersama'));
+            } else {
+              $this->pusher->trigger('ums', 'cuti_bersama', $log);
+              json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menghapus cuti bersama'));
+            }
+          }
         }
       }
     }
@@ -177,6 +306,13 @@ class Cuti extends CI_Controller {
       }
     } else {
       return null;
+    }
+  }
+
+  function _delete_file($name, $id){
+    $files = glob('doc/'.$name.'/'.$id.'.*');
+    foreach ($files as $key) {
+      unlink($key);
     }
   }
 
@@ -294,7 +430,22 @@ class Cuti extends CI_Controller {
                     'keterangan'  => 'Mengedit Cuti Baru'
                 );
 
-                $add = $this->CutiModel->edit($where, $data, $log, FALSE);
+                $start  = new DateTime($tgl_mulai);
+                $plus    = new DateTime($tgl_selesai);
+                $end     = $plus->modify('+1 days');
+
+                $interval = DateInterval::createFromDateString('1 day');
+                $period = new DatePeriod($start, $interval, $end);
+
+                $detail = array();
+                foreach($period as $dt){
+                  $detail[] = array(
+                    'id_pcuti' => $id_pcuti,
+                    'tanggal_cuti' => $dt->format('Y-m-d')
+                  );
+                }
+
+                $add = $this->CutiModel->edit($where, $data, $log, FALSE, $detail);
 
                 if(!$add){
                     json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengedit data cuti'));
@@ -342,7 +493,7 @@ class Cuti extends CI_Controller {
 
             $json['id']           = $key->id_pcuti;
             $json['pemohon']      = array('nik' => $key->nik, 'nama' => $key->nama_pemohon, 'jabatan' => $key->jabatan_pemohon, 'divisi' => $key->divisi_pemohon);
-            $json['jenis_cuti']   = array('id_cuti' => $key->id_cuti, 'nama_cuti' => $key->nama_cuti, 'keterangan' => $key->keterangan);
+            $json['jenis_cuti']   = array('id_cuti' => $key->id_cuti, 'nama_cuti' => $key->nama_cuti, 'keterangan' => $key->keterangan, 'lampiran' => $key->lampiran);
             $json['tgl_mulai']    = $key->tgl_mulai;
             $json['tgl_selesai']  = $key->tgl_selesai;
             $json['alamat']       = $key->alamat;

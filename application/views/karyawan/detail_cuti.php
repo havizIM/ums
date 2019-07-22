@@ -130,7 +130,25 @@
                                     
                 content += `                </div>
                                         </div>
-                                    </div>`;
+                                        <div class="card">
+                                            <div class="card-header">
+                                                Lampiran 
+                                                <button type="button" id="add_lampiran" class="btn btn-sm btn-info pull-right" >Tambah Lampiran</button>
+                                            </div>
+                                            <div class="card-body">`;
+
+                                            if(data.lampiran.length < 1){
+                                                content += `<div class="text-center">Tidak Ada Lampiran</div>`;
+                                            } else {
+                                                content += `<div class="list-group">`;
+                                                    $.each(data.lampiran, function(k, v){
+                                                        content += `<img src="<?= base_url('doc/lampiran_cuti/') ?>${v.lampiran}">`;
+                                                    });          
+                                                content += `</div>`;
+                                            }
+
+                content += `                 </div>
+                                        </div>`;
 
             $('#detail_content').html(content);
 
@@ -203,6 +221,10 @@
                 });
                 }
             })
+        })
+
+        $(document).on('click', '#add_lampiran', function(){
+            alert('Okeeee');
         })
     })
  </script>

@@ -169,7 +169,7 @@ class Approval_izin extends CI_Controller {
                 'keterangan'  => 'Approve 1'
               );
 
-              $update = $this->IzinModel->edit($where, $data, $log, $approval);
+              $update = $this->IzinModel->edit($where, $data, $log, $approval, FALSE);
 
               if(!$update){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengapprove izin'));

@@ -27,9 +27,13 @@
 
   <link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet"/>
 
+  <link href="<?= base_url() ?>assets/plugins/dropzone/css/dropzone.css" rel="stylesheet" type="text/css">
+
   <link href="<?= base_url() ?>assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
 
   <link rel="stylesheet" href="<?= base_url('assets/plugins/sweetalert/sweetalert.css') ?>">
+
+  <link href="<?= base_url() ?>assets/plugins/fullcalendar/css/fullcalendar.min.css" rel='stylesheet'/>
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css"/>
 
@@ -103,19 +107,6 @@
         </a>
         <ul class="sidebar-submenu">
           <li><a href="#/approval_pengganti"><i class="fa fa-circle-o"></i> Approval Pengganti</a></li>
-          <li><a href="#/approval_cuti"><i class="fa fa-circle-o"></i> Approval Cuti</a></li>
-          <li><a href="#/approval_izin"><i class="fa fa-circle-o"></i> Approval Izin</a></li>
-        </ul>
-      </li>
-
-      <li>
-        <a href="#" class="waves-effect">
-          <i class="icon-layers"></i> <span>Laporan</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="sidebar-submenu">
-          <li><a href="#/laporan_cuti"><i class="fa fa-circle-o"></i> Laporan Pengajuan Cuti</a></li>
-          <li><a href="#/laporan_izin"><i class="fa fa-circle-o"></i> Laporan Pengajuan Izin</a></li>
-          <li><a href="#/laporan_revisi"><i class="fa fa-circle-o"></i> Laporan Koreksi Absen</a></li>
         </ul>
       </li>
 
@@ -264,6 +255,9 @@
 
   <script src="<?= base_url() ?>assets/plugins/sweetalert/sweetalert.min.js"></script>
 
+  <script src="<?= base_url() ?>assets/plugins/dropzone/js/dropzone.js"></script>
+  <script src="<?= base_url() ?>assets/plugins/jquery.PrintArea.js"></script>
+
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
@@ -276,6 +270,9 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
   <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>
+
+  <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/moment.min.js'></script>
+  <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
 
   <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 

@@ -21,6 +21,7 @@ class Izin extends CI_Controller {
 
     $this->load->model('IzinModel');
     $this->load->model('ApprovalIzinModel');
+    $this->load->model('LampiranIzinModel');
   }
 
   function add($token = null)
@@ -45,10 +46,27 @@ class Izin extends CI_Controller {
             $id_izin      = $this->input->post('id_izin');
             $tgl_izin     = date('Y-m-d', strtotime($this->input->post('tgl_izin')));
             $keterangan   = $this->input->post('keterangan');
+            $lampiran     = $this->input->post('lampiran');
 
             if($id_izin == null || $tgl_izin == null || $keterangan == null){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Data yang dikirim tidak lengkap'));
             } else {
+                if($lampiran == 'Y'){
+                  $nama_lampiran = $this->input->post('nama_lampiran');
+                  $lampiran_izin = $this->_upload_file('lampiran_izin', $id_pizin);
+
+                  if($nama_lampiran == null || $lampiran_izin == null){
+                      json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Data yang dikirim tidak lengkap'));
+                  } else {
+                    $lampiran = array(
+                      'id_pizin' => $id_pizin,
+                      'nama_lampiran' => $nama_lampiran,
+                      'lampiran_izin' => $lampiran_izin
+                    );
+                  } 
+                } else {
+                  $lampiran = array();
+                }
 
                 $data = array(
                     'id_pizin'      => $id_pizin,
@@ -67,7 +85,9 @@ class Izin extends CI_Controller {
                     'keterangan'  => 'Menambahkan izin baru'
                 );
 
-                $add = $this->IzinModel->add($data, $log);
+                
+
+                $add = $this->IzinModel->add($data, $log, $lampiran);
 
                 if(!$add){
                     json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menambah data izin'));
@@ -78,6 +98,35 @@ class Izin extends CI_Controller {
             }
         }
       }
+    }
+  }
+
+  function _upload_file($name, $id)
+  {
+    if(isset($_FILES[$name]) && $_FILES[$name]['name'] != ""){
+      $files = glob('doc/'.$name.'/'.$id.'.*');
+      foreach ($files as $key) {
+        unlink($key);
+      }
+
+      $config['upload_path']   = './doc/'.$name.'/';
+      $config['allowed_types'] = 'jpg|jpeg|png|pdf|doc|docx';
+      $config['overwrite']     = TRUE;
+      $config['max_size']      = '3048';
+      $config['remove_space']  = TRUE;
+      $config['file_name']     = $id;
+
+      $this->load->library('upload', $config);
+      $this->upload->initialize($config);
+
+      if(!$this->upload->do_upload($name)){
+        return null;
+      } else {
+        $file = $this->upload->data();
+        return $file['file_name'];
+      }
+    } else {
+      return null;
     }
   }
 
@@ -103,12 +152,33 @@ class Izin extends CI_Controller {
             $id_izin      = $this->input->post('id_izin');
             $tgl_izin     = date('Y-m-d', strtotime($this->input->post('tgl_izin')));
             $keterangan   = $this->input->post('keterangan');
+            $lampiran     = $this->input->post('lampiran');
 
             if($id_izin == null || $tgl_izin == null || $keterangan == null){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Data yang dikirim tidak lengkap'));
             } else {
 
                 $where = array('id_pizin' => $id_pizin);
+
+                if($lampiran == 'Y'){
+                  $nama_lampiran = $this->input->post('nama_lampiran');
+                  $lampiran_izin = $this->_upload_file('lampiran_izin', $id_pizin);
+
+                  if($nama_lampiran == null){
+                      json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Data yang dikirim tidak lengkap'));
+                  } else {
+                    $lampiran = array(
+                      'id_pizin'      => $id_pizin,
+                      'nama_lampiran' => $nama_lampiran
+                    );
+
+                    if($lampiran_izin != null){
+                      $lampiran['lampiran_izin'] = $lampiran_izin;
+                    }
+                  } 
+                } else {
+                  $lampiran = array();
+                }
 
                 $data = array(
                     'nik'           => $otorisasi->nik,
@@ -125,7 +195,7 @@ class Izin extends CI_Controller {
                     'keterangan'  => 'Mengedit Cuti Baru'
                 );
 
-                $add = $this->IzinModel->edit($where, $data, $log);
+                $add = $this->IzinModel->edit($where, $data, $log, FALSE, $lampiran);
 
                 if(!$add){
                     json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengedit data cuti'));
@@ -180,8 +250,10 @@ class Izin extends CI_Controller {
             $json['status']       = $key->status;
             
             $where_approval       = array('a.id_pizin' => $key->id_pizin);
-            
             $json['approval']     =  $this->ApprovalIzinModel->show($where_approval, FALSE, FALSE)->result();
+
+            $where_lampiran       = array('id_pizin' => $key->id_pizin);
+            $json['lampiran']     =  $this->LampiranIzinModel->show($where_lampiran, FALSE)->result();
             
             $response[] = $json;
         }

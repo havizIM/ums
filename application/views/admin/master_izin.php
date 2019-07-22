@@ -1,10 +1,10 @@
 <!-- Breadcrumb-->
 <div class="row pt-2 pb-2">
   <div class="col-sm-9">
-    <h4 class="page-title">Izin</h4>
+    <h4 class="page-title">Master Izin</h4>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="#/dashboard">Dashboard</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Izin</li>
+      <li class="breadcrumb-item active" aria-current="page">Master Izin</li>
     </ol>
   </div>
 
@@ -105,8 +105,9 @@
               $('#modal_add').modal('hide');
             } else {
               toastr.error(response.message);
-              $('#simpan_izin').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan');
             }
+
+            $('#simpan_izin').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan');
           },
           error: function(){
             toastr.error('Tidak dapat mengakses server');
@@ -165,11 +166,13 @@
       }, function (isConfirm){
         if (isConfirm) {
           $.ajax({
-            url: `<?= base_url('api/jenis_izin/delete') ?>${auth.token}?id_izin=${id_izin}`,
+            url: `<?= base_url('api/jenis_izin/delete/') ?>${auth.token}?id_izin=${id_izin}`,
             type: 'GET',
             dataType: 'JSON',
             success: function(response){
               if(response.status === 200){
+                toastr.success(response.message);
+                swal.close();
               } else {
                 toastr.error(response.message)
               }

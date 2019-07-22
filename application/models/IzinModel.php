@@ -38,11 +38,16 @@ class IzinModel extends CI_Model {
         return $this->db->get();
   }
 
-  function add($data, $log)
+  function add($data, $log, $lampiran)
   {
     $this->db->trans_start();
     $this->db->insert('izin', $data);
     $this->db->insert('log', $log);
+
+    if(!empty($lampiran)){
+        $this->db->insert('lampiran_izin', $lampiran);
+    }
+
     $this->db->trans_complete();
 
     if ($this->db->trans_status() === FALSE){
@@ -55,11 +60,15 @@ class IzinModel extends CI_Model {
   }
 
 
-  function edit($where, $data, $log, $approval)
+  function edit($where, $data, $log, $approval, $lampiran)
   {
     $this->db->trans_start();
     $this->db->where($where)->update('izin', $data);
     $this->db->insert('log', $log);
+
+    if(!empty($lampiran)){
+        $this->db->where($where)->update('lampiran_izin', $lampiran);
+    }
 
     if(!empty($approval)){
             $this->db->insert('approval_izin', $approval);

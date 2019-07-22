@@ -121,6 +121,36 @@
                                 }
 
                 content += `                </div>
+                                        </div>`
+
+                content += `
+                                    <div class="card">
+                                        <div class="card-header">Lampiran</div>
+                                        <div class="card-body">`;
+
+                                            if(data.lampiran.length < 1){
+                                                content += `<div class="text-center">Tidak Ada Lampiran</div>`;
+                                            } else {
+                                                content += `<div class="list-group">`;
+                                                    $.each(data.lampiran, function(k, v){
+                                                        content += `
+                                                                <table class="table">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>${v.nama_lampiran}</label>
+                                                                            <br/>
+                                                                            <embed src="<?= base_url('doc/lampiran_izin/') ?>${v.lampiran_izin}" style="width: 100%; max-height: 500px;">
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            
+                                                            
+                                                        `;
+                                                    });          
+                                                content += `</div>`;
+                                            }
+
+                content += `                 </div>
                                         </div>
                                     </div>`;
 

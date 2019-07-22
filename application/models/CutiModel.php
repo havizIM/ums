@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class CutiModel extends CI_Model {
   function show($where, $like, $between){
         $this->db->select('a.*')
-                 ->select('b.nama_cuti, b.keterangan')
+                 ->select('b.nama_cuti, b.keterangan, b.lampiran')
                  ->select('c.nama as nama_pemohon, c.jabatan as jabatan_pemohon')
                  ->select('d.id_divisi, d.nama_divisi as divisi_pemohon')
                  ->select('e.nama as nama_pengganti, c.jabatan as jabatan_pengganti')
@@ -42,11 +42,35 @@ class CutiModel extends CI_Model {
         return $this->db->get();
   }
 
-  function add($data, $log)
+  function total_cuti($where1, $where2){
+    $this->db->select('*')
+             ->select('(SELECT SUM(jumlah_cuti) FROM cuti WHERE id_cuti = jenis_cuti.id_cuti AND nik = "'.$where2['nik'].'" AND (YEAR(tgl_mulai) = "'.$where2['tahun'].'" AND YEAR(tgl_selesai) = "'.$where2['tahun'].'") AND status = "'.$where2['status'].'") as total_cuti')
+
+             ->from('jenis_cuti');
+
+
+    if(!empty($where1)){
+            foreach($where1 as $key => $value){
+                if($value != null){
+                    $this->db->where($key, $value);
+                }
+            }
+        }
+
+    return $this->db->get();
+
+  }
+
+  function add($data, $log, $detail)
   {
     $this->db->trans_start();
     $this->db->insert('cuti', $data);
     $this->db->insert('log', $log);
+
+    if(!empty($detail)){
+        $this->db->insert_batch('detail_cuti', $detail);
+    }
+
     $this->db->trans_complete();
 
     if ($this->db->trans_status() === FALSE){
@@ -75,7 +99,7 @@ class CutiModel extends CI_Model {
     }
   }
 
-  function edit($where, $data, $log, $approval)
+  function edit($where, $data, $log, $approval, $detail)
   {
     $this->db->trans_start();
     $this->db->where($where)->update('cuti', $data);
@@ -83,6 +107,11 @@ class CutiModel extends CI_Model {
 
     if(!empty($approval)){
         $this->db->insert('approval_cuti', $approval);
+    }
+
+    if(!empty($detail)){
+        $this->db->where($where)->delete('detail_cuti');
+        $this->db->insert_batch('detail_cuti', $detail);
     }
 
     $this->db->trans_complete();

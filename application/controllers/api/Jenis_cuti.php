@@ -47,10 +47,10 @@ class Jenis_cuti extends CI_Controller {
             $id_cuti          = $this->KodeModel->buatKode('jenis_cuti', 'C', 'id_cuti', 4);
             $nama_cuti        = $this->input->post('nama_cuti');
             $banyak_cuti      = $this->input->post('banyak_cuti');
-            $format_cuti      = $this->input->post('format_cuti');
+            $lampiran         = $this->input->post('lampiran');
             $keterangan       = $this->input->post('keterangan');
 
-            if($nama_cuti == null || $keterangan == null || $banyak_cuti == null || $format_cuti == null){
+            if($nama_cuti == null || $keterangan == null || $banyak_cuti == null){
               json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Data yang dikirim tidak lengkap'));
             } else {
 
@@ -58,7 +58,7 @@ class Jenis_cuti extends CI_Controller {
                 'id_cuti'         => $id_cuti,
                 'nama_cuti'       => $nama_cuti,
                 'banyak_cuti'     => $banyak_cuti,
-                'format_cuti'     => $format_cuti,
+                'lampiran'        => $lampiran,
                 'keterangan'      => $keterangan
               );
 
@@ -103,8 +103,12 @@ class Jenis_cuti extends CI_Controller {
         } else {
 
           $otorisasi      = $auth->row();
-          $id_cuti        = $this->input->get('id_cuti');
-          $show           = $this->JcutiModel->show($id_cuti);
+
+          $where = array(
+            'id_cuti'    => $this->input->get('id_cuti')
+          );
+
+          $show           = $this->JcutiModel->show($where);
           $jenis_cuti     = array();
 
           foreach($show->result() as $key){
@@ -113,7 +117,7 @@ class Jenis_cuti extends CI_Controller {
             $json['id_cuti']      = $key->id_cuti;
             $json['nama_cuti']    = $key->nama_cuti;
             $json['banyak_cuti']  = $key->banyak_cuti;
-            $json['format_cuti']  = $key->format_cuti;
+            $json['lampiran']  = $key->lampiran;
             $json['keterangan']   = $key->keterangan;
 
             $jenis_cuti[] = $json;

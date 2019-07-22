@@ -53,6 +53,7 @@ class Auth extends CI_Controller {
               'nik'            => $key->nik,
               'nama_user'      => $key->nama,
               'tgl_registrasi' => $key->tgl_registrasi,
+              'kelamin'        => $key->kelamin,
               'foto'           => $key->foto,
               'level'          => $level,
               'token'          => $key->token,
