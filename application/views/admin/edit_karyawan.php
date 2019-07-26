@@ -15,75 +15,95 @@
      <div class="card">
        <div class="card-body">
          <h5 class="card-title">Form Karyawan</h5>
-         <form id="form_edit">
-           <div class="form-group">
-            <label>Nama</label>
-            <input type="text" class="form-control" id="nama" name="nama">
-           </div>
+         <form id="form_edit" enctype="multipart/form-data">
 
-           <div class="form-group">
-            <label>Tempat Lahir</label>
-            <input type="text" class="form-control" id="tmp_lahir" name="tmp_lahir">
-           </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Nama</label>
+                    <input type="text" class="form-control" id="nama" name="nama">
+                    <div class="invalid_nama"></div>
+                  </div>
 
-           <div class="form-group">
-            <label>Tanggal Lahir</label>
-            <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir">
-           </div>
+                  <div class="form-group">
+                    <label>Tempat Lahir</label>
+                    <input type="text" class="form-control" id="tmp_lahir" name="tmp_lahir">
+                    <div class="invalid_tmp_lahir"></div>
+                  </div>
 
-           <div class="form-group">
-             <label>Jenis Kelamin</label>
-             <select class="form-control" id="kelamin" name="kelamin">
-               <option value=""></option>
-               <option value="Laki-laki">Laki-laki</option>
-               <option value="Perempuan">Perempuan</option>
-             </select>
-           </div>
+                  <div class="form-group">
+                    <label>Tanggal Lahir</label>
+                    <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir">
+                    <div class="invalid_tgl_lahir"></div>
+                  </div>
 
-           <div class="form-group">
-            <label>Tanggal Masuk</label>
-            <input type="date" class="form-control" id="tgl_masuk" name="tgl_masuk">
-           </div>
+                  <div class="form-group">
+                    <label>Jenis Kelamin</label>
+                    <select class="form-control" id="kelamin" name="kelamin">
+                      <option value=""></option>
+                      <option value="Laki-laki">Laki-laki</option>
+                      <option value="Perempuan">Perempuan</option>
+                    </select>
+                    <div class="invalid_kelamin"></div>
+                  </div>
+                  <div class="form-group">
+                    <label>Tanggal Masuk</label>
+                    <input type="date" class="form-control" id="tgl_masuk" name="tgl_masuk">
+                    <div class="invalid_tgl_masuk"></div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" id="status_karyawan" name="status_karyawan">
+                      <option value=""></option>
+                      <option value="Aktif">Aktif</option>
+                      <option value="Nonaktif">Nonaktif</option>
+                    </select>
+                    <div class="invalid_status_karyawan"></div>
+                  </div>
+                  <div class="form-group">
+                    <label>Jabatan</label>
+                    <input type="text" class="form-control" id="jabatan" name="jabatan">
+                    <div class="invalid_jabatan"></div>
+                  </div>
 
-           <div class="form-group">
-             <label>Status</label>
-             <select class="form-control" id="status" name="status_karyawan">
-               <option value=""></option>
-               <option value="Aktif">Aktif</option>
-               <option value="Nonaktif">Nonaktif</option>
-             </select>
-           </div>
+                  <div class="form-group">
+                    <label>Divisi</label>
+                    <div class="input-group">
+                      <input type="hidden" name="id_divisi" id="id_divisi">
+                      <input type="text" name="nama_divisi" id="nama_divisi" readonly class="form-control">
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" id="cari_divisi"><i class="fa fa-search" ></i></button>
+                      </div>
+                    </div>
+                    <div class="invalid_nama_divisi"></div>
+                  </div>
 
-           <div class="form-group">
-            <label>Jabatan</label>
-            <input type="text" class="form-control" id="jabatan" name="jabatan">
-           </div>
+                  <div class="form-group">
+                    <label>Level</label>
+                    <select class="form-control" id="level" name="level">
+                      <option value=""></option>
+                      <option value="Karyawan">Karyawan</option>
+                      <option value="Admin">Admin</option>
+                      <option value="Kabag">Kabag</option>
+                      <option value="Manager">Manager</option>
+                    </select>
+                    <div class="invalid_level"></div>
+                  </div>
 
-           <div class="form-group">
-             <label>Divisi</label>
-             <div class="input-group">
-               <input type="hidden" name="id_divisi" id="id_divisi">
-               <input type="text" name="nama_divisi" id="nama_divisi" readonly class="form-control">
-               <div class="input-group-append">
-                 <button class="btn btn-primary" type="button" id="cari_divisi"><i class="fa fa-search" ></i></button>
-               </div>
-             </div>
-           </div>
+                  <div class="form-group">
+                    <label for="">Foto</label>
+                    <input type="file" class="form-control" id="foto" name="foto">
+                  </div>
+              </div>
 
-           <div class="form-group">
-             <label>Level</label>
-             <select class="form-control" id="level" name="level">
-               <option value=""></option>
-               <option value="Karyawan">Karyawan</option>
-               <option value="Admin">Admin</option>
-               <option value="Kabag">Kabag</option>
-               <option value="Direksi">Direksi</option>
-             </select>
-           </div>
+              <div class="form-group text-right">
+                  <input type="hidden" name="nik" id="edit_id">
+                  <a href="#/karyawan" id="batal" class="btn btn-danger shadow-danger px-5"> Batal</a>
+                  <button type="submit" id="submit_edit" class="btn btn-primary shadow-primary px-5"> Simpan</button>
+              </div>
 
-           <div class="form-group">
-             <input type="hidden" name="nik" id="edit_id">
-            <button type="submit" id="submit_edit" class="btn btn-primary shadow-primary px-5"> Simpan</button>
           </div>
          </form>
        </div>
@@ -243,7 +263,7 @@
           $('#tgl_lahir').val(v.tgl_lahir);
           $('#kelamin').val(v.kelamin);
           $('#tgl_masuk').val(v.tgl_masuk);
-          $('#status').val(v.status_karyawan);
+          $('#status_karyawan').val(v.status_karyawan);
           $('#jabatan').val(v.jabatan);
           $('#id_divisi').val(v.id_divisi);
           $('#nama_divisi').val(v.nama_divisi);
@@ -255,48 +275,106 @@
       }
     });
 
-    $('#form_edit').on('submit', function(e){
-      e.preventDefault();
+    $('#form_edit').validate({
+            rules: {
+                nama: "required",
+                tmp_lahir: "required",
+                tgl_lahir: "required",
+                kelamin: "required",
+                tgl_masuk: "required",
+                status_karyawan: "required",
+                jabatan: "required",
+                nama_divisi: "required",
+                level: "required"
 
-      var nama = $('#nama').val();
-      var tmp_lahir = $('#tmp_lahir').val();
-      var tgl_lahir = $('#tgl_lahir').val();
-      var kelamin = $('#kelamin').val();
-      var tgl_masuk = $('#tgl_masuk').val();
-      var status = $('#status').val();
-      var jabatan = $('#jabatan').val();
-      var id_divisi = $('#id_divisi').val();
-      var nama_divisi = $('#nama_divisi').val();
-      var level = $('#level').val();
-
-      if(nama === '' || tmp_lahir === '' || tgl_lahir === '' || kelamin === '' || tgl_masuk === '' || status === '' || jabatan === '' || id_divisi === '' || nama_divisi === '' || level === ''){
-        toastr.warning('Data belum lengkap');
-      } else {
-        $.ajax({
-          url: `<?= base_url('api/karyawan/edit/') ?>${auth.token}?nik=${nik}`,
-          type: 'POST',
-          dataType: 'JSON',
-          beforeSend: function(){
-            $('#submit_edit').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-spinner fa-spin"></i>');
-          },
-          data: $(this).serialize(),
-          success: function(response){
-            if(response.status === 200){
-              toastr.success(response.message);
-              $('#form_edit')[0].reset();
-              location.hash = '#/karyawan';
-            } else {
-              toastr.error(response.message);
-              $('#submit_edit').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan')
+            },
+            messages: {
+                nama: "Field wajib diisi",
+                tmp_lahir: "Field wajib diisi",
+                tgl_lahir: "Field wajib diisi",
+                kelamin: "Field wajib diisi",
+                tgl_masuk: "Field wajib diisi",
+                status_karyawan: "Field wajib diisi",
+                jabatan: "Field wajib diisi",
+                nama_divisi: "Field wajib diisi",
+                level: "Field wajib diisi"
+            },
+            errorClass: 'is-invalid',
+            errorPlacement: function(error, element) {
+                var name = $(element).attr("id");
+                error.appendTo($('.invalid_'+name));
+            },
+            submitHandler: function(form){
+                $.ajax({
+                  url: `<?= base_url('api/karyawan/edit/') ?>${auth.token}?nik=${nik}`,
+                  type: 'POST',
+                  dataType: 'JSON',
+                  data: new FormData(form),
+                  processData:false,
+                  contentType:false,
+                  beforeSend: function(){
+                    $('#submit_edit').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-spinner fa-spin"></i>');
+                  },
+                  success: function(response){
+                    if(response.status === 200){
+                      toastr.success(response.message);
+                      location.hash = '#/karyawan/'+nik;
+                    } else {
+                      toastr.error(response.message);
+                      $('#submit_edit').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan')
+                    }
+                  },
+                  error: function(){
+                    toastr.error('Tidak dapat mengakses server');
+                    $('#submit_edit').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan')
+                  }
+                });
             }
-          },
-          error: function(){
-            toastr.error('Tidak dapat mengakses server');
-            $('#submit_edit').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan')
-          }
-        });
-      }
-    })
+        })
+
+    // $('#form_edit').on('submit', function(e){
+    //   e.preventDefault();
+
+    //   var nama = $('#nama').val();
+    //   var tmp_lahir = $('#tmp_lahir').val();
+    //   var tgl_lahir = $('#tgl_lahir').val();
+    //   var kelamin = $('#kelamin').val();
+    //   var tgl_masuk = $('#tgl_masuk').val();
+    //   var status = $('#status').val();
+    //   var jabatan = $('#jabatan').val();
+    //   var id_divisi = $('#id_divisi').val();
+    //   var nama_divisi = $('#nama_divisi').val();
+    //   var level = $('#level').val();
+
+    //   if(nama === '' || tmp_lahir === '' || tgl_lahir === '' || kelamin === '' || tgl_masuk === '' || status === '' || jabatan === '' || id_divisi === '' || nama_divisi === '' || level === ''){
+    //     toastr.warning('Data belum lengkap');
+    //   } else {
+    //     $.ajax({
+    //       url: `<?= base_url('api/karyawan/edit/') ?>${auth.token}?nik=${nik}`,
+    //       type: 'POST',
+    //       dataType: 'JSON',
+    //       data: new FormData(this),
+    //       processData:false,
+    //       contentType:false,
+    //       beforeSend: function(){
+    //         $('#submit_edit').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-spinner fa-spin"></i>');
+    //       },
+    //       success: function(response){
+    //         if(response.status === 200){
+    //           toastr.success(response.message);
+    //           location.hash = '#/karyawan';
+    //         } else {
+    //           toastr.error(response.message);
+    //           $('#submit_edit').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan')
+    //         }
+    //       },
+    //       error: function(){
+    //         toastr.error('Tidak dapat mengakses server');
+    //         $('#submit_edit').removeClass('disabled').removeAttr('disabled', 'disabled').text('Simpan')
+    //       }
+    //     });
+    //   }
+    // })
 
    })
  </script>

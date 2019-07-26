@@ -1,9 +1,9 @@
 <div class="row pt-2 pb-2">
     <div class="col-sm-12">
-        <h4 class="page-title">Approval Pengganti</h4>
+        <h4 class="page-title">Approval Cuti</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#/dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Approval - Pengganti</li>
+            <li class="breadcrumb-item active" aria-current="page">Approval - Cuti</li>
         </ol>
     </div>
  </div>
@@ -64,12 +64,14 @@
        responsive: true,
        processing: true,
        ajax: {   
-                url: `<?= base_url('api/approval_pengganti/show/'); ?>${auth.token}`,
+                url: `<?= base_url('api/approval_cuti/show/'); ?>${auth.token}`,
                 dataSrc: function(response){
                   var filter = [];
 
+                  console.log(response);
+
                   $.each(response.data, function(k,v){
-                      if(v.status === 'Proses'){
+                      if((v.pemohon.id_divisi !== auth.id_divisi && v.status === 'Approve 2') || (v.pemohon.id_divisi === auth.id_divisi && v.status === 'Approve 1')){
                         filter.push(v);
                       }
                   })
@@ -80,7 +82,7 @@
        columns: [
          {"data": 'tgl_input'},
          {"data": null, 'render': function(data, type, row){
-          return `<a href="#/approval_pengganti/${row.id}">${row.id}</a>`
+          return `<a href="#/approval_cuti/${row.id}">${row.id}</a>`
           }
          },
          {"data": 'pemohon.nik'},
@@ -88,7 +90,7 @@
          {"data": 'tgl_mulai'},
          {"data": 'tgl_selesai'},
          {"data": null, 'render': function(data, type, row){
-            if(row.status === 'Proses'){
+            if(row.status === 'Approve 1'){
                 return `<span class="badge badge-warning">Menunggu Approval</span>`;
             } else  if(row.status === 'Ditolak' || row.status === 'Batal'){
                 return `<span class=" badge badge-danger">${row.status}</span>`;

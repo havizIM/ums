@@ -302,6 +302,126 @@ class Auth extends CI_Controller {
     }
   }
 
+  function lupa_password(){
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if($method != 'POST') {
+      json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah' ));
+    } else {
+      $email            = $this->input->post('email');
+			$new_password     = substr(str_shuffle("01234567890abcdefghijklmnopqestuvwxyz"), 0, 5);
+
+      if($email == null){
+        json_output(400, array('status' => 400, 'description' => 'Failed', 'message' => 'Email tidak boleh kosong' ));
+      } else {
+        $param    = array('a.email' => $email);
+        $karyawan = $this->AuthModel->cekOtorisasi($param);
+
+        if($karyawan->num_rows() != 1){
+  				json_output(400, array('status' => 400, 'description' => 'Failed', 'message' => 'Email tidak ditemukan' ));
+  			} else {
+
+          $otorisasi = $karyawan->row();
+
+          $data_email = array(
+            'nama'            => $otorisasi->nama,
+            'password'        => $new_password
+          );
+
+          /* ---------- Setting Email Offline ------------- */
+          // $config = array(
+          //   'charset'   => 'utf-8',
+          //   'wordwrap'  => TRUE,
+          //   'mailtype'  => 'html',
+          //   'protocol'  => 'smtp',
+          //   'smtp_host' => 'ssl://smtp.gmail.com',
+          //   'smtp_user' => 'adm.titan001@gmail.com',
+          //   'smtp_pass' => 'cintaku1',
+          //   'smtp_port' => 465,
+          //   'crlf'      => "\r\n",
+          //   'newline'   => "\r\n"
+          // );
+
+          // $this->load->library('email');
+
+          // $this->email->initialize($config);
+          // $this->email->from('adm.titan001@gmail.com', 'Admin SIPPK');
+          // $this->email->to($email_perusahaan);
+          // $this->email->subject('Reset Password Akun SIPPK');
+          // $this->email->message($template);
+          /* -------------- Setting Email Offline --------------- */
+
+          /* ----------------- Setting Email Online ---------------------- */
+          $this->load->library('email');
+
+          $config = array(
+              'protocol'  => 'smtp',
+              'smtp_host' => 'ssl://smtp.googlemail.com',
+              'smtp_port' => 465,
+              'smtp_user' => 'umsosella@gmail.com',
+              'smtp_pass' => 'cintaku1',
+              'mailtype'  => 'html',
+              'charset'   => 'utf-8'
+          );
+          $this->email->initialize($config);
+          $this->email->set_mailtype("html");
+          $this->email->set_newline("\r\n");
+
+          $template = $this->load->view('email/lupa_password', $data_email, TRUE);
+
+          $this->email->to($otorisasi->email);
+          $this->email->from('umsosella@gmail.com','SIPACAR');
+          $this->email->subject('Reset Password Akun SIPACAR');
+          $this->email->message($template);
+          /* ---------------- Setting Email Online ------------------- */
+
+          /* ----------------- New Setting ------------------------ */
+          // $this->load->library('email');
+
+          // $this->email->set_newline("\r\n");
+
+          // $config['protocol'] = 'smtp';
+          // $config['smtp_host'] = 'smtp.gmail.com';
+          // $config['smtp_port'] = '587';
+          // $config['smtp_user'] = 'adm.titan001@gmail.com';
+          // $config['smtp_from_name'] = 'Admin Titan Group';
+          // $config['smtp_pass'] = 'cintaku1';
+          // $config['wordwrap'] = TRUE;
+          // $config['newline'] = "\r\n";
+          // $config['mailtype'] = 'html';                       
+
+          // $this->email->initialize($config);
+
+          // $this->email->from('adm.titan001@gmail.com', 'Admin SIPPK');
+          // $this->email->to($email_perusahaan);
+          // $this->email->subject('Reset Password Akun SIPPK');
+          // $this->email->message($template);
+
+        /* ----------------- New Setting ------------------------ */
+
+          $send = $this->email->send();
+          
+          if (!$send) {
+            json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Tidak dapat mengirim email'));
+          } else {
+            $param2    = array('email' => $email);
+            $data      = array(
+              'password' => $new_password
+            );
+
+            $update = $this->AuthModel->resetPass($param2, $data);
+
+            if(!$update){
+							json_output(400, array('status' => 400, 'description' => 'Failed', 'message' => 'Gagal melakukan reset password' ));
+						} else {
+							json_output(200, array('status' => 200, 'description' => 'Success', 'message' => 'Berhasil melakukan reset password. Silahkan cek email anda untuk mendapatkan password baru'));
+						}
+          }
+        }
+      }
+    }
+  }
+
 }
 
  ?>

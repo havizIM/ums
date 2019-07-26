@@ -202,10 +202,12 @@
                             swal.close();
                         } else {
                             toastr.error(response.message, response.description)
+                            swal.close();
                         }
                     },
                     error: function(){
                         toastr.error('Tidak dapat mengakses server')
+                        swal.close();
                     }
                 });
                 }
@@ -240,10 +242,12 @@
                             swal.close();
                         } else {
                             toastr.error(response.message, response.description)
+                            swal.close();
                         }
                     },
                     error: function(){
                         toastr.error('Tidak dapat mengakses server')
+                        swal.close();
                     }
                 });
                 }

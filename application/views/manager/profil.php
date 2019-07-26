@@ -13,7 +13,7 @@
    <div class="profile-card-3">
     <div class="card">
 		 <div class="user-fullimage">
-		   <img src="<?= base_url() ?>assets/images/avatars/avatar-22.png" alt="user avatar" class="card-img-top">
+		   <img id="pp" alt="user avatar" class="card-img-top">
 		    <div class="details">
 		      <h5 class="mb-1 text-white ml-3" id="nama"></h5>
 				  <h6 class="text-white ml-3" id="nik"></h6>
@@ -21,25 +21,19 @@
 		  </div>
 
       <div class="card-body text-center">
-        <p id="level"></p>
+        <p id="jabatan"></p>
   		  <div class="row">
-  		    <div class="col p-2">
-    				<h5 class="mb-0 line-height-5">ID Divisi</h5>
-    				<small class="mb-0 font-weight-bold" id="id_divisi"></small>
+  		    <div class="col-md-6 p-2">
+    				<h5 class="mb-0 line-height-5">Divisi</h5>
+    				<small class="mb-0 font-weight-bold" id="nama_divisi"></small>
   				</div>
 
-					<div class="col p-2">
-  					<h5 class="mb-0 line-height-5">Divisi</h5>
-  					<small class="mb-0 font-weight-bold" id="nama_divisi"></small>
-					</div>
 
-					<div class="col p-2">
-  					<h5 class="mb-0 line-height-5">Jabatan</h5>
-  					<small class="mb-0 font-weight-bold" id="jabatan"></small>
+					<div class="col-md-6 p-2">
+  					<h5 class="mb-0 line-height-5">Status</h5>
+  					<small class="mb-0 font-weight-bold" id="status_keaktifan"></small>
 					</div>
 			  </div>
-        <hr>
-        <span class="btn btn-primary shadow-primary btn-sm btn-round waves-effect waves-light m-1" id="status_keaktifan"></span>
       </div>
      </div>
 		</div>
@@ -64,35 +58,35 @@
               <div class="row">
                 <div class="col-md-6">
                   <h6><i class="ti-calendar"></i> Tanggal Masuk</h6>
-                  <p id="tgl_masuk"></p>
+                  <p id="tgl_masuk" class="m-b-10"></p><br>
 
                   <h6><i class="ti-time"></i> Tanggal Registrasi</h6>
-                  <p id="tgl_regis"></p>
+                  <p id="tgl_regis"></p><br>
 
                   <h6><i class="ti-location-pin"></i> Tempat Lahir</h6>
-                  <p id="tmp_lahir"></p>
+                  <p id="tmp_lahir"></p><br>
 
                   <h6><i class="ti-calendar"></i> Tanggal Lahir</h6>
-                  <p id="tgl_lahir"></p>
+                  <p id="tgl_lahir"></p><br>
 
                   <h6><i class="fa fa-intersex"></i> Kelamin</h6>
-                  <p id="kelamin"></p>
+                  <p id="kelamin"></p><br>
                 </div>
                 <div class="col-md-6">
                   <h6><i class="ti-location-pin"></i> Alamat</h6>
-                  <p id="alamat"></p>
+                  <p id="alamat"></p><br>
 
                   <h6><i class="ti-control-play"></i> Status</h6>
-                  <p id="status"></p>
+                  <p id="status"></p><br>
 
                   <h6><i class="fa fa-graduation-cap"></i> Pendidikan</h6>
-                  <p id="pendidikan"></p>
+                  <p id="pendidikan"></p><br>
 
                   <h6><i class="ti-mobile"></i> Telepon</h6>
-                  <p id="telepon"></p>
+                  <p id="telepon"></p><br>
 
                   <h6><i class="ti-email"></i> Email</h6>
-                  <p id="email"></p>
+                  <p id="email"></p><br>
                 </div>
               </div>
               <!--/row-->
@@ -164,8 +158,8 @@
 
 <script type="text/javascript">
 
-  function load_data(){
-    $.ajax({
+function load_profile(){
+  $.ajax({
       url: '<?= base_url('api/auth/profile/') ?>'+auth.token,
       type: 'GET',
       dataType: 'JSON',
@@ -193,16 +187,19 @@
           $('#edit_pendidikan').val(v.pendidikan)
           $('#edit_alamat').val(v.alamat)
           $('#edit_telepon').val(v.telepon)
+          $('#pp').attr('src', `<?= base_url('doc/foto/') ?>${v.foto}`)
         })
       }
     })
-  }
+}
+
+
 
   $(document).ready(function(){
 
     $('#profile').addClass('active');
 
-    load_data();
+    load_profile();
 
     $('#form_edit').on('submit', function(e){
       e.preventDefault();

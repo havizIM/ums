@@ -133,7 +133,7 @@ class Approval_cuti extends CI_Controller {
     }
   }
 
-  public function approve($token = null){
+  public function approve_2($token = null){
     $method = $_SERVER['REQUEST_METHOD'];
 
     if ($method != 'GET') {
@@ -171,6 +171,60 @@ class Approval_cuti extends CI_Controller {
                 'id_pcuti'    => $id_pcuti,
                 'nik'         => $otorisasi->nik,
                 'keterangan'  => 'Approve 2'
+              );
+
+              $update = $this->CutiModel->edit($where, $data, $log, $approval, FALSE);
+
+              if(!$update){
+                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menyetujui cuti'));
+              } else {
+                $this->pusher->trigger('ums', 'approve', $log);
+                json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menyetujui cuti'));
+              }
+            }
+        }
+      }
+    }
+  }
+
+  public function approve_3($token = null){
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+			json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi = $auth->row();
+
+            $id_pcuti = $this->input->get('id');
+
+            if($id_pcuti == null){
+              json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'ID Cuti tidak ditemukan'));
+            } else {
+              $where = array('id_pcuti' => $id_pcuti);
+
+              $data = array('status' => 'Approve 3');
+
+              $log = array(
+                'nik'         => $otorisasi->nik,
+                'id_ref'      => $id_pcuti,
+                'refrensi'    => 'Cuti',
+                'kategori'    => 'Approve',
+                'keterangan'  => 'Menyetujui pengajuan cuti'
+              );
+
+              $approval = array(
+                'id_pcuti'    => $id_pcuti,
+                'nik'         => $otorisasi->nik,
+                'keterangan'  => 'Approve 3'
               );
 
               $update = $this->CutiModel->edit($where, $data, $log, $approval, FALSE);

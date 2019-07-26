@@ -1,9 +1,9 @@
 <div class="row pt-2 pb-2">
     <div class="col-sm-9">
-        <h4 class="page-title">Cetak Absensi</h4>
+        <h4 class="page-title">Laporan Cuti</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#/dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Cetak Absensi</li>
+            <li class="breadcrumb-item active" aria-current="page">Laporan Cuti</li>
         </ol>
     </div>
  </div>
@@ -11,16 +11,9 @@
  <div class="row">
    <div class="col-md-12">
      <div class="card">
-        <div class="card-header">Filter Absensi</div>
+        <div class="card-header">Filter Laporan Cuti</div>
         <div class="card-body">
             <form id="form_filter">
-                <div class="form-group row">
-                    <label for="alasan" class="col-md-2 col-form-label">Pilih Karyawan</label>
-                    <div class="col-md-10">
-                        <select name="nik" id="nik" class="form-control"></select>
-                        <div class="invalid_nik"></div>
-                    </div>
-                </div>
                 <div class="form-group row">
                     <label for="alasan" class="col-md-2 col-form-label">Pilih Bulan</label>
                     <div class="col-md-10">
@@ -66,36 +59,15 @@
     const DOM = {
         content: '#content_absen',
         form: '#form_filter',
-        nik: '#nik',
         tahun: '#tahun',
         submit: '#submit_filter'
     }
 
-    const cetakAbsenUI = (() => {
+    const laporanCutiUI = (() => {
         return {
-            renderNoKaryawan: () => {
-                let html = `
-                    <option value="">-- Pilih Karyawan --</option>
-                `;
 
-                $(DOM.nik).html(html);
-            },
-
-            renderNoAbsen: () => {
+            renderNoCuti: () => {
                console.log('No Absensi...')
-            },
-            renderKaryawan: (data) => {
-                let html = `
-                    <option value="">-- Pilih Karyawan --</option>
-                `
-
-                $.each(data, function(k,v){
-                    html += `
-                        <option value="${v.nik}">${v.nik} - ${v.nama}</option>
-                    `;
-                })
-
-                $(DOM.nik).html(html);
             },
             renderTahun: (data) => {
                 let html = `
@@ -110,16 +82,14 @@
 
                 $(DOM.tahun).html(html);
             },
-            renderAbsensi: (data) => {
+            renderCuti: (res) => {
                 let html = '';
                 let bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
-                $.each(data, function(k, v){
-
+                
                     html = `
                         <div class="card">
                             <div class="card-header">
-                                Absensi ${v.nik} - ${v.nama}
                                 <div class="btn-group" style="float: right">
                                     <button class="btn btn-success btn-md" id="print_absen"><i class="fa fa-print"></i> Print</button>
                                 </div>
@@ -134,67 +104,37 @@
                                     </div>
                                     
                                     <div class="col-md-12">
-                                        <center><h5>Absensi Periode ${bulan[v.bulan-1]} ${v.tahun}</h5></center><br>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <th>NIK</th>
-                                                <td>${v.nik}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Nama</th>
-                                                <td>${v.nama}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Jabatan</th>
-                                                <td>${v.jabatan}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Divisi</th>
-                                                <td>${v.divisi}</td>
-                                            </tr>
-                                        </table>
+                                        <center><h5>Pengajuan Cuti Periode ${bulan[res.bulan-1]} ${res.tahun}</h5></center><br>
                                     </div>
                                 </div><br><br>
+
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="font-size: 11px">
                                             <thead>
                                                 <tr>
-                                                    <th>Tanggal</th>
-                                                    <th>Jam Masuk</th>
-                                                    <th>Jam Pulang</th>
-                                                    <th>Cuti</th>
-                                                    <th>Keterangan Cuti</th>
-                                                    <th>Izin</th>
-                                                    <th>Keterangan Izin</th>
+                                                    <th>No Pengajuan</th>
+                                                    <th>Pemohon</th>
+                                                    <th>Jenis Cuti</th>
+                                                    <th>Tgl Mulai</th>
+                                                    <th>Tgl Selesai</th>
+                                                    <th>Jumlah Cuti</th>
                                                 </tr>
                                             </thead>
                                             <tbody>`
 
-                                            if(v.absensi.length === 0){
-                                                 html += `
-                                                        <tr>
-                                                            <td colspan="7"><center>Tidak ada absensi</center></td>
-                                                        </tr>
-                                                    `;
-                                            } else {
-                                                $.each(v.absensi, function(k2, v2){
-                                                    html += `
-                                                        <tr>
-                                                            <td>${v2.tgl}</td>
-                                                            <td>${v2.jam_m !== '-' ? v2.jam_m : '-'}</td>
-                                                            <td>${v2.jam_k !== '-' ? v2.jam_k : '-'}</td>
-                                                            <td>${v2.ket_cuti !== '-' ? 'Y' : 'T'}</td>
-                                                            <td>${v2.ket_cuti !== '-' ? v2.ket_cuti : 'T'}</td>
-                                                            <td>${v2.ket_izin !== '-' ? 'Y' : 'T'}</td>
-                                                            <td>${v2.ket_izin !== '-' ? v2.ket_izin : 'T'}</td>
-                                                        </tr>
-                                                    `;
-                                                })
-                                            }
+                                            $.each(res.data, function(k, v){
+                                                html += `
+                                                    <tr>
+                                                        <td>${v.id}</td>
+                                                        <td>${v.pemohon.nik} - ${v.pemohon.nama}</td>
+                                                        <td>${v.jenis_cuti.nama_cuti}</td>
+                                                        <td>${v.tgl_mulai}</td>
+                                                        <td>${v.tgl_selesai}</td>
+                                                        <td>${v.jumlah_cuti}</td>
+                                                    </tr>
+                                                `;
+                                            })
                                                 
                     html +=                 `
                                             </tbody>
@@ -204,36 +144,13 @@
                             </div>
                         </div>
                     `;
-                })
                 
                 $(DOM.content).html(html);
             }
         }
     })();
 
-    const cetakAbsenController = ((UI) => {
-
-        const getKaryawan = () => {
-            $.ajax({
-                url: `<?= base_url('api/karyawan/show/') ?>${auth.token}`,
-                type: 'GET',
-                dataType: 'JSON',
-                success: function(res){
-                    if(res.status === 200){
-                        if(res.data.length === 0){
-                            UI.renderNoKaryawan();
-                        } else {
-                            UI.renderKaryawan(res.data)
-                        }
-                    }else {
-                        UI.renderNoKaryawan();
-                    }
-                },
-                error: function(err){
-                    UI.renderNoKaryawan();
-                }
-            })
-        }
+    const laporanCutiController = ((UI) => {
 
         const getTahun = () => {
             var currentYear = new Date().getFullYear(), years = [];
@@ -249,14 +166,12 @@
         const submitFilter = () => {
             $(DOM.form).validate({
                 rules: {
-                    nik: "required",
                     bulan: "required",
                     tahun: "required"
                 },
                 messages: {
-                    nik: "Pilih NIK Karyawan",
-                    bulan: "Pilih Bulan Absensi",
-                    tahun: "Pilih Tahun Absensi"
+                    bulan: "Pilih Bulan Pengajuan Cuti",
+                    tahun: "Pilih Tahun Pengajuan Cuti"
                 },
                 errorClass: 'is-invalid',
                 errorPlacement: function(error, element) {
@@ -265,12 +180,11 @@
                     error.appendTo($('.invalid_'+name));
                 },
                 submitHandler: function(form){
-                    let nik = $('#nik').val();
                     let bulan = $('#bulan').val();
                     let tahun = $('#tahun').val();
                     
                     $.ajax({
-                        url: `<?= base_url('api/absensi/show/') ?>${auth.token}?nik=${nik}&bulan=${bulan}&tahun=${tahun}`,
+                        url: `<?= base_url('api/cuti/laporan/') ?>${auth.token}?bulan=${bulan}&tahun=${tahun}`,
                         type: 'GET',
                         dataType: 'JSON',
                         beforeSend: function(){
@@ -278,18 +192,18 @@
                         },
                         success: function(response){
                             if(response.status === 200){
-                                if(response.data.length === 1){
-                                    UI.renderAbsensi(response.data);
+                                if(response.data.length !== 0){
+                                    UI.renderCuti(response);
                                 } else {
-                                    UI.renderNoAbsen();
+                                    UI.renderNoCuti();
                                 }
                             } else {
-                                UI.renderNoAbsen();
+                                UI.renderNoCuti();
                             }
                             $(DOM.submit).html('Submit');
                         },
                         error: function(err){
-                            UI.renderNoAbsen();
+                            UI.renderNoCuti();
                             $(DOM.submit).html('Submit');
                             toastr.error('Tidak dapat mengakases server', 'Gagal');
                         }
@@ -298,7 +212,7 @@
             })
         }
 
-        printAbsen = () => {
+        printLaporan = () => {
             $(document).on('click', '#print_absen', function(){
                 var mode = 'iframe'; //popup
                 var close = mode == "popup";
@@ -313,16 +227,15 @@
 
         return {
             init: () => {
-                getKaryawan();
                 getTahun();
                 submitFilter();
-                printAbsen();
+                printLaporan();
             }
         }
-    })(cetakAbsenUI);
+    })(laporanCutiUI);
 
     $(document).ready(function(){
-        cetakAbsenController.init();
+        laporanCutiController.init();
     })
 
 </script>

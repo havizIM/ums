@@ -42,12 +42,14 @@ class Izin extends CI_Controller {
         } else {
 
             $otorisasi    = $auth->row();
-            $id_pizin     = $this->KodeModel->buatKode('izin', 'PIZ', 'id_pizin', 8);
             $id_izin      = $this->input->post('id_izin');
             $tgl_izin     = date('Y-m-d', strtotime($this->input->post('tgl_izin')));
             $keterangan   = $this->input->post('keterangan');
             $lampiran     = $this->input->post('lampiran');
-
+            
+            $mycode       = 'PI-'.date('my').'-';
+            $id_pizin     = $this->KodeModel->buatKode('izin', $mycode, 'id_pizin', 3);
+            
             if($id_izin == null || $tgl_izin == null || $keterangan == null){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Data yang dikirim tidak lengkap'));
             } else {
@@ -260,6 +262,115 @@ class Izin extends CI_Controller {
         
 
           json_output(200, array('status' => 200, 'description' => 'Berhasil', 'data' => $response));
+        }
+      }
+    }
+  }
+
+  function laporan($token = null)
+  {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+      json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi  = $auth->row();
+
+          $where_izin = array(
+              'MONTH(a.tgl_input)' => $this->input->get('bulan'),
+              'YEAR(a.tgl_input)' => $this->input->get('tahun'),
+              'a.status' => 'Approve 2'
+          );
+
+          $izin       = $this->IzinModel->show($where_izin, FALSE, FALSE);
+          $response   = array();
+
+          foreach($izin->result() as $key){
+            $json = array();
+
+            $json['id']           = $key->id_pizin;
+            $json['pemohon']      = array('nik' => $key->nik, 'nama' => $key->nama_pemohon, 'jabatan' => $key->jabatan_pemohon, 'divisi' => $key->divisi_pemohon);
+            $json['jenis_izin']   = array('id_izin' => $key->id_izin, 'keperluan' => $key->keperluan, 'keterangan_izin' => $key->keterangan_izin);
+            $json['tgl_izin']     = $key->tgl_izin;
+            $json['keterangan']   = $key->keterangan;
+            $json['tgl_input']    = $key->tgl_input;
+            $json['status']       = $key->status;
+            
+            $where_approval       = array('a.id_pizin' => $key->id_pizin);
+            $json['approval']     =  $this->ApprovalIzinModel->show($where_approval, FALSE, FALSE)->result();
+
+            $where_lampiran       = array('id_pizin' => $key->id_pizin);
+            $json['lampiran']     =  $this->LampiranIzinModel->show($where_lampiran, FALSE)->result();
+            
+            $response[] = $json;
+        }
+        
+
+          json_output(200, array('status' => 200, 'description' => 'Berhasil',  'bulan' => $this->input->get('bulan'), 'tahun' => $this->input->get('tahun'), 'data' => $response));
+        }
+      }
+    }
+  }
+
+  function statistic($token = null)
+  {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+      json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi  = $auth->row();
+
+          $where_izin = array(
+              'YEAR(a.tgl_input)' => date('Y'),
+              'a.status' => 'Approve 2'
+          );
+
+          $izin       = $this->IzinModel->show($where_izin, FALSE, FALSE);
+          $response   = array();
+
+          foreach($izin->result() as $key){
+            $json = array();
+
+            $json['id']           = $key->id_pizin;
+            $json['pemohon']      = array('nik' => $key->nik, 'nama' => $key->nama_pemohon, 'jabatan' => $key->jabatan_pemohon, 'divisi' => $key->divisi_pemohon);
+            $json['jenis_izin']   = array('id_izin' => $key->id_izin, 'keperluan' => $key->keperluan, 'keterangan_izin' => $key->keterangan_izin);
+            $json['tgl_izin']     = $key->tgl_izin;
+            $json['keterangan']   = $key->keterangan;
+            $json['tgl_input']    = $key->tgl_input;
+            $json['status']       = $key->status;
+            
+            $where_approval       = array('a.id_pizin' => $key->id_pizin);
+            $json['approval']     =  $this->ApprovalIzinModel->show($where_approval, FALSE, FALSE)->result();
+
+            $where_lampiran       = array('id_pizin' => $key->id_pizin);
+            $json['lampiran']     =  $this->LampiranIzinModel->show($where_lampiran, FALSE)->result();
+            
+            $response[] = $json;
+        }
+        
+
+          json_output(200, array('status' => 200, 'description' => 'Berhasil',  'bulan' => $this->input->get('bulan'), 'tahun' => $this->input->get('tahun'), 'data' => $response));
         }
       }
     }

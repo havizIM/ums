@@ -22,6 +22,10 @@ class Absensi extends CI_Controller {
     $this->load->library('excel');
     $this->load->model('KaryawanModel');
     $this->load->model('AbsensiModel');
+
+    $this->load->model('CutiModel');
+    $this->load->model('IzinModel');
+    $this->load->model('RevisiModel');
   }
 
   function preview_absen($token = null){
@@ -108,9 +112,10 @@ class Absensi extends CI_Controller {
                 $otorisasi      = $auth->row();
                 $absensi        = array();
 
-                $nik = $this->input->get('nik') === null ? $this->input->get('nik') : $otorisasi->nik;
+                $where      = array(
+                    'a.nik'   => $this->input->get('nik')
+                );
 
-                $where      = array('a.nik' => $nik);
                 $karyawan   = $this->KaryawanModel->show($where, FALSE);
 
                 foreach($karyawan->result() as $key){
@@ -129,17 +134,18 @@ class Absensi extends CI_Controller {
                         'tahun' => $this->input->get('tahun'),
                     );
 
-                    $show = $this->AbsensiModel->show($where_ab);
+                    $detail = $this->AbsensiModel->show($where_ab);
+                    foreach($detail->result() as $key2){
+                        $json_a['tgl']      = $key2->tgl;
+                        $json_a['mynik']    = $key2->mynik;
+                        $json_a['jam_m']    = $key2->jam_m;
+                        $json_a['jam_k']    = $key2->jam_k;
+                        $json_a['ket_cuti'] = $key2->ket_cuti;
+                        $json_a['ket_izin'] = $key2->ket_izin;
 
-                    foreach($show->result() as $key){
-                        $json_ab = array();
-
-                        $json_ab['nik'] = $key->nik_absen != null || $key->nik_cuti != null || $key->nik_izin != null;
-
-
-                        $json['absensi'][] = $json_ab;
+                        $json['absensi'][] = $json_a;
                     }
-
+                    
                     $absensi[] = $json;
                 }
 
@@ -200,6 +206,77 @@ class Absensi extends CI_Controller {
                     
                 }
             }
+        }
+    }
+
+    function statistic($token = null)
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        if ($method != 'GET') {
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+            } else {
+
+        if($token == null){
+            json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+        } else {
+            $auth = $this->AuthModel->cekAuth($token);
+
+            if($auth->num_rows() != 1){
+                json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+            } else {
+                $otorisasi  = $auth->row();
+                $tahun      = date('Y');
+
+                if($otorisasi->level === 'Kabag'){
+                    $id_divisi = $otorisasi->id_divisi;
+                } else {
+                    $id_divisi = null;
+                }
+
+                // echo $id_divisi;
+
+                $cuti       = $this->CutiModel->statistic($tahun, $id_divisi);
+                $izin       = $this->IzinModel->statistic($tahun, $id_divisi);
+                $revisi     = $this->RevisiModel->statistic($tahun, $id_divisi);
+
+                $jml_cuti     = array("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0");
+                $jml_izin     = array("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0");
+                $jml_revisi   = array("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0");
+
+                foreach($cuti->result() as $key){
+                    $index = $key->bulan - 1;
+
+                    $jml_cuti[$index]   = $key->jml_cuti;
+                }
+
+                foreach($izin->result() as $key){
+                    $index = $key->bulan - 1;
+
+                    $jml_izin[$index]    = $key->jml_izin;
+                }
+
+                foreach($revisi->result() as $key){
+                    $index = $key->bulan - 1;
+
+                    $jml_revisi[$index] = $key->jml_revisi;
+                }
+
+                $statistic = array(
+                    'cuti'    => array(
+                        'count'   => $jml_cuti
+                    ),
+                    'izin'    => array(
+                        'count'   => $jml_izin
+                    ),
+                    'revisi'  => array(
+                        'count'   => $jml_revisi
+                    )
+                );
+
+                json_output(200, array('status' => 200, 'description' => 'Berhasil', 'data' => $statistic));
+            }
+          }
         }
     }
 

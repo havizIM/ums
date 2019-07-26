@@ -1,10 +1,11 @@
-<div class="row pt-2 pb-2">
-    <div class="col-sm-12">
-        <h4 class="page-title">Detail Approval</h4>
+<!-- Breadcrumb-->
+ <div class="row pt-2 pb-2">
+    <div class="col-sm-9">
+        <h4 class="page-title">Detail - Izin</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#/dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#/approval_pengganti">Approval Pengganti</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Detail Approval - Pengganti</li>
+            <li class="breadcrumb-item"><a href="#/approval_izin">Approval Izin</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detail Approval - Izin</li>
         </ol>
     </div>
  </div>
@@ -19,23 +20,23 @@
         
             content += `<div class="col-md-4">
                             <div class="card">
-                                <div class="card-header" id="id_content">Detail Cuti - ${data.id}</div>
+                                <div class="card-header" id="id_content">Detail Izin - ${data.id}</div>
                                 <div class="card-body">`;
 
-            if(data.status === 'Proses'){
+            if((data.pemohon.id_divisi !== auth.id_divisi && data.status === 'Approve 1') || (data.pemohon.id_divisi === auth.id_divisi && data.status === 'Proses')){
                 content += `<div class="text-center">
                                 <div class="btn-group group-round">
-                                    <button class="btn btn-sm btn-danger" id="tolak_cuti" data-id="${data.id}"><i class="fa fa-close"></i> Tolak</button>
-                                    <button class="btn btn-sm btn-info" id="approve_cuti" data-id="${data.id}"><i class="fa fa-check"></i> Approve</button>
+                                    <button class="btn btn-sm btn-danger" id="tolak_izin" data-id="${data.id}"><i class="fa fa-close"></i> Tolak</button>
+                                    <button class="btn btn-sm btn-info" id="approve_izin" data-id="${data.id}"><i class="fa fa-check"></i> Approve</button>
                                 </div>
                             </div>`;
-            } else if(data.status === 'Ditolak' || data.status === 'Batal'){
+            }  else if(data.status === 'Ditolak' || data.status === 'Batal'){
                 content += `<div class="text-center">
                                 <h4 class="text-danger">${data.status} <i class="fa fa-close"></i></h4>
                             </div>`;
             } else {
                  content += `<div class="text-center">
-                                <h4 class="text-success">Approved <i class="fa fa-check"></i></h4>
+                                <h4 class="text-success">${data.status} <i class="fa fa-check"></i></h4>
                             </div>`;
             }
 
@@ -87,7 +88,7 @@
                                 <div class="alert-message">
                                 <span>
                                     <strong>Perhatian</strong><br/>
-                                    Dengan mengapprove Data Cuti ini maka anda menyetujui sebagai pengganti pekerjaan selama pemohon cuti. 
+                                    Dengan mengapprove Data Izin ini maka anda menyetujui pengajuan izin dari yang bersangkutan. 
                                 </span>
                                 </div>
                             </div>
@@ -97,22 +98,14 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>
+                                                <th>Tanggal Izin</th>
                                                 <th>Jenis Cuti</th>
-                                                <th>Tanggal Mulai</th>
-                                                <th>Tanggal Selesai</th>
-                                                <th>Alamat</th>
-                                                <th>Telepon</th>
-                                                <th>Jumlah Cuti</th>
-                                                <th>Pengganti</th>
+                                                <th>Keterangan</th>
                                             </thead>
                                             <tbody>
-                                                <td>${data.jenis_cuti.nama_cuti}</td>
-                                                <td>${data.tgl_mulai}</td>
-                                                <td>${data.tgl_selesai}</td>
-                                                <td>${data.alamat}</td>
-                                                <td>${data.telepon}</td>
-                                                <td>${data.jumlah_cuti}</td>
-                                                <td>${data.pengganti.nik} - ${data.pengganti.nama}</td>
+                                                <td>${data.tgl_izin}</td>
+                                                <td>${data.jenis_izin.keperluan}</td>
+                                                <td>${data.keterangan}</td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -130,7 +123,7 @@
                                             content += `<a href="javaScript:void();" class="list-group-item list-group-item-action flex-column align-items-start">
                                                         <div class="d-flex w-100 justify-content-between">
                                                             <p class="mb-1"><b>${v.keterangan}</b></p>
-                                                            <small>${v.tgl_approve}</small>
+                                                            <small>${v.tgl_approval}</small>
                                                         </div>
                                                         <small class="mb-1">Oleh ${v.nama} - ${v.jabatan}</small>
                                                         </a>`;
@@ -150,7 +143,7 @@
     function load_data(id, render_content){
         
         $.ajax({
-            url: `<?= base_url('api/approval_pengganti/show/') ?>${auth.token}?id=${id}`,
+            url: `<?= base_url('api/approval_izin/show/') ?>${auth.token}?id=${id}`,
             type: 'GET',
             dataType: 'JSON',
             beforeSend: function(){
@@ -162,7 +155,7 @@
                         render_content(v);
                     });
                 } else {
-                    location.hash = '#/cuti'
+                    location.hash = '#/approval_izin'
                 }
             },
             error: function(err){
@@ -173,15 +166,16 @@
     }
 
     $(document).ready(function(){
-        var id = location.hash.substr(21);
+        var id = location.hash.substr(16);
 
         load_data(id, render_content);
 
-        $(document).on('click', '#tolak_cuti', function(){
+        $(document).on('click', '#tolak_izin', function(){
             var id = $(this).attr('data-id');
 
             swal({
-                title: "Apa Anda yakin ingin menolak?",
+                title: "Apa Anda yakin ingin membatalkan?",
+                text: "Data cuti akan dibatalkan secara permanen",
                 icon: "warning",
                 dangerMode: true,
                 showCancelButton: true,
@@ -194,13 +188,13 @@
             }, function (isConfirm){
                 if (isConfirm) {
                 $.ajax({
-                    url: `<?= base_url('api/approval_pengganti/tolak/') ?>${auth.token}?id=${id}`,
+                    url: `<?= base_url('api/approval_izin/tolak/') ?>${auth.token}?id=${id}`,
                     type: 'GET',
                     dataType: 'JSON',
                     success: function(response){
                         if(response.status === 200){
                             toastr.info(response.message, response.description)
-                            location.hash = '#/approval_pengganti';
+                            location.hash = '#/approval_izin';
                             swal.close();
                         } else {
                             toastr.error(response.message, response.description)
@@ -214,11 +208,11 @@
             })
         })
 
-        $(document).on('click', '#approve_cuti', function(){
+        $(document).on('click', '#approve_izin', function(){
             var id = $(this).attr('data-id');
 
             swal({
-                title: "Apa Anda yakin ingin menyetujui cuti ini?",
+                title: "Apa Anda yakin ingin menyetujui?",
                 icon: "warning",
                 dangerMode: true,
                 showCancelButton: true,
@@ -231,13 +225,13 @@
             }, function (isConfirm){
                 if (isConfirm) {
                 $.ajax({
-                    url: `<?= base_url('api/approval_pengganti/approve/') ?>${auth.token}?id=${id}`,
+                    url: `<?= base_url('api/approval_izin/approve_2/') ?>${auth.token}?id=${id}`,
                     type: 'GET',
                     dataType: 'JSON',
                     success: function(response){
                         if(response.status === 200){
                             toastr.info(response.message, response.description)
-                            location.hash = '#/approval_pengganti';
+                            location.hash = '#/approval_izin';
                             swal.close();
                         } else {
                             toastr.error(response.message, response.description)

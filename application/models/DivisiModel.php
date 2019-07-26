@@ -48,6 +48,17 @@ class DivisiModel extends CI_Model {
     }
   }
 
+  function by_divisi()
+    {
+      $this->db->select("b.nama_divisi, COUNT('a.nik') as jml_karyawan");
+
+      $this->db->from("karyawan a");
+      $this->db->join("divisi b", "b.id_divisi = a.id_divisi", "left");
+
+      $this->db->group_by("a.id_divisi");
+      return $this->db->get();
+    }
+
 
 }
 

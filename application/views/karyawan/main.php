@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>UMS - Karyawan</title>
+  <title>SIPACAR - Karyawan</title>
   <!--favicon-->
   <link rel="icon" href="<?= base_url() ?>assets/images/logo-osella.png" type="image/x-icon">
   <!--Full Calendar Css-->
@@ -97,9 +97,12 @@
       </li>
 
       <li>
-        <a href="#/absensi" class="waves-effect">
-          <i class="icon-layers"></i> <span>Absensi</span>
+        <a href="#" class="waves-effect">
+          <i class="icon-layers"></i> <span>Absensi</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
+        <ul class="sidebar-submenu">
+          <li><a href="#/cetak_absensi"><i class="fa fa-circle-o"></i> Cetak Absensi</a></li>
+        </ul>
       </li>
 
     </ul>
@@ -121,13 +124,13 @@
   <ul class="navbar-nav align-items-center right-nav-link">
     <li class="nav-item">
       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="calendar.html#">
-        <span class="user-profile"><img src="<?= base_url() ?>assets/images/avatars/avatar-17.png" class="img-circle" alt="user avatar"></span>
+        <span class="user-profile"><img id="foto" class="img-circle" alt="user avatar"></span>
       </a>
       <ul class="dropdown-menu dropdown-menu-right">
        <li class="dropdown-item user-details">
         <a href="javaScript:void();">
            <div class="media">
-             <div class="avatar"><img class="align-self-start mr-3" src="<?= base_url() ?>assets/images/avatars/avatar-17.png" alt="user avatar"></div>
+             <div class="avatar"><img class="align-self-start mr-3" id="test" alt="user avatar"></div>
             <div class="media-body">
             <h6 class="mt-2 user-title" id="session_name"></h6>
             <p class="user-subtitle" id="session_jabatan"></p>
@@ -199,7 +202,7 @@
 	<footer class="footer">
       <div class="container">
         <div class="text-center">
-          PT. CKSM User Management System | By Riska
+          PT. CKSM SIPACAR | By Riska
         </div>
       </div>
     </footer>
@@ -227,6 +230,9 @@
   <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/moment.min.js'></script>
   <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
   <link href="<?= base_url() ?>assets/plugins/toastr/toastr.min.css" rel="stylesheet"/>
+  
+  <script src="<?= base_url() ?>assets/plugins/jquery.PrintArea.js"></script>
+  <script src="<?= base_url() ?>assets/plugins/Chart.js/Chart.min.js"></script>
 
   <!--Bootstrap Datepicker Js-->
   <script src="<?= base_url() ?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
@@ -237,8 +243,6 @@
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-
-  <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/moment.min.js'></script>
 
   <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>
 
@@ -276,6 +280,8 @@
 
       $('#session_name').text(auth.nama_user)
       $('#session_jabatan').text(auth.jabatan)
+      $('#foto').attr('src', `<?= base_url() ?>doc/foto/${auth.foto}`);
+      $('#test').attr('src', `<?= base_url() ?>doc/foto/${auth.foto}`);
 
       if(location.hash){
         link = location.hash.substr(2);
@@ -310,7 +316,7 @@
               dataType: 'JSON',
               success: function(response){
                 localStorage.clear();
-                window.location.replace('<?= base_url().'auth' ?>');
+                window.location.replace('<?= base_url().'' ?>');
               }
             });
           }

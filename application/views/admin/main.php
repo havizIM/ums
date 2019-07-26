@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>UMS - Admin</title>
+  <title>SIPACAR - Admin</title>
   <!--favicon-->
   <link rel="icon" href="<?= base_url() ?>assets/images/logo-osella.png" type="image/x-icon">
   <!--Full Calendar Css-->
@@ -25,19 +25,31 @@
   <!-- Custom Style-->
   <link href="<?= base_url() ?>assets/css/app-style.css" rel="stylesheet"/>
 
-  <link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet"/>
-
+  <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/plugins/jquery.steps/css/jquery.steps.css">
   <link href="<?= base_url() ?>assets/plugins/dropzone/css/dropzone.css" rel="stylesheet" type="text/css">
-
   <link href="<?= base_url() ?>assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
-
   <link rel="stylesheet" href="<?= base_url('assets/plugins/sweetalert/sweetalert.css') ?>">
-
   <link href="<?= base_url() ?>assets/plugins/fullcalendar/css/fullcalendar.min.css" rel='stylesheet'/>
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css"/>
-
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.bootstrap4.min.css"/>
+
+  <style>
+    .wizard > .content > .body {
+        float: left;
+        position: relative !important;
+        width: 95%;
+        padding: 2.5%;
+    }
+
+    .wizard > .steps > ul > li {
+        width: 33.33% !important;
+    }
+
+    .custom-select.is-invalid, .form-control.is-invalid, .was-validated .custom-select:invalid, .was-validated .form-control:invalid {
+      border-color: #dc3545 !important;
+    }
+  </style>
 
 
   <script type="text/javascript">
@@ -145,13 +157,13 @@
   <ul class="navbar-nav align-items-center right-nav-link">
     <li class="nav-item">
       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="calendar.html#">
-        <span class="user-profile"><img src="<?= base_url() ?>assets/images/avatars/avatar-17.png" class="img-circle" alt="user avatar"></span>
+        <span class="user-profile"><img id="foto" class="img-circle" alt="user avatar"></span>
       </a>
       <ul class="dropdown-menu dropdown-menu-right">
        <li class="dropdown-item user-details">
         <a href="javaScript:void();">
            <div class="media">
-             <div class="avatar"><img class="align-self-start mr-3" src="<?= base_url() ?>assets/images/avatars/avatar-17.png" alt="user avatar"></div>
+             <div class="avatar"><img class="align-self-start mr-3" id="test" alt="user avatar"></div>
             <div class="media-body">
             <h6 class="mt-2 user-title" id="session_name"></h6>
             <p class="user-subtitle" id="session_jabatan"></p>
@@ -160,7 +172,7 @@
           </a>
         </li>
         <li class="dropdown-divider"></li>
-        <li class="dropdown-item"><a href="#/profil"><i class="zmdi zmdi-accounts-list" style="padding-right: 9px;"></i> Profil</a></li>
+        <li class="dropdown-item"><a style="width: 100%; height: 100%;" href="#/profil"><i class="zmdi zmdi-accounts-list" style="padding-right: 9px;"></i> Profil</a></li>
         <li class="dropdown-divider"></li>
         <li class="dropdown-item"><a href="javaScript:void();" id="ganti_pass" data-toggle="modal" data-target="#modal_ganti"><i class="icon-settings mr-2"></i> Ganti Password</a></li>
         <li class="dropdown-divider"></li>
@@ -223,7 +235,7 @@
 	<footer class="footer">
       <div class="container">
         <div class="text-center">
-          PT. CKSM User Management System | By Riska
+          PT. CKSM SIPACAR | By Riska
         </div>
       </div>
     </footer>
@@ -257,23 +269,16 @@
 
   <script src="<?= base_url() ?>assets/plugins/dropzone/js/dropzone.js"></script>
   <script src="<?= base_url() ?>assets/plugins/jquery.PrintArea.js"></script>
-
-  <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-
-  <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
-
-  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
-
-  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
-
-
+  <script src="<?= base_url() ?>assets/plugins/Chart.js/Chart.min.js"></script>
+  <script src="<?= base_url() ?>assets/plugins/jquery.steps/js/jquery.steps.min.js" type="text/javascript"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.bootstrap4.min.js"></script>
+
   <script src="<?= base_url() ?>assets/plugins/toastr/toastr.js"></script>
-
-  <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/moment.min.js'></script>
-  <script src='<?= base_url() ?>assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
-
   <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 
   <script type="text/javascript">
@@ -308,6 +313,8 @@
 
       $('#session_name').text(auth.nama_user)
       $('#session_jabatan').text(auth.jabatan)
+      $('#foto').attr('src', `<?= base_url() ?>doc/foto/${auth.foto}`);
+      $('#test').attr('src', `<?= base_url() ?>doc/foto/${auth.foto}`);
 
       if(location.hash){
         link = location.hash.substr(2);
@@ -342,7 +349,7 @@
               dataType: 'JSON',
               success: function(response){
                 localStorage.clear();
-                window.location.replace('<?= base_url().'auth' ?>');
+                window.location.replace('<?= base_url().'' ?>');
               }
             });
           }

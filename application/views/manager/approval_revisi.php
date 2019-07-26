@@ -1,35 +1,28 @@
-<!-- Breadcrumb-->
- <div class="row pt-2 pb-2">
-    <div class="col-sm-9">
-        <h4 class="page-title">Pengajuan - Cuti</h4>
+<div class="row pt-2 pb-2">
+    <div class="col-sm-12">
+        <h4 class="page-title">Approval Revisi Absen</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#/dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Pengajuan - Cuti</li>
+            <li class="breadcrumb-item active" aria-current="page">Approval - Revisi Absen</li>
         </ol>
-    </div>
-    <div class="col-sm-3">
-      <div class="btn-group float-sm-right">
-        <a href="#/add_cuti" class="btn btn-outline-primary waves-effect waves-light"><i class="fa fa-plus mr-1"></i> Tambah Baru</a>
-      </div>
     </div>
  </div>
 
-  <div class="row">
+ <div class="row">
    <div class="col-md-12">
      <div class="card">
        <div class="card-body">
-         <h5 class="card-title">Data Cuti</h5>
+         <h5 class="card-title">Data Approval</h5>
 
          <div class="table-responsive">
            <table id="table_cuti" class="table table-striped table-hover js-basic-example dataTable table-custom">
              <thead>
                <tr>
                  <th>Tanggal</th>
-                 <th>ID Cuti</th>
-                 <th>Jenis Cuti</th>
-                 <th>Tanggal Mulai</th>
-                 <th>Tanggal Selesai</th>
-                 <th>Jumlah Cuti</th>
+                 <th>ID Revisi</th>
+                 <th>NIK</th>
+                 <th>Nama</th>
+                 <th>Absensi</th>
                  <th>Status</th>
                </tr>
              </thead>
@@ -43,7 +36,6 @@
    </div>
  </div>
 
- 
  <script type="text/javascript">
 
    $(document).ready(function(){
@@ -70,17 +62,29 @@
        },
        responsive: true,
        processing: true,
-       ajax: '<?= base_url('api/cuti/show/'); ?>'+auth.token,
+       ajax: {   
+                url: `<?= base_url('api/approval_revisi/show/'); ?>${auth.token}`,
+                dataSrc: function(response){
+                  var filter = [];
+
+                  $.each(response.data, function(k,v){
+                      if(v.pemohon.id_divisi === auth.id_divisi && v.status === 'Proses'){
+                        filter.push(v);
+                      }
+                  })
+
+                  return filter;
+                }
+        },
        columns: [
          {"data": 'tgl_input'},
          {"data": null, 'render': function(data, type, row){
-          return `<a href="#/cuti/${row.id}">${row.id}</a>`
+          return `<a href="#/approval_revisi/${row.id}">${row.id}</a>`
           }
          },
-         {"data": 'jenis_cuti.nama_cuti'},
-         {"data": 'tgl_mulai'},
-         {"data": 'tgl_selesai'},
-         {"data": 'jumlah_cuti'},
+         {"data": 'pemohon.nik'},
+         {"data": 'pemohon.nama'},
+         {"data": 'tgl_absensi'},
          {"data": null, 'render': function(data, type, row){
             if(row.status === 'Proses'){
                 return `<span class="badge badge-warning">Menunggu Approval</span>`;

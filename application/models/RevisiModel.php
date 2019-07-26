@@ -53,10 +53,19 @@ class RevisiModel extends CI_Model {
   }
 
 
-  function edit($where, $data, $log)
+  function edit($where, $data, $log, $approval, $where_ab, $absen)
   {
     $this->db->trans_start();
     $this->db->where($where)->update('revisi_absen', $data);
+
+    if(!empty($approval)){
+        $this->db->insert('approval_absen', $approval);     
+    }
+
+    if(!empty($absen)){
+        $this->db->where($where_ab)->update('absensi', $absen);     
+    }
+
     $this->db->insert('log', $log);
     $this->db->trans_complete();
 
@@ -68,6 +77,24 @@ class RevisiModel extends CI_Model {
       return true;
     }
   }
+
+    function statistic($tahun, $id_divisi)
+    {
+      $this->db->select("YEAR(a.tgl_input) as tahun, MONTH(a.tgl_input) as bulan, COUNT(a.id_previsi) as jml_revisi");
+
+      $this->db->from("revisi_absen a");
+      $this->db->join("karyawan b", "b.nik = a.nik", "left");
+
+      $this->db->where("YEAR(a.tgl_input)", $tahun);
+      $this->db->where("status", 'Approve');
+
+      if($id_divisi !== null){
+        $this->db->where("b.id_divisi", $id_divisi);
+      }
+
+      $this->db->group_by("MONTH(a.tgl_input)");
+      return $this->db->get();
+    }
 
 
 }

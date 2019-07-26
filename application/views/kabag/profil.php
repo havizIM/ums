@@ -13,7 +13,7 @@
    <div class="profile-card-3">
     <div class="card">
 		 <div class="user-fullimage">
-		   <img src="<?= base_url() ?>assets/images/avatars/avatar-22.png" alt="user avatar" class="card-img-top">
+		   <img id="pp" alt="user avatar" class="card-img-top">
 		    <div class="details">
 		      <h5 class="mb-1 text-white ml-3" id="nama"></h5>
 				  <h6 class="text-white ml-3" id="nik"></h6>
@@ -187,6 +187,7 @@ function load_profile(){
           $('#edit_pendidikan').val(v.pendidikan)
           $('#edit_alamat').val(v.alamat)
           $('#edit_telepon').val(v.telepon)
+          $('#pp').attr('src', `<?= base_url('doc/foto/') ?>${v.foto}`)
         })
       }
     })

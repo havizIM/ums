@@ -29,11 +29,11 @@
                     <div class="col-md-10">
                         <div id="dateragne-picker">
                             <div class="input-daterange input-group">
-                                <input type="text" class="form-control tgl_mulai" id="periode_tgl" name="tgl_mulai" id="tgl_mulai" />
+                                <input type="text" autocomplete="off" class="form-control tgl_mulai" id="periode_tgl" name="tgl_mulai" id="tgl_mulai" />
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Sampai</span>
                                 </div>
-                                <input type="text" class="form-control tgl_selesai" id="periode_tgl" name="tgl_selesai" id="tgl_selesai" />
+                                <input type="text" autocomplete="off" class="form-control tgl_selesai" id="periode_tgl" name="tgl_selesai" id="tgl_selesai" />
                             </div>
                             <div class="invalid_periode_tgl"></div>
                         </div> 
@@ -67,9 +67,17 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="sisa_cuti" class="col-md-2 col-form-label">Sisa Cuti</label>
+                    <div class="col-md-10">
+                        <input type="number" name="sisa_cuti" id="sisa_cuti" class="form-control" readonly>
+                        <div class="invalid_sisa_cuti"></div>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="jumlah_cuti" class="col-md-2 col-form-label">Jumlah Cuti</label>
                     <div class="col-md-10">
                         <input type="number" name="jumlah_cuti" id="jumlah_cuti" class="form-control" readonly>
+                        <div class="invalid_jumlah_cuti"></div>
                     </div>
                 </div>
                 <div class="form-group text-center">
@@ -120,7 +128,16 @@
         var content = '';
 
         $.each(data, function(k, v){
-            content += `<option value="${v.id_cuti}">${v.nama_cuti}</option>`;
+            if(auth.kelamin === 'Laki-laki'){
+                if(v.keterangan === 'Laki-laki' || v.keterangan === 'Semua'){
+                    content += `<option value="${v.id_cuti}">${v.nama_cuti}</option>`;
+                }
+            } else {
+                if(v.keterangan === 'Perempuan' || v.keterangan === 'Semua'){
+                    content += `<option value="${v.id_cuti}">${v.nama_cuti}</option>`;
+                }
+            }
+            
         })
 
         $('#id_cuti').append(content);
@@ -135,6 +152,7 @@
                 if(response.data.length > 0){
                     render_jcuti(response.data)
                 }
+                
             }, 
             error: function(err){
                 alert('Tidak dapat mengakses server');
@@ -142,8 +160,34 @@
         })
     }
 
+    function getSisaCuti(id_cuti){
+        $.ajax({
+            url: `<?= base_url('api/cuti/sisa_cuti/') ?>${auth.token}?id_cuti=${id_cuti}`,
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(res){
+                if(res.status === 200){
+
+                    $.each(res.data, function(k, v){
+                        $('#sisa_cuti').val(v.sisa_cuti);
+                    })
+                } else {
+                     $('#sisa_cuti').val(0);
+                }
+            }, 
+            error: function(err){
+                $('#sisa_cuti').val(0);
+            }
+        })
+    }
+
     $(document).ready(function(){
         load_jcuti(render_jcuti);
+
+        $.validator.addMethod("greaterThan", function (value, element, param) {
+            var $otherElement = $(param);
+            return parseInt(value, 10) < parseInt($otherElement.val(), 10);
+        });
 
         var t_karyawan = $('#t_karyawan').DataTable({
             columnDefs: [{
@@ -163,7 +207,9 @@
 
                   $.each(response.data, function(k,v){
                      if(v.status_karyawan === 'Aktif' && v.id_divisi === auth.id_divisi){
-                        filter.push(v);
+                         if(v.level !== 'Manager' && v.level !== 'Kabag'){
+                            filter.push(v);
+                         }
                      }
                   })
 
@@ -184,6 +230,17 @@
             ],
             order: [[1, 'desc']]
         });
+
+        $('#id_cuti').on('change', function(){
+            var sisa_cuti = 0
+            var id_cuti   = $(this).val();
+
+            if(id_cuti !== ''){
+                getSisaCuti(id_cuti);
+            } else {
+                $('#sisa_cuti').val(sisa_cuti);
+            }
+        })
 
         $('.tgl_mulai').datepicker({
             format: "dd-mm-yyyy",
@@ -232,7 +289,15 @@
                 tgl_selesai: "required",
                 alamat: "required",
                 telepon: "required",
-                nama_pengganti: "required"
+                nama_pengganti: "required",
+                sisa_cuti: {
+                    number: true,
+                    min: 1
+                },
+                jumlah_cuti: {
+                    number: true,
+                    greaterThan: "#sisa_cuti",
+                }
             },
             messages: {
                 id_cuti: "Pilih jenis cuti yang akan diambil",
@@ -240,7 +305,15 @@
                 tgl_selesai: "Pilih periode cuti",
                 alamat: "Masukkan alamat tujuan cuti",
                 telepon: "Masukkan telepon darurat saat cuti",
-                nama_pengganti: "Pilih pengganti pekerjaan"
+                nama_pengganti: "Pilih pengganti pekerjaan",
+                sisa_cuti: {
+                    number: "Hanya angka",
+                    min: "Minimal 1",
+                },
+                jumlah_cuti: {
+                    number: "Hanya angka",
+                    greaterThan: "Sisa Cuti tidak mencukupi",
+                }
             },
             errorClass: 'is-invalid',
             errorPlacement: function(error, element) {

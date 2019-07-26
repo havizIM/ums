@@ -29,11 +29,11 @@
                     <div class="col-md-10">
                         <div id="dateragne-picker">
                             <div class="input-daterange input-group">
-                                <input type="text" class="form-control tgl_mulai" id="periode_tgl" name="tgl_mulai" id="tgl_mulai" />
+                                <input type="text" autocomplete="off" class="form-control tgl_mulai" id="periode_tgl" name="tgl_mulai" id="tgl_mulai" />
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Sampai</span>
                                 </div>
-                                <input type="text" class="form-control tgl_selesai" id="periode_tgl" name="tgl_selesai" id="tgl_selesai" />
+                                <input type="text" autocomplete="off" class="form-control tgl_selesai" id="periode_tgl" name="tgl_selesai" id="tgl_selesai" />
                             </div>
                             <div class="invalid_periode_tgl"></div>
                         </div> 
@@ -66,10 +66,18 @@
                         <div class="invalid_nama_pengganti" style="margin-top: -15px"></div>
                     </div>
                 </div>
+                 <div class="form-group row">
+                    <label for="sisa_cuti" class="col-md-2 col-form-label">Sisa Cuti</label>
+                    <div class="col-md-10">
+                        <input type="number" name="sisa_cuti" id="sisa_cuti" class="form-control" readonly>
+                        <div class="invalid_sisa_cuti"></div>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label for="jumlah_cuti" class="col-md-2 col-form-label">Jumlah Cuti</label>
                     <div class="col-md-10">
                         <input type="number" name="jumlah_cuti" id="jumlah_cuti" class="form-control" readonly>
+                        <div class="invalid_jumlah_cuti"></div>
                     </div>
                 </div>
                 <div class="form-group text-center">
@@ -136,13 +144,14 @@
                 if(response.data.length === 1){
                     $.each(response.data, function(k, v){
                         $('.id-page').append(` ${v.id}`)
-                        $('#id_cuti').val(v.jenis_cuti.id_cuti);
-                        $('.tgl_mulai').datepicker('setDate', new Date(v.tgl_mulai))
-                        $('.tgl_selesai').datepicker('setDate', new Date(v.tgl_selesai))
+                        $('#id_cuti').val(v.jenis_cuti.id_cuti).trigger('change');
+                        // $('.tgl_mulai').datepicker('setDate', new Date(v.tgl_mulai));
+                        // $('.tgl_selesai').datepicker('setDate', new Date(v.tgl_selesai));
                         $('#alamat').val(v.alamat);
                         $('#telepon').val(v.telepon);
                         $('#pengganti').val(v.pengganti.nik);
                         $('#nama_pengganti').val(v.pengganti.nama);
+                        $('#jumlah_cuti').val(v.jumlah_cuti);
                     });
                 } else {
                     location.hash = '#/cuti';
@@ -172,8 +181,34 @@
         })
     }
 
+    function getSisaCuti(id_cuti){
+        $.ajax({
+            url: `<?= base_url('api/cuti/sisa_cuti/') ?>${auth.token}?id_cuti=${id_cuti}`,
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(res){
+                if(res.status === 200){
+
+                    $.each(res.data, function(k, v){
+                        $('#sisa_cuti').val(v.sisa_cuti);
+                    })
+                } else {
+                     $('#sisa_cuti').val(0);
+                }
+            }, 
+            error: function(err){
+                $('#sisa_cuti').val(0);
+            }
+        })
+    }
+
     $(document).ready(function(){
         var id = location.hash.substr(12);
+
+        $.validator.addMethod("greaterThan", function (value, element, param) {
+            var $otherElement = $(param);
+            return parseInt(value, 10) < parseInt($otherElement.val(), 10);
+        });
 
         load_jcuti(id, render_jcuti, load_detail)
 
@@ -194,8 +229,10 @@
                   var filter = [];
 
                   $.each(response.data, function(k,v){
-                     if(v.status_karyawan === 'Aktif' && v.level.toLowerCase() === auth.level){
-                        filter.push(v);
+                     if(v.status_karyawan === 'Aktif' && v.id_divisi === auth.id_divisi){
+                        if(v.level !== 'Manager' && v.level !== 'Kabag'){
+                            filter.push(v);
+                         }
                      }
                   })
 
@@ -229,8 +266,7 @@
                 var start = $(".tgl_mulai").datepicker("getDate");
                 var end = $(".tgl_selesai").datepicker("getDate");
                 var days = parseInt((end - start) / (1000 * 60 * 60 * 24) + 1);
-                $("#jumlah_cuti").val(days);
-                
+                $("#jumlah_cuti").val(days);  
         });
         
         $(".tgl_selesai").datepicker({
@@ -260,6 +296,17 @@
             $('#modal_karyawan').modal('show');
         });
 
+        $('#id_cuti').on('change', function(){
+            var sisa_cuti = 0
+            var id_cuti   = $(this).val();
+
+            if(id_cuti !== ''){
+                getSisaCuti(id_cuti);
+            } else {
+                $('#sisa_cuti').val(sisa_cuti);
+            }
+        })
+
         $('#form_cuti').validate({
             rules: {
                 id_cuti: "required",
@@ -267,7 +314,16 @@
                 tgl_selesai: "required",
                 alamat: "required",
                 telepon: "required",
-                nama_pengganti: "required"
+                nama_pengganti: "required",
+                sisa_cuti: {
+                    number: true,
+                    min: 1
+                },
+                jumlah_cuti: {
+                    number: true,
+                    min: 1,
+                    greaterThan: "#sisa_cuti",
+                }
             },
             messages: {
                 id_cuti: "Pilih jenis cuti yang akan diambil",
@@ -275,7 +331,16 @@
                 tgl_selesai: "Pilih periode cuti",
                 alamat: "Masukkan alamat tujuan cuti",
                 telepon: "Masukkan telepon darurat saat cuti",
-                nama_pengganti: "Pilih pengganti pekerjaan"
+                nama_pengganti: "Pilih pengganti pekerjaan",
+                sisa_cuti: {
+                    number: "Hanya angka",
+                    min: "Minimal 1",
+                },
+                jumlah_cuti: {
+                    number: "Hanya angka",
+                    min: "Minimal 1",
+                    greaterThan: "Sisa Cuti tidak mencukupi",
+                }
             },
             errorClass: 'is-invalid',
             errorPlacement: function(error, element) {

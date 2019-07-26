@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>UMS - Login</title>
+  <title>SIPACAR - Login</title>
   <!--favicon-->
   <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
   <!-- Bootstrap core CSS-->
@@ -40,8 +40,8 @@
 	    	   <div class="bg-signin2"></div>
 	    		<div class="card-img-overlay rounded-left my-5">
                  <!-- <h2 class="text-white">User Management System</h2> -->
-                 <h1 class="text-white">User Management System</h1>
-                 <p class="card-text text-white pt-3">PT. Cipta Kreasi Sandang Mandiri</p>
+                 <h1 class="text-white">SI Pengelolaan Absensi dan Cuti Karyawan</h1>
+                 <p class="card-text text-white pt-3">PT. Cipta KreasiSandang Mandiri</p>
              </div>
 	    	</div>
 
@@ -79,10 +79,29 @@
 							 </div>
 							</div>
 							<div class="form-group col-6 text-right">
-							 <a href="javascript:void()" id="forgot_pass">Forgot Password?</a>
+							 <a id="forgot_pass">Forgot Password?</a>
 							</div>
 						</div>
 						<button type="submit" class="btn btn-outline-primary btn-block waves-effect waves-light" id="btn_login">Log In</button>
+
+					</form>
+
+          <form id="form_pass" style="display: none">
+						  <div class="form-group">
+						   <div class="position-relative has-icon-left">
+							   <label for="email" class="sr-only">Email</label>
+								 <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+								 <div class="form-control-position">
+									<i class="icon-user"></i>
+								</div>
+						   </div>
+						  </div>
+						  <div class="form-row mr-0 ml-0">
+                <div class="form-group col-12 text-right">
+                  <a id="to_login">Back to Login</a>
+                </div>
+						</div>
+						<button type="submit" class="btn btn-outline-primary btn-block waves-effect waves-light" id="btn_reset">Reset</button>
 
 					</form>
 				 </div>
@@ -135,6 +154,50 @@
           $('#password').attr('type','password');
         };
       });
+
+      $('#forgot_pass').on('click', function(){
+        $('#form_pass').show();
+        $('#form_login').hide();
+      })
+
+      $('#to_login').on('click', function(){
+        $('#form_pass').hide();
+        $('#form_login').show();
+      })
+
+      $('#form_pass').on('submit', function(e){
+        e.preventDefault();
+
+        var email = $('#email').val();
+
+        if (email === ''){
+          toastr.warning('Email harus diisi dengan lengkap', 'Warning')
+        } else {
+          $.ajax({
+            url: '<?= base_url('api/auth/lupa_password') ?>',
+            type: 'POST',
+            dataType: 'JSON',
+            beforeSend: function(){
+              $('#btn_reset').addClass('disabled').attr('disabled', 'disabled').html('<i class="fa fa-spinner fa-spin"></i>');
+            },
+            data: $('#form_pass').serialize(),
+            success: function(response){
+              if(response.status === 200){
+                toastr.error(response.message, response.description)
+                $('#btn_reset').removeClass('disabled').removeAttr('disabled', 'disabled').text('Log In');
+              } else {
+                toastr.error(response.message, response.description)
+                $('#btn_reset').removeClass('disabled').removeAttr('disabled', 'disabled').text('Log In');
+              }
+            },
+            error: function(){
+              toastr.error('Tidak dapat mengakses server', 'Failed')
+              $('#btn_reset').removeClass('disabled').removeAttr('disabled', 'disabled').text('Log In');
+            }
+          });
+        }
+      });
+      
 
       $('#form_login').on('submit', function(e){
         e.preventDefault();

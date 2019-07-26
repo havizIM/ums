@@ -116,6 +116,32 @@ class Divisi extends CI_Controller {
     }
   }
 
+  function by_divisi($token = null)
+  {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+      json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi  = $auth->row();
+          $divisi     = $this->DivisiModel->by_divisi()->result();
+
+          json_output(200, array('status' => 200, 'description' => 'Berhasil', 'data' => $divisi));
+        }
+      }
+    }
+  }
+
   public function delete($token = null){
     $method = $_SERVER['REQUEST_METHOD'];
 

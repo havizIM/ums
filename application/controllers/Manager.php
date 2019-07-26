@@ -19,44 +19,6 @@ class Manager extends CI_Controller{
     $this->load->view('manager/dashboard');
   }
 
-  function log()
-  {
-    $this->load->view('manager/log');
-  }
-
-  function profil()
-  {
-    $this->load->view('manager/profil');
-  }
-
-  function cuti($id = null)
-  {
-    if($id == null){
-       $this->load->view('manager/cuti');
-    } else {
-       $this->load->view('manager/detail_cuti');
-    }
-  }
-
-  function add_cuti()
-  {
-    $this->load->view('manager/add_cuti');
-  }
-
-  function edit_cuti($id = null)
-  {
-    $this->load->view('manager/edit_cuti');
-  }
-
-  function approval_pengganti($id = null)
-  {
-    if($id == null){
-       $this->load->view('manager/approval_pengganti');
-    } else {
-       $this->load->view('manager/detail_approval_pengganti');
-    }
-  }
-
   function approval_cuti($id = null){
     if($id == null){
        $this->load->view('manager/approval_cuti');
@@ -81,9 +43,34 @@ class Manager extends CI_Controller{
     }
   }
 
-  function absensi()
+  function log()
   {
-    $this->load->view('manager/absensi');
+    $this->load->view('manager/log');
+  }
+
+  function cetak_absensi()
+  {
+    $this->load->view('manager/cetak_absensi');
+  }
+
+  function laporan_cuti()
+  {
+    $this->load->view('manager/laporan_cuti');
+  }
+
+  function laporan_izin()
+  {
+    $this->load->view('manager/laporan_izin');
+  }
+
+  function laporan_revisi()
+  {
+    $this->load->view('manager/laporan_revisi');
+  }
+
+  function profil()
+  {
+    $this->load->view('manager/profil');
   }
 
 }

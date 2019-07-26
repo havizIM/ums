@@ -207,7 +207,9 @@
 
                   $.each(response.data, function(k,v){
                      if(v.status_karyawan === 'Aktif' && v.id_divisi === auth.id_divisi){
-                        filter.push(v);
+                         if(v.level !== 'Manager' && v.level !== 'Kabag'){
+                            filter.push(v);
+                         }
                      }
                   })
 

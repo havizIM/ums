@@ -44,7 +44,6 @@ class Cuti extends CI_Controller {
         } else {
 
             $otorisasi    = $auth->row();
-            $id_pcuti     = $this->KodeModel->buatKode('cuti', 'PCT', 'id_pcuti', 9);
             $id_cuti      = $this->input->post('id_cuti');
             $tgl_mulai    = date('Y-m-d', strtotime($this->input->post('tgl_mulai')));
             $tgl_selesai  = date('Y-m-d', strtotime($this->input->post('tgl_selesai')));;
@@ -52,6 +51,9 @@ class Cuti extends CI_Controller {
             $telepon      = $this->input->post('telepon');
             $pengganti    = $this->input->post('pengganti');
             $jumlah_cuti  = $this->input->post('jumlah_cuti');
+
+            $mycode       = 'PCT-'.date('my').'-';
+            $id_pcuti     = $this->KodeModel->buatKode('cuti', $mycode, 'id_pcuti', 3);
 
             if($id_cuti == null || $tgl_mulai == null || $tgl_selesai == null || $alamat == null || $telepon == null || $pengganti == null || $jumlah_cuti == null){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Data yang dikirim tidak lengkap'));
@@ -519,6 +521,158 @@ class Cuti extends CI_Controller {
     }
   }
 
+  function laporan($token = null)
+  {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+      json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi  = $auth->row();
+
+          $where_cuti = array(
+              'MONTH(a.tgl_input)' => $this->input->get('bulan'),
+              'YEAR(a.tgl_input)' => $this->input->get('tahun'),
+              'a.status' => 'Approve 3'
+          );
+
+          $cuti       = $this->CutiModel->show($where_cuti, FALSE, FALSE);
+          $response   = array();
+
+          foreach($cuti->result() as $key){
+            $json = array();
+
+            $json['id']           = $key->id_pcuti;
+            $json['pemohon']      = array('nik' => $key->nik, 'nama' => $key->nama_pemohon, 'jabatan' => $key->jabatan_pemohon, 'divisi' => $key->divisi_pemohon);
+            $json['jenis_cuti']   = array('id_cuti' => $key->id_cuti, 'nama_cuti' => $key->nama_cuti, 'keterangan' => $key->keterangan, 'lampiran' => $key->lampiran);
+            $json['tgl_mulai']    = $key->tgl_mulai;
+            $json['tgl_selesai']  = $key->tgl_selesai;
+            $json['alamat']       = $key->alamat;
+            $json['telepon']      = $key->telepon;
+            $json['jumlah_cuti']  = $key->jumlah_cuti;
+            $json['pengganti']    = array('nik' => $key->pengganti, 'nama' => $key->nama_pengganti, 'jabatan' => $key->jabatan_pengganti, 'divisi' => $key->divisi_pengganti);
+            $json['tgl_input']    = $key->tgl_input;
+            $json['status']       = $key->status;
+            
+            $where_approval       = array('a.id_pcuti' => $key->id_pcuti);
+            $json['approval']     =  $this->ApprovalCutiModel->show($where_approval, FALSE, FALSE)->result();
+
+            $where_lampiran       = array('id_pcuti' => $key->id_pcuti);
+            $json['lampiran']     =  $this->LampiranCutiModel->show($where_lampiran, FALSE)->result();
+            
+            $response[] = $json;
+        }
+        
+
+          json_output(200, array('status' => 200, 'description' => 'Berhasil', 'bulan' => $this->input->get('bulan'), 'tahun' => $this->input->get('tahun'), 'data' => $response));
+        }
+      }
+    }
+  }
+
+  function statistic($token = null)
+  {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+      json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi  = $auth->row();
+
+          $where_cuti = array(
+              'YEAR(a.tgl_input)' => date('Y'),
+              'a.status' => 'Approve 3'
+          );
+
+          $cuti       = $this->CutiModel->show($where_cuti, FALSE, FALSE);
+          $response   = array();
+
+          foreach($cuti->result() as $key){
+            $json = array();
+
+            $json['id']           = $key->id_pcuti;
+            $json['pemohon']      = array('nik' => $key->nik, 'nama' => $key->nama_pemohon, 'jabatan' => $key->jabatan_pemohon, 'divisi' => $key->divisi_pemohon);
+            $json['jenis_cuti']   = array('id_cuti' => $key->id_cuti, 'nama_cuti' => $key->nama_cuti, 'keterangan' => $key->keterangan, 'lampiran' => $key->lampiran);
+            $json['tgl_mulai']    = $key->tgl_mulai;
+            $json['tgl_selesai']  = $key->tgl_selesai;
+            $json['alamat']       = $key->alamat;
+            $json['telepon']      = $key->telepon;
+            $json['jumlah_cuti']  = $key->jumlah_cuti;
+            $json['pengganti']    = array('nik' => $key->pengganti, 'nama' => $key->nama_pengganti, 'jabatan' => $key->jabatan_pengganti, 'divisi' => $key->divisi_pengganti);
+            $json['tgl_input']    = $key->tgl_input;
+            $json['status']       = $key->status;
+            
+            $where_approval       = array('a.id_pcuti' => $key->id_pcuti);
+            $json['approval']     =  $this->ApprovalCutiModel->show($where_approval, FALSE, FALSE)->result();
+
+            $where_lampiran       = array('id_pcuti' => $key->id_pcuti);
+            $json['lampiran']     =  $this->LampiranCutiModel->show($where_lampiran, FALSE)->result();
+            
+            $response[] = $json;
+        }
+        
+
+          json_output(200, array('status' => 200, 'description' => 'Berhasil', 'bulan' => $this->input->get('bulan'), 'tahun' => $this->input->get('tahun'), 'data' => $response));
+        }
+      }
+    }
+  }
+
+  function by_master_cuti($token = null)
+  {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+      json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi  = $auth->row();
+
+          $tahun  = date('Y');
+          
+          if($otorisasi->level === 'Kabag'){
+            $id_divisi = $otorisasi->id_divisi;
+          } else {
+            $id_divisi = '';
+          }
+
+          $cuti       = $this->CutiModel->by_master_cuti($tahun, $id_divisi)->result();
+
+          json_output(200, array('status' => 200, 'description' => 'Berhasil', 'data' => $cuti));
+        }
+      }
+    }
+  }
+
   public function batalkan($token = null){
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -566,6 +720,7 @@ class Cuti extends CI_Controller {
       }
     }
   }
+
 
 
 }

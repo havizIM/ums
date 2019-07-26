@@ -95,8 +95,8 @@ class Karyawan extends CI_Controller{
     }
   }
 
-  function absensi()
+  function cetak_absensi()
   {
-    $this->load->view('karyawan/absensi');
+    $this->load->view('karyawan/cetak_absensi');
   }
 }

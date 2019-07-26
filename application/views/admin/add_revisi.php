@@ -27,9 +27,9 @@
                     <div class="col-md-10">
                         <select name="alasan" id="alasan" class="form-control">
                             <option value="">-- Pilih Alasan --</option>
-                            <option value="Alasan 1">Alasan 1</option>
-                            <option value="Alasan 2">Alasan 2</option>
-                            <option value="Alasan 3">Alasan 3</option>
+                            <option value="Tidak Finger Print">Tidak Finger Print</option>
+                            <option value="Listrik Mati">Listrik Mati</option>
+                            <option value="Mesin Print Rusak">Mesin Print Rusak</option>
                         </select>
                         <div class="invalid_alasan"></div>
                     </div>

@@ -129,7 +129,7 @@ class Approval_izin extends CI_Controller {
     }
   }
 
-  public function approve($token = null){
+  public function approve_1($token = null){
     $method = $_SERVER['REQUEST_METHOD'];
 
     if ($method != 'GET') {
@@ -167,6 +167,60 @@ class Approval_izin extends CI_Controller {
                 'id_pizin'    => $id_pizin,
                 'nik'         => $otorisasi->nik,
                 'keterangan'  => 'Approve 1'
+              );
+
+              $update = $this->IzinModel->edit($where, $data, $log, $approval, FALSE);
+
+              if(!$update){
+                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengapprove izin'));
+              } else {
+                $this->pusher->trigger('ums', 'izin', $log);
+                json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengapprove izin'));
+              }
+            }
+        }
+      }
+    }
+  }
+
+  public function approve_2($token = null){
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+			json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi = $auth->row();
+
+            $id_pizin = $this->input->get('id');
+
+            if($id_pizin == null){
+              json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'ID Izin tidak ditemukan'));
+            } else {
+              $where = array('id_pizin' => $id_pizin);
+
+              $data = array('status' => 'Approve 2');
+
+              $log = array(
+                'nik'         => $otorisasi->nik,
+                'id_ref'      => $id_pizin,
+                'refrensi'    => 'Izin',
+                'kategori'    => 'Batalkan',
+                'keterangan'  => 'Menyetujui Izin'
+              );
+
+              $approval = array(
+                'id_pizin'    => $id_pizin,
+                'nik'         => $otorisasi->nik,
+                'keterangan'  => 'Approve 2'
               );
 
               $update = $this->IzinModel->edit($where, $data, $log, $approval, FALSE);

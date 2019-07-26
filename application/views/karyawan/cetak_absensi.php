@@ -15,13 +15,6 @@
         <div class="card-body">
             <form id="form_filter">
                 <div class="form-group row">
-                    <label for="alasan" class="col-md-2 col-form-label">Pilih Karyawan</label>
-                    <div class="col-md-10">
-                        <select name="nik" id="nik" class="form-control"></select>
-                        <div class="invalid_nik"></div>
-                    </div>
-                </div>
-                <div class="form-group row">
                     <label for="alasan" class="col-md-2 col-form-label">Pilih Bulan</label>
                     <div class="col-md-10">
                         <select name="bulan" id="bulan" class="form-control">
@@ -83,19 +76,6 @@
 
             renderNoAbsen: () => {
                console.log('No Absensi...')
-            },
-            renderKaryawan: (data) => {
-                let html = `
-                    <option value="">-- Pilih Karyawan --</option>
-                `
-
-                $.each(data, function(k,v){
-                    html += `
-                        <option value="${v.nik}">${v.nik} - ${v.nama}</option>
-                    `;
-                })
-
-                $(DOM.nik).html(html);
             },
             renderTahun: (data) => {
                 let html = `
@@ -173,7 +153,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>`
-
                                             if(v.absensi.length === 0){
                                                  html += `
                                                         <tr>
@@ -213,28 +192,6 @@
 
     const cetakAbsenController = ((UI) => {
 
-        const getKaryawan = () => {
-            $.ajax({
-                url: `<?= base_url('api/karyawan/show/') ?>${auth.token}`,
-                type: 'GET',
-                dataType: 'JSON',
-                success: function(res){
-                    if(res.status === 200){
-                        if(res.data.length === 0){
-                            UI.renderNoKaryawan();
-                        } else {
-                            UI.renderKaryawan(res.data)
-                        }
-                    }else {
-                        UI.renderNoKaryawan();
-                    }
-                },
-                error: function(err){
-                    UI.renderNoKaryawan();
-                }
-            })
-        }
-
         const getTahun = () => {
             var currentYear = new Date().getFullYear(), years = [];
             var startYear = startYear || 2015;
@@ -249,12 +206,10 @@
         const submitFilter = () => {
             $(DOM.form).validate({
                 rules: {
-                    nik: "required",
                     bulan: "required",
                     tahun: "required"
                 },
                 messages: {
-                    nik: "Pilih NIK Karyawan",
                     bulan: "Pilih Bulan Absensi",
                     tahun: "Pilih Tahun Absensi"
                 },
@@ -265,12 +220,11 @@
                     error.appendTo($('.invalid_'+name));
                 },
                 submitHandler: function(form){
-                    let nik = $('#nik').val();
                     let bulan = $('#bulan').val();
                     let tahun = $('#tahun').val();
                     
                     $.ajax({
-                        url: `<?= base_url('api/absensi/show/') ?>${auth.token}?nik=${nik}&bulan=${bulan}&tahun=${tahun}`,
+                        url: `<?= base_url('api/absensi/show/') ?>${auth.token}?nik=${auth.nik}&bulan=${bulan}&tahun=${tahun}`,
                         type: 'GET',
                         dataType: 'JSON',
                         beforeSend: function(){
@@ -313,7 +267,6 @@
 
         return {
             init: () => {
-                getKaryawan();
                 getTahun();
                 submitFilter();
                 printAbsen();

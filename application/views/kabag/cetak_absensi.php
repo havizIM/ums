@@ -90,9 +90,11 @@
                 `
 
                 $.each(data, function(k,v){
-                    html += `
-                        <option value="${v.nik}">${v.nik} - ${v.nama}</option>
-                    `;
+                    if(v.id_divisi === auth.id_divisi){
+                        html += `
+                            <option value="${v.nik}">${v.nik} - ${v.nama}</option>
+                        `;
+                    }
                 })
 
                 $(DOM.nik).html(html);

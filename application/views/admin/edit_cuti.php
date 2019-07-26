@@ -229,8 +229,10 @@
                   var filter = [];
 
                   $.each(response.data, function(k,v){
-                     if(v.status_karyawan === 'Aktif' && v.level.toLowerCase() === auth.level){
-                        filter.push(v);
+                     if(v.status_karyawan === 'Aktif' && v.id_divisi === auth.id_divisi){
+                        if(v.level !== 'Manager' && v.level !== 'Kabag'){
+                            filter.push(v);
+                         }
                      }
                   })
 

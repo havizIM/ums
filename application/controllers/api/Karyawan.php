@@ -64,46 +64,52 @@ class Karyawan extends CI_Controller {
               json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Data yang dikirim tidak lengkap'));
             } else {
 
-              $karyawan = array(
-                'nik'             => $nik,
-                'nama'            => $nama,
-                'tmp_lahir'       => $tmp_lahir,
-                'tgl_lahir'       => $tgl_lahir,
-                'kelamin'         => $kelamin,
-                'status_kawin'    => $status_kawin,
-                'pendidikan'      => $pendidikan,
-                'alamat'          => $alamat,
-                'telepon'         => $telepon,
-                'tgl_masuk'       => $tgl_masuk,
-                'status_karyawan' => $status_karyawan,
-                'jabatan'         => $jabatan,
-                'id_divisi'       => $id_divisi
-              );
+              $foto = $this->upload_file('foto', $nik);
 
-              $user = array(
-                'nik'      => $nik,
-                'email'    => $email,
-                'password' => $nik,
-                'level'    => $level,
-                'foto'     => 'user.jpg',
-                'token'    => sha1($nama)
-              );
-
-              $log = array(
-                'nik'         => $otorisasi->nik,
-                'id_ref'      => $nik,
-                'refrensi'    => 'Karyawan',
-                'kategori'    => 'Add',
-                'keterangan'  => 'Menambah Karyawan Baru'
-              );
-
-              $add = $this->KaryawanModel->add($karyawan, $user, $log);
-
-              if(!$add){
-                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menambah data karyawan'));
+              if($foto === null){
+                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'File gagal diupload'));
               } else {
-                $this->pusher->trigger('ums', 'karyawan', $log);
-                json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menambah data karyawan'));
+                $karyawan = array(
+                  'nik'             => $nik,
+                  'nama'            => $nama,
+                  'tmp_lahir'       => $tmp_lahir,
+                  'tgl_lahir'       => $tgl_lahir,
+                  'kelamin'         => $kelamin,
+                  'status_kawin'    => $status_kawin,
+                  'pendidikan'      => $pendidikan,
+                  'alamat'          => $alamat,
+                  'telepon'         => $telepon,
+                  'tgl_masuk'       => $tgl_masuk,
+                  'status_karyawan' => $status_karyawan,
+                  'jabatan'         => $jabatan,
+                  'id_divisi'       => $id_divisi
+                );
+
+                $user = array(
+                  'nik'      => $nik,
+                  'email'    => $email,
+                  'password' => $nik,
+                  'level'    => $level,
+                  'foto'     => $foto,
+                  'token'    => sha1($nama)
+                );
+
+                $log = array(
+                  'nik'         => $otorisasi->nik,
+                  'id_ref'      => $nik,
+                  'refrensi'    => 'Karyawan',
+                  'kategori'    => 'Add',
+                  'keterangan'  => 'Menambah Karyawan Baru'
+                );
+
+                $add = $this->KaryawanModel->add($karyawan, $user, $log);
+
+                if(!$add){
+                  json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menambah data karyawan'));
+                } else {
+                  $this->pusher->trigger('ums', 'karyawan', $log);
+                  json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menambah data karyawan'));
+                }
               }
             }
           }
@@ -276,6 +282,11 @@ class Karyawan extends CI_Controller {
                   'level'    => $level
                 );
 
+                $foto = $this->upload_file('foto', $nik);
+                if($foto !== null){
+                    $user['foto'] = $foto;
+                }
+
                 $log = array(
                   'nik'         => $otorisasi->nik,
                   'id_ref'      => $nik,
@@ -297,6 +308,43 @@ class Karyawan extends CI_Controller {
           }
         }
       }
+    }
+  }
+
+  function upload_file($name, $id)
+  {
+    if(isset($_FILES[$name]) && $_FILES[$name]['name'] != ""){
+      $files = glob('doc/'.$name.'/'.$id.'.*');
+      foreach ($files as $key) {
+        unlink($key);
+      }
+
+      $config['upload_path']   = './doc/'.$name.'/';
+      $config['allowed_types'] = 'jpg|jpeg|png|pdf|doc|docx';
+      $config['overwrite']     = TRUE;
+			$config['max_size']      = '3048';
+			$config['remove_space']  = TRUE;
+			$config['file_name']     = $id;
+
+      $this->load->library('upload', $config);
+      $this->upload->initialize($config);
+
+      if(!$this->upload->do_upload($name)){
+        return null;
+      } else {
+        $file = $this->upload->data();
+        return $file['file_name'];
+      }
+    } else {
+      return null;
+    }
+  }
+
+  /* ------------------------------ Delete File ----------------------------- */
+  function delete_file($name, $id){
+    $files = glob('doc/'.$name.'/'.$id.'.*');
+    foreach ($files as $key) {
+      unlink($key);
     }
   }
 

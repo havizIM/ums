@@ -85,7 +85,7 @@
       </div>
 
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Calendar Cuti</h4>
@@ -93,16 +93,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Sisa Cuti</h4>
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered" id="t_sisa_cuti">
+                            <table class="table table-striped table-bordered" id="t_sisa_cuti" style="font-size: 12px">
                                 <thead>
                                     <tr>
-                                        <th>Nama Cuti</th>
-                                        <th>Sisa Cuti</th>
+                                        <th style="width: 50%">Nama Cuti</th>
+                                        <th style="width: 50%">Sisa Cuti</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -134,11 +134,9 @@
             renderSisaCuti: (data) => {
               let html = '';
 
-              console.log(auth.kelamin);
-
-              $.each(data, (k, v) => {
+              $.each(data, function(k, v){
                 if(auth.kelamin === 'Laki-laki'){
-                  if(v.keterangan === 'Laki-laki' && v.keterangan === 'Semua'){
+                  if(v.keterangan === 'Semua' || v.keterangan === 'Laki-laki'){
                     html += `
                       <tr>
                           <td>${v.nama_cuti}</td>
@@ -147,7 +145,7 @@
                     `;
                   }
                 } else {
-                  if(v.keterangan === 'Perempuan' && v.keterangan === 'Semua'){
+                  if(v.keterangan === 'Perempuan' || v.keterangan === 'Semua'){
                     html += `
                       <tr>
                           <td>${v.nama_cuti}</td>
@@ -166,6 +164,42 @@
 
         const dashboardController = ((UI) => {
 
+          const CALENDAR = $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+            defaultDate: moment().format("YYYY-MM-DD"),
+            editable: false,
+            eventLimit: true,
+            droppable: false,
+            events: {
+              url: `<?= base_url('api/cuti/show/'); ?>${auth.token}`,
+                error: function(){
+                    alert('Tidak dapat mengakses server');
+                },
+                success: function(response){
+                    var events_array = [];
+
+                    $.each(response.data, function(k, v){
+                        if(v.status === 'Approve 3'){
+                             var obj = {
+                                title: v.jenis_cuti.nama_cuti,
+                                start: v.tgl_mulai,
+                                end: v.tgl_selesai,
+                                className: 'bg-info'
+                            };
+                            events_array.push(obj); 
+                        } 
+                    });
+
+               
+                    return events_array;
+                }
+            }
+            });
+            
           const getKaryawan = () => {
             $.ajax({
               url: `<?= base_url('api/karyawan/show/') ?>${auth.token}`,
@@ -329,6 +363,7 @@
           }
           return {
             init: () => {
+              CALENDAR;
               getKaryawan();
               getMasterCuti();
               getMasterIzin();
@@ -345,88 +380,7 @@
             dashboardController.init();
         })
         
-        $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            defaultDate: '2018-03-12',
-            navLinks: true, // can click day/week names to navigate views
-            selectable: true,
-            selectHelper: true,
-            select: function(start, end) {
-                var title = prompt('Event Title:');
-                var eventData;
-                if (title) {
-                eventData = {
-                    title: title,
-                    start: start,
-                    end: end
-                };
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-                }
-                $('#calendar').fullCalendar('unselect');
-            },
-            editable: true,
-            eventLimit: true, // allow "more" link when too many events
-            events: [
-                {
-                title: 'All Day Event',
-                start: '2018-03-01'
-                },
-                {
-                title: 'Long Event',
-                start: '2018-03-07',
-                end: '2018-03-10'
-                },
-                {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2018-03-09T16:00:00'
-                },
-                {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2018-03-16T16:00:00'
-                },
-                {
-                title: 'Conference',
-                start: '2018-03-11',
-                end: '2018-03-13'
-                },
-                {
-                title: 'Meeting',
-                start: '2018-03-12T10:30:00',
-                end: '2018-03-12T12:30:00'
-                },
-                {
-                title: 'Lunch',
-                start: '2018-03-12T12:00:00'
-                },
-                {
-                title: 'Meeting',
-                start: '2018-03-12T14:30:00'
-                },
-                {
-                title: 'Happy Hour',
-                start: '2018-03-12T17:30:00'
-                },
-                {
-                title: 'Dinner',
-                start: '2018-03-12T20:00:00'
-                },
-                {
-                title: 'Birthday Party',
-                start: '2018-03-13T07:00:00'
-                },
-                {
-                title: 'Click for Google',
-                url: 'http://google.com/',
-                start: '2018-03-28'
-                }
-            ]
-            });
+        
       
       </script>
 

@@ -14,7 +14,7 @@
      <div class="card">
         <div class="card-header id-page">Formulir Cuti</div>
         <div class="card-body">
-            <form id="form_cuti">
+            <form id="form_cuti" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label for="id_cuti" class="col-md-2 col-form-label">Jenis Cuti</label>
                     <div class="col-md-10">
@@ -36,6 +36,30 @@
                     <div class="col-md-10">
                         <textarea name="keterangan" id="keterangan" rows="5" class="form-control"></textarea>
                         <div class="invalid_keterangan"></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="tgl_izin" class="col-md-2 col-form-label">Lampiran</label>
+                    <div class="col-md-10">
+                        <select name="lampiran" id="lampiran" class="form-control">
+                            <option value="T">T</option>
+                            <option value="Y">Y</option>
+                        </select>        
+                        <div class="invalid_lampiran"></div>
+                    </div>
+                </div>
+                <div class="form-group row row_lampiran" style="display: none">
+                    <label for="tgl_izin" class="col-md-2 col-form-label">Nama Lampiran</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control nama_lampiran" name="nama_lampiran" id="nama_lampiran" />        
+                        <div class="invalid_nama_lampiran"></div>
+                    </div>
+                </div>
+                <div class="form-group row row_lampiran" style="display: none">
+                    <label for="tgl_izin" class="col-md-2 col-form-label">File</label>
+                    <div class="col-md-10">
+                        <input type="file" class="form-control lampiran_izin" name="lampiran_izin" id="lampiran_izin" />        
+                        <div class="invalid_lampiran_izin"></div>
                     </div>
                 </div>
                 <div class="form-group text-center">
@@ -105,6 +129,16 @@
                         $('#id_izin').val(v.jenis_izin.id_izin);
                         $('.tgl_izin').datepicker('setDate', new Date(v.tgl_izin))
                         $('#keterangan').val(v.keterangan);
+
+                        if(v.lampiran.length === 0){
+                            $('#lampiran').val('T').trigger('change');
+                        } else {
+                            $('#lampiran').val('Y').trigger('change');
+
+                            $.each(v.lampiran, function(k1, v1){
+                                $('#nama_lampiran').val(v1.nama_lampiran);
+                            })
+                        }
                     });
                 } else {
                     location.hash = '#/izin';
@@ -138,6 +172,15 @@
         var id = location.hash.substr(12);
 
         load_jizin(id, render_jizin, load_detail)
+
+        $('#lampiran').on('change', function(){
+            var myval = $(this).val();
+            if(myval === 'Y'){
+                $('.row_lampiran').show()
+            } else {
+                $('.row_lampiran').hide()
+            }
+        })
 
         var t_karyawan = $('#t_karyawan').DataTable({
             columnDefs: [{
@@ -226,12 +269,20 @@
             rules: {
                 id_izin: "required",
                 tgl_izin: "required",
-                keterangan: "required"
+                keterangan: "required",
+                nama_lampiran: {
+                    required: function(element){
+                        return ($('#lampiran').val() === 'Y')
+                    }
+                }
             },
             messages: {
                 id_izin: "Pilih jenis izin yang akan diajukan",
                 tgl_izin: "Pilih tanggal izin",
                 keterangan: "Masukkan keterangan izin",
+                nama_lampiran: {
+                    required: "File harus diisi"
+                }
             },
             errorClass: 'is-invalid',
             errorPlacement: function(error, element) {

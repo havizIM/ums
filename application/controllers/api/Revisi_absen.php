@@ -41,12 +41,14 @@ class Revisi_absen extends CI_Controller {
         } else {
 
             $otorisasi    = $auth->row();
-            $id_previsi   = $this->KodeModel->buatKode('revisi_absen', 'PRA', 'id_previsi', 8);
             $tgl_absensi  = date('Y-m-d', strtotime($this->input->post('tgl_absensi')));
             $alasan       = $this->input->post('alasan');
             $keterangan   = $this->input->post('keterangan');
             $jam_datang   = $this->input->post('jam_datang');
             $jam_pulang   = $this->input->post('jam_pulang');
+            
+            $mycode       = 'KR-'.date('my').'-';
+            $id_previsi   = $this->KodeModel->buatKode('revisi_absen', $mycode, 'id_previsi', 3);
 
             if($tgl_absensi == null || $keterangan == null || $alasan == null || $jam_datang == null || $jam_pulang == null){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Data yang dikirim tidak lengkap'));
@@ -199,6 +201,115 @@ class Revisi_absen extends CI_Controller {
         
 
           json_output(200, array('status' => 200, 'description' => 'Berhasil', 'data' => $response));
+        }
+      }
+    }
+  }
+
+  function laporan($token = null)
+  {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+      json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi  = $auth->row();
+
+          $where_revisi = array(
+              'MONTH(a.tgl_input)' => $this->input->get('bulan'),
+              'YEAR(a.tgl_input)' => $this->input->get('tahun'),
+              'a.status' => 'Approve'
+          );
+          
+          $izin       = $this->RevisiModel->show($where_revisi, FALSE, FALSE);
+          $response   = array();
+
+          foreach($izin->result() as $key){
+            $json = array();
+
+            $json['id']             = $key->id_previsi;
+            $json['pemohon']        = array('nik' => $key->nik, 'nama' => $key->nama_pemohon, 'jabatan' => $key->jabatan_pemohon, 'divisi' => $key->divisi_pemohon);
+            $json['tgl_absensi']    = $key->tgl_absensi;
+            $json['tgl_input']      = $key->tgl_input;
+            $json['alasan']         = $key->alasan;
+            $json['keterangan']     = $key->keterangan;
+            $json['jam_pulang']     = $key->jam_pulang;
+            $json['jam_datang']     = $key->jam_datang;
+            $json['status']         = $key->status;
+            
+            $where_approval         = array('a.id_previsi' => $key->id_previsi);
+            
+            $json['approval']       =  $this->ApprovalRevisiModel->show($where_approval, FALSE, FALSE)->result();
+            
+            $response[] = $json;
+        }
+        
+
+          json_output(200, array('status' => 200, 'description' => 'Berhasil', 'bulan' => $this->input->get('bulan'), 'tahun' => $this->input->get('tahun'), 'data' => $response));
+        }
+      }
+    }
+  }
+
+  function statistic($token = null)
+  {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method != 'GET') {
+      json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Metode request salah'));
+		} else {
+
+      if($token == null){
+        json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Request tidak terotorisasi'));
+      } else {
+        $auth = $this->AuthModel->cekAuth($token);
+
+        if($auth->num_rows() != 1){
+          json_output(401, array('status' => 401, 'description' => 'Gagal', 'message' => 'Token tidak dikenali'));
+        } else {
+
+          $otorisasi  = $auth->row();
+
+          $where_revisi = array(
+              'YEAR(a.tgl_input)' => date('Y'),
+              'a.status' => 'Approve'
+          );
+          
+          $izin       = $this->RevisiModel->show($where_revisi, FALSE, FALSE);
+          $response   = array();
+
+          foreach($izin->result() as $key){
+            $json = array();
+
+            $json['id']             = $key->id_previsi;
+            $json['pemohon']        = array('nik' => $key->nik, 'nama' => $key->nama_pemohon, 'jabatan' => $key->jabatan_pemohon, 'divisi' => $key->divisi_pemohon);
+            $json['tgl_absensi']    = $key->tgl_absensi;
+            $json['tgl_input']      = $key->tgl_input;
+            $json['alasan']         = $key->alasan;
+            $json['keterangan']     = $key->keterangan;
+            $json['jam_pulang']     = $key->jam_pulang;
+            $json['jam_datang']     = $key->jam_datang;
+            $json['status']         = $key->status;
+            
+            $where_approval         = array('a.id_previsi' => $key->id_previsi);
+            
+            $json['approval']       =  $this->ApprovalRevisiModel->show($where_approval, FALSE, FALSE)->result();
+            
+            $response[] = $json;
+        }
+        
+
+          json_output(200, array('status' => 200, 'description' => 'Berhasil', 'bulan' => $this->input->get('bulan'), 'tahun' => $this->input->get('tahun'), 'data' => $response));
         }
       }
     }

@@ -1,11 +1,11 @@
 <!-- Breadcrumb-->
  <div class="row pt-2 pb-2">
     <div class="col-sm-9">
-        <h4 class="page-title">Detail - Cuti</h4>
+        <h4 class="page-title">Detail - Revisi</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#/dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="#/cuti">Pengajuan</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Detail Cuti</li>
+            <li class="breadcrumb-item"><a href="#/revisi_absen">Pengajuan</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detail Revisi</li>
         </ol>
     </div>
  </div>
@@ -20,17 +20,17 @@
         
             content += `<div class="col-md-4">
                             <div class="card">
-                                <div class="card-header" id="id_content">Detail Cuti - ${data.id}</div>
+                                <div class="card-header" id="id_content">Detail Revisi - ${data.id}</div>
                                 <div class="card-body">`;
 
             if(data.status === 'Proses'){
                 content += `<div class="text-center">
                                 <div class="btn-group group-round">
-                                    <button class="btn btn-sm btn-danger" id="batal_cuti" data-id="${data.id}"><i class="fa fa-close"></i> Batalkan</button>
-                                    <a class="btn btn-sm btn-success" href="#/edit_cuti/${data.id}"><i class="fa fa-pencil"></i> Ubah</a>
+                                    <button class="btn btn-sm btn-danger" id="tolak_revisi" data-id="${data.id}"><i class="fa fa-close"></i> Tolak</button>
+                                    <button class="btn btn-sm btn-info" id="approve_revisi" data-id="${data.id}"><i class="fa fa-check"></i> Approve</button>
                                 </div>
                             </div>`;
-            } else if(data.status === 'Ditolak' || data.status === 'Batal'){
+            }  else if(data.status === 'Ditolak' || data.status === 'Batal'){
                 content += `<div class="text-center">
                                 <h4 class="text-danger">${data.status} <i class="fa fa-close"></i></h4>
                             </div>`;
@@ -81,28 +81,35 @@
                         </div>
                         
                         <div class="col-md-8">
+                            <div class="alert alert-icon-info alert-dismissible" role="alert">
+                                <div class="alert-icon icon-part-info">
+                                <i class="icon-info"></i>
+                                </div>
+                                <div class="alert-message">
+                                <span>
+                                    <strong>Perhatian</strong><br/>
+                                    Dengan mengapprove Data Revisi Absen ini maka anda menyetujui pemohon melakukan revisi absen. 
+                                </span>
+                                </div>
+                            </div>
                             <div class="card">
                                 <div class="card-header">Detail Pengajuan</div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>
-                                                <th>Jenis Cuti</th>
-                                                <th>Tanggal Mulai</th>
-                                                <th>Tanggal Selesai</th>
-                                                <th>Alamat</th>
-                                                <th>Telepon</th>
-                                                <th>Jumlah Cuti</th>
-                                                <th>Pengganti</th>
+                                                <th>Tanggal Absensi</th>
+                                                <th>Jam Datang</th>
+                                                <th>Jam Pulang</th>
+                                                <th>Alasan</th>
+                                                <th>Keterangan</th>
                                             </thead>
                                             <tbody>
-                                                <td>${data.jenis_cuti.nama_cuti}</td>
-                                                <td>${data.tgl_mulai}</td>
-                                                <td>${data.tgl_selesai}</td>
-                                                <td>${data.alamat}</td>
-                                                <td>${data.telepon}</td>
-                                                <td>${data.jumlah_cuti}</td>
-                                                <td>${data.pengganti.nik} - ${data.pengganti.nama}</td>
+                                                <td>${data.tgl_absensi}</td>
+                                                <td>${data.jam_datang}</td>
+                                                <td>${data.jam_pulang}</td>
+                                                <td>${data.alasan}</td>
+                                                <td>${data.keterangan}</td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -140,7 +147,7 @@
     function load_data(id, render_content){
         
         $.ajax({
-            url: `<?= base_url('api/cuti/show/') ?>${auth.token}?id=${id}`,
+            url: `<?= base_url('api/approval_revisi/show/') ?>${auth.token}?id=${id}`,
             type: 'GET',
             dataType: 'JSON',
             beforeSend: function(){
@@ -152,7 +159,7 @@
                         render_content(v);
                     });
                 } else {
-                    location.hash = '#/cuti'
+                    location.hash = '#/approval_revisi'
                 }
             },
             error: function(err){
@@ -163,16 +170,16 @@
     }
 
     $(document).ready(function(){
-        var id = location.hash.substr(7);
+        var id = location.hash.substr(18);
 
         load_data(id, render_content);
 
-        $(document).on('click', '#batal_cuti', function(){
+        $(document).on('click', '#tolak_revisi', function(){
             var id = $(this).attr('data-id');
 
             swal({
-                title: "Apa Anda yakin ingin membatalkan?",
-                text: "Data cuti akan dibatalkan secara permanen",
+                title: "Apa Anda yakin ingin menolak?",
+                text: "Data revisi akan ditolak",
                 icon: "warning",
                 dangerMode: true,
                 showCancelButton: true,
@@ -185,20 +192,62 @@
             }, function (isConfirm){
                 if (isConfirm) {
                 $.ajax({
-                    url: `<?= base_url('api/cuti/batalkan/') ?>${auth.token}?id=${id}`,
+                    url: `<?= base_url('api/approval_revisi/tolak/') ?>${auth.token}?id=${id}`,
                     type: 'GET',
                     dataType: 'JSON',
                     success: function(response){
                         if(response.status === 200){
                             toastr.info(response.message, response.description)
-                            location.hash = '#/cuti';
+                            location.hash = '#/approval_revisi';
                             swal.close();
                         } else {
                             toastr.error(response.message, response.description)
+                            swal.close();
                         }
                     },
                     error: function(){
                         toastr.error('Tidak dapat mengakses server')
+                        swal.close();
+                    }
+                });
+                }
+            })
+        })
+
+         $(document).on('click', '#approve_revisi', function(){
+            var id = $(this).attr('data-id');
+
+            swal({
+                title: "Apa Anda yakin ingin menyetujui?",
+                text: "Data revisi akan disetujui",
+                icon: "warning",
+                dangerMode: true,
+                showCancelButton: true,
+                closeOnConfirm: false,
+                closeOnCancel: true,
+                confirmButtonColor: "#DD6B55",
+                cancelButtonText: "Tidak",
+                confirmButtonText: "Ya",
+                showLoaderOnConfirm: true
+            }, function (isConfirm){
+                if (isConfirm) {
+                $.ajax({
+                    url: `<?= base_url('api/approval_revisi/approve/') ?>${auth.token}?id=${id}`,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(response){
+                        if(response.status === 200){
+                            toastr.info(response.message, response.description)
+                            location.hash = '#/approval_revisi';
+                            swal.close();
+                        } else {
+                            toastr.error(response.message, response.description)
+                            swal.close();
+                        }
+                    },
+                    error: function(){
+                        toastr.error('Tidak dapat mengakses server')
+                        swal.close();
                     }
                 });
                 }

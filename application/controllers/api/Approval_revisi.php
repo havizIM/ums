@@ -20,6 +20,7 @@ class Approval_revisi extends CI_Controller {
     );
 
     $this->load->model('RevisiModel');
+    $this->load->model('AbsensiModel');
     $this->load->model('ApprovalRevisiModel');
   }
 
@@ -151,33 +152,56 @@ class Approval_revisi extends CI_Controller {
             $id_previsi = $this->input->get('id');
 
             if($id_previsi == null){
-              json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'ID Izin tidak ditemukan'));
+              
             } else {
-              $where = array('id_previsi' => $id_previsi);
 
-              $data = array('status' => 'Approve');
+              $where      = array('id_previsi' => $id_previsi);
+              $new_absen  = $this->RevisiModel->show($where, FALSE, FALSE)->row();
 
-              $log = array(
-                'nik'         => $otorisasi->nik,
-                'id_ref'      => $id_previsi,
-                'refrensi'    => 'Revisi Absen',
-                'kategori'    => 'Approve',
-                'keterangan'  => 'Menyetujui Revisi Absen'
+              $param      = array(
+                'tgl_absen' => $new_absen->tgl_absensi
               );
 
-              $approval = array(
-                'id_pcuti'    => $id_previsi,
-                'nik'         => $otorisasi->nik,
-                'keterangan'  => 'Approve'
-              );
+              $check_ab = $this->AbsensiModel->check($param);
 
-              $update = $this->RevisiModel->edit($where, $data, $log, $approval);
-
-              if(!$update){
-                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal Menyetujui revisi absen'));
+              if($check_ab->num_rows() !== 1){
+                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Tanggal absen tidak ditemukan'));
               } else {
-                $this->pusher->trigger('ums', 'revisi_absen', $log);
-                json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil Menyetujui revisi absen'));
+                $old_absen = $check_ab->row();
+
+                $data = array('status' => 'Approve');
+
+                $log = array(
+                  'nik'         => $otorisasi->nik,
+                  'id_ref'      => $id_previsi,
+                  'refrensi'    => 'Revisi Absen',
+                  'kategori'    => 'Approve',
+                  'keterangan'  => 'Menyetujui Revisi Absen'
+                );
+
+                $approval = array(
+                  'id_previsi'  => $id_previsi,
+                  'nik'         => $otorisasi->nik,
+                  'keterangan'  => 'Approve'
+                );
+
+                $where_ab = array(
+                  'tgl_absen' => $old_absen->tgl_absen
+                );
+
+                $absen = array(
+                  'jam_masuk'   => $new_absen->jam_datang,
+                  'jam_keluar'  => $new_absen->jam_pulang
+                );
+
+                $update = $this->RevisiModel->edit($where, $data, $log, $approval, $where_ab, $absen);
+
+                if(!$update){
+                  json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal Menyetujui revisi absen'));
+                } else {
+                  $this->pusher->trigger('ums', 'revisi_absen', $log);
+                  json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil Menyetujui revisi absen'));
+                }
               }
             }
         }

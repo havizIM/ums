@@ -231,7 +231,7 @@
             }, function (isConfirm){
                 if (isConfirm) {
                 $.ajax({
-                    url: `<?= base_url('api/approval_cuti/approve/') ?>${auth.token}?id=${id}`,
+                    url: `<?= base_url('api/approval_cuti/approve_2/') ?>${auth.token}?id=${id}`,
                     type: 'GET',
                     dataType: 'JSON',
                     success: function(response){

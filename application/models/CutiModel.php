@@ -125,6 +125,43 @@ class CutiModel extends CI_Model {
     }
   }
 
+    function statistic($tahun, $id_divisi)
+    {
+      $this->db->select("YEAR(a.tgl_input) as tahun, MONTH(a.tgl_input) as bulan, COUNT(a.id_pcuti) as jml_cuti");
+
+      $this->db->from("cuti a");
+      $this->db->join("karyawan b", "b.nik = a.nik", "left");
+
+      $this->db->where("YEAR(a.tgl_input)", $tahun);
+      $this->db->where("a.status", 'Approve 3');
+
+      if($id_divisi !== null){
+        $this->db->where("b.id_divisi", $id_divisi);
+      }
+
+      $this->db->group_by("MONTH(a.tgl_input)");
+      return $this->db->get();
+    }
+
+    function by_master_cuti($tahun, $id_divisi)
+    {
+      $this->db->select("b.nama_cuti, COUNT('a.id_pcuti') as jml_cuti");
+
+      $this->db->from("cuti a");
+      $this->db->join("jenis_cuti b", "b.id_cuti = a.id_cuti", "left");
+      $this->db->join("karyawan c", "c.nik = a.nik", "left");
+
+      $this->db->where("YEAR(tgl_input)", $tahun);
+      $this->db->where("status", 'Approve 3');
+
+      if(!empty($id_divisi) && $id_divisi !== ''){
+        $this->db->where("c.id_divisi", $id_divisi);
+    }
+
+      $this->db->group_by("a.id_cuti");
+      return $this->db->get();
+    }
+
 
 }
 

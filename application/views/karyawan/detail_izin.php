@@ -11,13 +11,13 @@
  </div>
 
  <div class="row" id="detail_content"></div>
-  
+
 
  <script>
 
     function render_content(data){
         var content = '';
-        
+
             content += `<div class="col-md-4">
                             <div class="card">
                                 <div class="card-header" id="id_content">Detail Izin - ${data.id}</div>
@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header">Detail Pengajuan</div>
@@ -116,21 +116,51 @@
                                                         </div>
                                                         <small class="mb-1">Oleh ${v.nama} - ${v.jabatan}</small>
                                                         </a>`;
-                                        });          
+                                        });
                                     content += `</div>`;
                                 }
-                                    
+
                 content += `                </div>
+                                        </div>`
+
+                content += `
+                                    <div class="card">
+                                        <div class="card-header">Lampiran</div>
+                                        <div class="card-body">`;
+
+                                            if(data.lampiran.length < 1){
+                                                content += `<div class="text-center">Tidak Ada Lampiran</div>`;
+                                            } else {
+                                                content += `<div class="list-group">`;
+                                                    $.each(data.lampiran, function(k, v){
+                                                        content += `
+                                                                <table class="table">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>${v.nama_lampiran}</label>
+                                                                            <br/>
+                                                                            <embed src="<?= base_url('doc/lampiran_izin/') ?>${v.lampiran_izin}" style="width: 100%; max-height: 500px;">
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            
+                                                            
+                                                        `;
+                                                    });          
+                                                content += `</div>`;
+                                            }
+
+                content += `                 </div>
                                         </div>
                                     </div>`;
 
             $('#detail_content').html(content);
 
-            
+
     }
 
     function load_data(id, render_content){
-        
+
         $.ajax({
             url: `<?= base_url('api/izin/show/') ?>${auth.token}?id=${id}`,
             type: 'GET',
@@ -151,7 +181,7 @@
                 $('#detail_content').html('<h4>Tidak dapat mengakses server</h4>')
             }
         });
-        
+
     }
 
     $(document).ready(function(){

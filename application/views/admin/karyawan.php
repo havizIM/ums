@@ -25,24 +25,13 @@
            <table id="table_karyawan" class="table table-striped table-hover js-basic-example dataTable table-custom">
              <thead>
                <tr>
-                 <th>NIK</th>
                  <th>Nama</th>
+                 <th>NIK</th>
                  <th>Jabatan</th>
                  <th>Divisi</th>
                  <th>Level</th>
-                 <th>Status Keaktifan</th>
+                 <th>Status</th>
                  <th>Tanggal Masuk</th>
-                 <th>Foto</th>
-                 <th>Tanggal Registrasi</th>
-                 <th>Tempat Lahir</th>
-                 <th>Tanggal Lahir</th>
-                 <th>Kelamin</th>
-                 <th>Status Hubungan</th>
-                 <th>Pendidikan</th>
-                 <th>Alamat</th>
-                 <th>Telepon</th>
-                 <th>Email</th>
-                 <th></th>
                </tr>
              </thead>
              <tbody>
@@ -83,64 +72,19 @@
       processing: true,
       ajax: '<?= base_url('api/karyawan/show/'); ?>'+auth.token,
       columns: [
-        {"data": 'nik'},
         {"data": 'nama'},
+        {"data": null, 'render': function(data, type, row){
+          return `<a href="#/karyawan/${row.nik}" data-id="${row.nik}">${row.nik}</a>`
+          }
+        },
         {"data": 'jabatan'},
         {"data": 'nama_divisi'},
         {"data": 'level'},
         {"data": 'status_karyawan'},
-        {"data": 'tgl_masuk'},
-        {"data": 'foto'},
-        {"data": 'tgl_registrasi'},
-        {"data": 'tmp_lahir'},
-        {"data": 'tgl_lahir'},
-        {"data": 'kelamin'},
-        {"data": 'status_kawin'},
-        {"data": 'pendidikan'},
-        {"data": 'alamat'},
-        {"data": 'telepon'},
-        {"data": 'email'},
-        {"data": null, 'render': function(data, type, row){
-          return `<a href="#/edit_karyawan/${row.nik}" class="btn btn-md btn-info" id="edit_karyawan" data-id="${row.nik}">Ubah</a> <button class="btn btn-md btn-danger" id="hapus_karyawan" data-id="${row.nik}">Hapus</button>`
-          }
-        }
+        {"data": 'tgl_masuk'}
+        
       ],
       order: [[1, 'asc']]
-    })
-
-    $(document).on('click', '#hapus_karyawan', function(){
-      var nik = $(this).attr('data-id');
-
-      swal({
-        title: "Apa Anda yakin ingin hapus?",
-        text: "Data akan terhapus secara permanen",
-        icon: "warning",
-        dangerMode: true,
-        showCancelButton: true,
-        closeOnConfirm: false,
-        closeOnCancel: true,
-        confirmButtonColor: "#DD6B55",
-        cancelButtonText: "Tidak",
-        confirmButtonText: "Ya",
-        showLoaderOnConfirm: true
-      }, function (isConfirm){
-        if (isConfirm) {
-          $.ajax({
-            url: '<?= base_url('api/karyawan/delete/') ?>'+auth.token,
-            type: 'GET',
-            dataType: 'JSON',
-            success: function(response){
-              if(response.status === 200){
-              } else {
-                toastr.error(response.message)
-              }
-            },
-            error: function(){
-              toastr.error(response.message)
-            }
-          });
-        }
-      })
     })
 
     var pusher = new Pusher('9f324d52d4872168e514', {

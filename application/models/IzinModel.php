@@ -86,6 +86,25 @@ class IzinModel extends CI_Model {
   }
 
 
+    function statistic($tahun, $id_divisi)
+    {
+      $this->db->select("YEAR(a.tgl_input) as tahun, MONTH(a.tgl_input) as bulan, COUNT(a.id_pizin) as jml_izin");
+
+      $this->db->from("izin a");
+      $this->db->join("karyawan b", "b.nik = a.nik", "left");
+
+      $this->db->where("YEAR(a.tgl_input)", $tahun);
+      $this->db->where("a.status", 'Approve 2');
+
+      if($id_divisi !== null){
+        $this->db->where("b.id_divisi", $id_divisi);
+      }
+
+      $this->db->group_by("MONTH(a.tgl_input)");
+      return $this->db->get();
+    }
+
+
 }
 
 ?>

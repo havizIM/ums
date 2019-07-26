@@ -11,6 +11,46 @@
  </div>
 
  <div class="row" id="detail_content"></div>
+
+ <div class="modal fade" id="modal_lampiran">
+  <div class="modal-dialog">
+    <div class="modal-content animated slideInUp">
+      <div class="modal-header">
+        <h5 class="modal-title"> Tambah Lampiran</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form class="form-horizontal" id="form_lampiran" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>ID Pengajuan</label>
+            <input type="text" class="form-control" id="id_pcuti" name="id_pcuti" readonly>
+            <div class="invalid_id_pcuti"></div>
+          </div>
+
+          <div class="form-group">
+            <label>Nama Lampiran</label>
+            <input type="text" class="form-control" id="nama_lampiran" name="nama_lampiran">
+            <div class="invalid_id_pcuti"></div>
+          </div>
+
+          <div class="form-group">
+            <label>File</label>
+            <input type="file" class="form-control" id="lampiran_cuti" name="lampiran_cuti">
+            <div class="invalid_nama_lampiran"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
+          <button type="submit" id="submit_add" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
   
 
  <script>
@@ -132,8 +172,14 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header">
-                                                Lampiran 
-                                                <button type="button" id="add_lampiran" class="btn btn-sm btn-info pull-right" >Tambah Lampiran</button>
+                                                Lampiran`
+                                                
+                                                if(data.status === 'Proses' && data.jenis_cuti.lampiran === 'Y'){
+                                                // if(data.status === 'Proses'){
+                                                    content += `<button type="button" id="add_lampiran" data-id="${data.id}" class="btn btn-sm btn-info pull-right" >Tambah Lampiran</button>`
+                                                }
+
+                content += `
                                             </div>
                                             <div class="card-body">`;
 
@@ -142,13 +188,31 @@
                                             } else {
                                                 content += `<div class="list-group">`;
                                                     $.each(data.lampiran, function(k, v){
-                                                        content += `<img src="<?= base_url('doc/lampiran_cuti/') ?>${v.lampiran}">`;
+                                                        content += `
+                                                                <table class="table">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>${v.nama_lampiran}</label>`
+                                                                            
+                                                                            if(data.status === 'Proses'){
+                                                                                content += `<button style="float: right;" class="btn btn-danger btn-sm delete_lampiran" data-id="${v.id_lampiran_cuti}" data-nama="${v.nama_lampiran}"><i class="fa fa-trash"></i></button>`
+                                                                            }  
+                                                                            
+                                                        content +=          `
+                                                                            <br/>
+                                                                            <embed src="<?= base_url('doc/lampiran_cuti/') ?>${v.lampiran_cuti}" style="width: 90%; max-height: 500px;">
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            
+                                                            
+                                                        `;
                                                     });          
                                                 content += `</div>`;
                                             }
 
                 content += `                 </div>
-                                        </div>`;
+                                            </div>`;
 
             $('#detail_content').html(content);
 
@@ -180,10 +244,82 @@
         
     }
 
+    
+
     $(document).ready(function(){
         var id = location.hash.substr(7);
 
         load_data(id, render_content);
+
+        $(document).on('click', '#add_lampiran', function(){
+            var id_pcuti = $(this).data('id');
+
+            $('#id_pcuti').val(id_pcuti);
+            $('#modal_lampiran').modal('show');
+        })
+
+        $(document).on('click', '.delete_lampiran', function(){
+            var id_lampiran_cuti = $(this).data('id');
+            var nama_lampiran = $(this).data('nama');
+
+            $(this).addClass('disabled').html('<i class="fa fa-spin fa-spinner"></i>');
+
+            $.ajax({
+                url: `<?= base_url('api/cuti/delete_lampiran/') ?>${auth.token}?id_lampiran_cuti=${id_lampiran_cuti}&nama_lampiran=${nama_lampiran}`,
+                type: 'GET',
+                dataType: 'JSON',
+                success: function(res){
+                    if(res.status === 200){
+                        toastr.success(res.message, res.description);
+                        load_data(id, render_content);
+                    } else {
+                        toastr.warning(res.message, res.description);
+                    }
+                },
+                error: function(err){
+                    toastr.warning('Error', 'Tidak dapat mengakses server');
+                }
+            })
+        })
+
+        $('#form_lampiran').on('submit', function(e){
+            e.preventDefault();
+
+            var id_pcuti        = $('#id_pcuti').val();
+            var nama_lampiran   = $('#nama_lampiran').val();
+
+            if(id_pcuti === '' || nama_lampiran === ''){
+                toastr.warning('Warning', 'Silahkan isi lampiran dengan lengkap');
+            } else {
+                $.ajax({
+                    url: `<?= base_url('api/cuti/add_lampiran/') ?>${auth.token}`,
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: new FormData(this),
+                    processData:false,
+                    contentType:false,
+                    beforeSend: function() {
+                        $('#submit_add').addClass('disabled').html('<i class="fa fa-spin fa-spinner"></i>');
+                    },
+                    success: function(res){
+                        if(res.status === 200){
+                            toastr.success(res.message, res.description);
+                            $('#form_lampiran')[0].reset();
+                            $('#modal_lampiran').modal('hide');
+                            load_data(id, render_content);
+                        } else {
+                            toastr.warning(res.message, res.description);
+                        }
+                        $('#submit_add').removeClass('disabled').html('Simpan');
+                    },
+                    error: function(err){
+                        toastr.warning('Error', 'Tidak dapat mengakses server');
+                        $('#submit_add').removeClass('disabled').html('Simpan');
+                    }
+
+                })
+            }
+        })
 
         $(document).on('click', '#batal_cuti', function(){
             var id = $(this).attr('data-id');
@@ -221,10 +357,6 @@
                 });
                 }
             })
-        })
-
-        $(document).on('click', '#add_lampiran', function(){
-            alert('Okeeee');
         })
     })
  </script>

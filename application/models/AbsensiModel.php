@@ -20,66 +20,44 @@ class AbsensiModel extends CI_Model {
         }
     }
 
+    function check($where){
+        return $this->db->select('*')
+                    ->from('absensi')
+                    ->where($where)
+                    ->get();
+    }
+
     function show($where){
+        $query = 'SELECT x.tgl, x.mynik, x.jam_m, x.jam_k, x.ket_cuti, x.ket_izin
+                  FROM (
+                            SELECT 
+                                tgl_absen as tgl, nik as mynik, jam_masuk as jam_m, jam_keluar as jam_k, "-" as ket_cuti, "-" as ket_izin
+                            FROM absensi
 
+                      UNION ALL
 
-        // return $this->db->query('SELECT 
-                                 
-        //                          a.tgl_absen, a.jam_masuk, a.jam_keluar,
-        //                          b.tanggal_cuti, d.nama_cuti,
-        //                          e.tgl_izin, f.keperluan
-        
-        //                         FROM absensi a
-        //                         LEFT OUTER JOIN detail_cuti b ON b.tanggal_cuti = a.tgl_absen
-        //                         LEFT JOIN cuti c ON c.id_pcuti = b.id_pcuti AND c.status = "Approve 3"
-        //                         LEFT JOIN jenis_cuti d ON d.id_cuti = c.id_cuti
-        //                         LEFT OUTER JOIN izin e ON e.tgl_izin = a.tgl_absen AND e.status = "Approve 2"
-        //                         LEFT JOIN jenis_izin f ON f.id_izin = e.id_izin 
+                            SELECT 
+                                a.tanggal_cuti as tgl, b.nik as mynik, "-" as jam_m, "-" as jam_k, c.nama_cuti as ket_cuti, "-" as ket_izin
+                            FROM detail_cuti a
+                            LEFT JOIN cuti b ON b.id_pcuti = a.id_pcuti
+                            LEFT JOIN jenis_cuti c ON c.id_cuti = b.id_cuti
 
-        //                         WHERE (a.nik = "'.$where['nik'].'" OR c.nik = "'.$where['nik'].'" OR e.nik = "'.$where['nik'].'")
-        //                         AND (MONTH(a.tgl_absen) = "'.$where['bulan'].'" OR MONTH(b.tanggal_cuti) = "'.$where['bulan'].'" OR MONTH(e.tgl_izin) = "'.$where['bulan'].'")
-        //                         AND (YEAR(a.tgl_absen) = "'.$where['bulan'].'" OR YEAR(b.tanggal_cuti) = "'.$where['bulan'].'" OR YEAR(e.tgl_izin) = "'.$where['bulan'].'")
-                                   
-        // ');
+                      UNION ALL
+                            SELECT
+                                tgl_izin as tgl, nik as mynik, "-" as jam_m, "-" as jam_k, "-" as ket_cuti, keperluan as ket_izin
+                            FROM izin d
+                            LEFT JOIN jenis_izin e ON e.id_izin = d.id_izin
 
-        return $this->db->query('SELECT 
-
-                                a.nik AS nik_absen, a.tgl_absen, a.jam_masuk, a.jam_keluar,
-                                b.tanggal_cuti, d.nama_cuti, c.nik AS nik_cuti,
-                                e.tgl_izin, f.keperluan, e.nik AS nik_izin
-
-                                FROM absensi a
-
-                                LEFT JOIN detail_cuti b ON b.tanggal_cuti = a.tgl_absen
-                                LEFT JOIN cuti c ON c.id_pcuti = b.id_pcuti AND c.status = "Approve 3"
-                                LEFT JOIN jenis_cuti d ON d.id_cuti = c.id_cuti
-
-                                LEFT JOIN izin e ON e.tgl_izin = a.tgl_absen AND e.status = "Approve 2"
-                                LEFT JOIN jenis_izin f ON f.id_izin = e.id_izin
-
-                                UNION
-
-                                SELECT 
-                                a.nik AS nik_absen, a.tgl_absen, a.jam_masuk, a.jam_keluar,
-                                b.tanggal_cuti, d.nama_cuti, c.nik AS nik_cuti,
-                                e.tgl_izin, f.keperluan, e.nik AS nik_izin
-
-                                FROM absensi a
-
-                                RIGHT JOIN detail_cuti b ON b.tanggal_cuti = a.tgl_absen
-                                RIGHT JOIN cuti c ON c.id_pcuti = b.id_pcuti AND c.status = "Approve 3"
-                                RIGHT JOIN jenis_cuti d ON d.id_cuti = c.id_cuti
-
-                                RIGHT JOIN izin e ON e.tgl_izin = a.tgl_absen AND e.status = "Approve 2"
-                                RIGHT JOIN jenis_izin f ON f.id_izin = e.id_izin
-
-                                WHERE (a.nik = "'.$where['nik'].'" OR c.nik = "'.$where['nik'].'" OR e.nik = "'.$where['nik'].'")
-                                
-                                
-
-                                
-                                   
-        ');
+                      UNION ALL 
+                            SELECT
+                                tgl_cuti_bersama as tgl, "-" as mynik, "-" as jam_m, "-" as jam_k, keterangan as ket_cuti, "-" as ket_izin
+                            FROM cuti_bersama
+                  ) as x
+                  WHERE mynik = '.$where['nik'].' AND YEAR(tgl) = '.$where['tahun'].' AND MONTH(tgl) = '.$where['bulan'].'
+                  ORDER BY x.tgl
+        ';
+        return $this->db->query($query);
+      
   }
 
 
