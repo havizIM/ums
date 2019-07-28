@@ -410,7 +410,7 @@ class Izin extends CI_Controller {
                 'keterangan'  => 'Membatalkan Izin'
               );
 
-              $update = $this->IzinModel->edit($where, $data, $log);
+              $update = $this->IzinModel->edit($where, $data, $log, FALSE, FALSE);
 
               if(!$update){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal membatalkan izin'));

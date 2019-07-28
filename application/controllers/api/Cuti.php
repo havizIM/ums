@@ -707,7 +707,7 @@ class Cuti extends CI_Controller {
                 'keterangan'  => 'Membatalkan Cuti'
               );
 
-              $update = $this->CutiModel->edit($where, $data, $log, FALSE);
+              $update = $this->CutiModel->edit($where, $data, $log, FALSE, FALSE);
 
               if(!$update){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal membatalkan cuti'));
