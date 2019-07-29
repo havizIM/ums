@@ -78,7 +78,7 @@
         <ul class="sidebar-submenu">
           <li><a href="#/approval_cuti"><i class="fa fa-circle-o"></i> Approval Cuti</a></li>
           <li><a href="#/approval_izin"><i class="fa fa-circle-o"></i> Approval Izin</a></li>
-          <li><a href="#/approval_revisi"><i class="fa fa-circle-o"></i> Approval Revisi</a></li>
+          <li><a href="#/approval_revisi"><i class="fa fa-circle-o"></i> Approval Koreksi</a></li>
         </ul>
       </li>
 
@@ -98,7 +98,7 @@
         <ul class="sidebar-submenu">
           <li><a href="#/laporan_cuti"><i class="fa fa-circle-o"></i> Laporan Cuti</a></li>
           <li><a href="#/laporan_izin"><i class="fa fa-circle-o"></i> Laporan Izin</a></li>
-          <li><a href="#/laporan_revisi"><i class="fa fa-circle-o"></i> Laporan Revisi Absen</a></li>
+          <li><a href="#/laporan_revisi"><i class="fa fa-circle-o"></i> Laporan Koreksi Absen</a></li>
         </ul>
       </li>
 

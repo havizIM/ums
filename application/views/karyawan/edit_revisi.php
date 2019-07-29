@@ -1,10 +1,10 @@
 <div class="row pt-2 pb-2">
     <div class="col-sm-9">
-        <h4 class="page-title">Edit Revisi</h4>
+        <h4 class="page-title">Edit Koreksi Absen</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#/dashboard">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="#/revisi_absen">Pengajuan</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit Revisi</li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Koreksi Absen</li>
         </ol>
     </div>
  </div>
@@ -12,7 +12,7 @@
  <div class="row">
    <div class="col-md-12">
      <div class="card">
-        <div class="card-header">Formulir Revisi Absen</div>
+        <div class="card-header">Formulir Koreksi Absen</div>
         <div class="card-body">
             <form id="form_revisi">
                 <div class="form-group row">

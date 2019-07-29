@@ -1,9 +1,9 @@
 <div class="row pt-2 pb-2">
     <div class="col-sm-12">
-        <h4 class="page-title">Approval Revisi Absen</h4>
+        <h4 class="page-title">Approval Koreksi Absen</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#/dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Approval - Revisi Absen</li>
+            <li class="breadcrumb-item active" aria-current="page">Approval - Koreksi Absen</li>
         </ol>
     </div>
  </div>

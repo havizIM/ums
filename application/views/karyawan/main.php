@@ -77,7 +77,7 @@
         <ul class="sidebar-submenu">
           <li><a href="#/cuti"><i class="fa fa-circle-o"></i> Cuti</a></li>
           <li><a href="#/izin"><i class="fa fa-circle-o"></i> Izin</a></li>
-          <li><a href="#/revisi_absen"><i class="fa fa-circle-o"></i> Revisi Absen</a></li>
+          <li><a href="#/revisi_absen"><i class="fa fa-circle-o"></i> Koreksi Absen</a></li>
         </ul>
       </li>
 

@@ -1,10 +1,10 @@
 <!-- Breadcrumb-->
  <div class="row pt-2 pb-2">
     <div class="col-sm-9">
-        <h4 class="page-title">Pengajuan - Revisi Absen</h4>
+        <h4 class="page-title">Pengajuan - Koreksi Absen</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#/dashboard">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Pengajuan - Revisi Absen</li>
+            <li class="breadcrumb-item active" aria-current="page">Pengajuan - Koreksi Absen</li>
         </ol>
     </div>
     <div class="col-sm-3">
@@ -18,7 +18,7 @@
    <div class="col-md-12">
      <div class="card">
        <div class="card-body">
-         <h5 class="card-title">Data Revisi Absen</h5>
+         <h5 class="card-title">Data Koreksi Absen</h5>
 
          <div class="table-responsive">
            <table id="table_revisi" class="table table-striped table-hover js-basic-example dataTable table-custom">
