@@ -361,7 +361,10 @@
                 transitionEffect: "fade",
                 titleTemplate: '<span class="step">#index#</span> #title#',
                 labels: {
-                    finish: "Simpan"
+                    finish: "Simpan",
+                    next: "Selanjutnya",
+                    previous: "Sebelumnya",
+                    loading: 'Loading....'
                 },
                 onStepChanging: function (event, currentIndex, newIndex)
                 {   

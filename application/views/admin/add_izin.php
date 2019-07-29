@@ -64,7 +64,7 @@
                 </div>
                 <div class="form-group text-center">
                     <a class="btn btn-danger btn-md" href="#/izin">Batal</a>
-                    <button class="btn btn-info btn-md" type="submit" id="submit_add">Submit</button>
+                    <button class="btn btn-info btn-md" type="submit" id="submit_add">Simpan</button>
                 </div>
             </form>
        </div>

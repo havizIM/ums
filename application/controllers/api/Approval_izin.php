@@ -112,10 +112,10 @@ class Approval_izin extends CI_Controller {
               $approval = array(
                 'id_pizin'    => $id_pizin,
                 'nik'         => $otorisasi->nik,
-                'keterangan'  => 'Approve 1'
+                'keterangan'  => 'Ditolak'
               );
 
-              $update = $this->IzinModel->edit($where, $data, $log, $approval);
+              $update = $this->IzinModel->edit($where, $data, $log, $approval, FALSE);
 
               if(!$update){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menyetujui izin'));

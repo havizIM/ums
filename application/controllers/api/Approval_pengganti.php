@@ -121,7 +121,7 @@ class Approval_pengganti extends CI_Controller {
                 'keterangan'  => 'Ditolak'
               );
 
-              $update = $this->CutiModel->edit($where, $data, $log, $approval);
+              $update = $this->CutiModel->edit($where, $data, $log, $approval, FALSE);
 
               if(!$update){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menolak cuti'));

@@ -51,12 +51,14 @@
       </div>
 
       <form class="form-horizontal" id="form_add" method="post">
-        <div class="modal-body form-group">
+        <div class="modal-body">
           <div class="form-group">
+            <label for="">Keperluan</label>
             <input type="text" class="form-control" id="keperluan" name="keperluan" placeholder="Keperluan">
           </div>
 
           <div class="form-group">
+            <label for="">Keterangan</label>
             <input type="text" class="form-control" id="keterangan_izin" name="keterangan_izin" placeholder="Keterangan">
           </div>
         </div>

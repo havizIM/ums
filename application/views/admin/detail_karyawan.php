@@ -30,7 +30,7 @@
             renderAction: () => {
                 let html = `
                             <div class="btn-group float-sm-right">
-                                <a href="#/edit_karyawan/${nik}" class="btn btn-outline-success waves-effect waves-light"><i class="fa fa-pencil mr-1"></i> Edit</a>
+                                <a href="#/edit_karyawan/${nik}" class="btn btn-outline-success waves-effect waves-light"><i class="fa fa-pencil mr-1"></i> Ubah</a>
                                 <button type="button" class="btn btn-outline-danger data-id="${nik}" id="hapus_karyawan" waves-effect waves-light"><i class="fa fa-close mr-1"></i> Hapus</button>
                             </div>`
 

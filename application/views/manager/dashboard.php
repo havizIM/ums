@@ -283,7 +283,7 @@
                 })
             }
 
-            const getByDivisi = () => {
+            const getKaryawan = () => {
                 $.ajax({
                     url: `<?= base_url('api/divisi/by_divisi/'); ?>${auth.token}`,
                     type: 'GET',
@@ -291,7 +291,7 @@
                     success: function(res){
                         let { data } = res;
 
-                        if(data.length > 1){
+                        if(data.length !== 0){
                             $.each(data, function(k,v){
                                 let color = getRandomColor();
 
@@ -299,6 +299,8 @@
                                 DIVISI_CHART.data.datasets[0].data.push(v.jml_karyawan);
                                 DIVISI_CHART.data.datasets[0].backgroundColor.push(color);
                             })
+
+                            console.log(color)
 
                             DIVISI_CHART.update();
                         }
@@ -343,7 +345,7 @@
               getAppRevisi();
               getAppIzin();
               getByCuti();
-              getByDivisi();
+              getKaryawan();
             }
           }
         })();

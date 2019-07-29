@@ -136,7 +136,7 @@ class Revisi_absen extends CI_Controller {
                     'keterangan'  => 'Mengedit Revisi Absen Baru'
                 );
 
-                $add = $this->RevisiModel->edit($where, $data, $log);
+                $add = $this->RevisiModel->edit($where, $data, $log, FALSE, FALSE, FALSE);
 
                 if(!$add){
                     json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengedit data revisi absen'));
@@ -349,7 +349,7 @@ class Revisi_absen extends CI_Controller {
                 'keterangan'  => 'Membatalkan Revisi Absen'
               );
 
-              $update = $this->RevisiModel->edit($where, $data, $log);
+              $update = $this->RevisiModel->edit($where, $data, $log, FALSE, FALSE, FALSE);
 
               if(!$update){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal membatalkan revisi absen'));

@@ -113,12 +113,12 @@ class Approval_revisi extends CI_Controller {
               );
 
               $approval = array(
-                'id_pcuti'    => $id_previsi,
+                'id_previsi'    => $id_previsi,
                 'nik'         => $otorisasi->nik,
                 'keterangan'  => 'Ditolak'
               );
 
-              $update = $this->RevisiModel->edit($where, $data, $log, $approval);
+              $update = $this->RevisiModel->edit($where, $data, $log, $approval, FALSE, FALSE);
 
               if(!$update){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menolak revisi absen'));
@@ -164,7 +164,7 @@ class Approval_revisi extends CI_Controller {
 
               $check_ab = $this->AbsensiModel->check($param);
 
-              if($check_ab->num_rows() !== 1){
+              if($check_ab->num_rows() < 1){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Tanggal absen tidak ditemukan'));
               } else {
                 $old_absen = $check_ab->row();

@@ -99,7 +99,7 @@
                                         <table class="table">
                                             <thead>
                                                 <th>Tanggal Izin</th>
-                                                <th>Jenis Cuti</th>
+                                                <th>Jenis Izin</th>
                                                 <th>Keterangan</th>
                                             </thead>
                                             <tbody>

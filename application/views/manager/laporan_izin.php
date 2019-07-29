@@ -98,8 +98,8 @@
                                 <div class="row">
                                     <div class="col-md-12 text-center" style="margin-bottom: 20px;">
                                         <h3>PT. Cipta KreasiSandang Mandiri</h3>
-                                        <h4>Jl. Maju Mundur Abadi no. 3F Pluit Jaya</h4>
-                                        <h5>Telp. 021-1238219 Fax. 021-1379318</h5>
+                                        <h4>Gang Jangkung No. II PP, Penjaringan Jakarta Utara 14450</h4>
+                                        <h5>Telp. 0622-16619187 Fax. 0622-16619187</h5>
                                         <hr>
                                     </div>
                                     
