@@ -164,7 +164,7 @@ class Approval_revisi extends CI_Controller {
 
               $check_ab = $this->AbsensiModel->check($param);
 
-              if($check_ab->num_rows() < 1){
+              if($check_ab->num_rows() == 0){
                 json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Tanggal absen tidak ditemukan'));
               } else {
                 $old_absen = $check_ab->row();
