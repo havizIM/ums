@@ -68,18 +68,18 @@ class Revisi_absen extends CI_Controller {
                 $log = array(
                     'nik'         => $otorisasi->nik,
                     'id_ref'      => $id_previsi,
-                    'refrensi'    => 'Revisi Absen',
+                    'refrensi'    => 'Koreksi Absen',
                     'kategori'    => 'Add',
-                    'keterangan'  => 'Menambahkan revisi absen baru'
+                    'keterangan'  => 'Menambahkan Koreksi absen baru'
                 );
 
                 $add = $this->RevisiModel->add($data, $log);
 
                 if(!$add){
-                    json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menambah data revisi'));
+                    json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menambah data Koreksi'));
                 } else {
                     $this->pusher->trigger('ums', 'revisi_absen', $log);
-                    json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menambah data revisi'));
+                    json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menambah data Koreksi'));
                 }
             }
         }
@@ -132,17 +132,17 @@ class Revisi_absen extends CI_Controller {
                     'nik'         => $otorisasi->nik,
                     'id_ref'      => $id_previsi,
                     'refrensi'    => 'Cuti',
-                    'kategori'    => 'Edit',
-                    'keterangan'  => 'Mengedit Revisi Absen Baru'
+                    'kategori'    => 'Ubah',
+                    'keterangan'  => 'Mengubah Koreksi Absen Baru'
                 );
 
                 $add = $this->RevisiModel->edit($where, $data, $log, FALSE, FALSE, FALSE);
 
                 if(!$add){
-                    json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengedit data revisi absen'));
+                    json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengubah data Koreksi absen'));
                 } else {
                     $this->pusher->trigger('ums', 'revisi_absen', $log);
-                    json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengedit data revisi absen'));
+                    json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengubah data Koreksi absen'));
                 }
             }
         }
@@ -344,18 +344,18 @@ class Revisi_absen extends CI_Controller {
               $log = array(
                 'nik'         => $otorisasi->nik,
                 'id_ref'      => $id_previsi,
-                'refrensi'    => 'Revisi Absen',
+                'refrensi'    => 'Koreksi Absen',
                 'kategori'    => 'Batalkan',
-                'keterangan'  => 'Membatalkan Revisi Absen'
+                'keterangan'  => 'Membatalkan Koreksi Absen'
               );
 
               $update = $this->RevisiModel->edit($where, $data, $log, FALSE, FALSE, FALSE);
 
               if(!$update){
-                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal membatalkan revisi absen'));
+                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal membatalkan koreksi absen'));
               } else {
                 $this->pusher->trigger('ums', 'revisi_absen', $log);
-                json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil membatalkan revisi absen'));
+                json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil membatalkan Koreksi absen'));
               }
             }
         }

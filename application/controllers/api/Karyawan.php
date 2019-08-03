@@ -209,7 +209,7 @@ class Karyawan extends CI_Controller {
                 'nik'         => $otorisasi->nik,
                 'id_ref'      => $nik,
                 'refrensi'    => 'Karyawan',
-                'kategori'    => 'Delete',
+                'kategori'    => 'Hapus',
                 'keterangan'  => 'Menghapus data karyawan'
               );
 
@@ -291,17 +291,17 @@ class Karyawan extends CI_Controller {
                   'nik'         => $otorisasi->nik,
                   'id_ref'      => $nik,
                   'refrensi'    => 'Karyawan',
-                  'kategori'    => 'Edit',
+                  'kategori'    => 'Ubah',
                   'keterangan'  => 'Mengirim Karyawan Baru'
                 );
 
                 $edit = $this->KaryawanModel->edit($nik, $karyawan, $user, $log);
 
                 if(!$edit){
-                  json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengedit data karyawan'));
+                  json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengubah data karyawan'));
                 } else {
                   $this->pusher->trigger('ums', 'karyawan', $log);
-                  json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengedit data karyawan'));
+                  json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengubah data karyawan'));
                 }
               }
             }

@@ -261,7 +261,7 @@ class Cuti extends CI_Controller {
               'nik'         => $otorisasi->nik,
               'id_ref'      => $id_lampiran_cuti,
               'refrensi'    => 'Cuti Bersama',
-              'kategori'    => 'Delete',
+              'kategori'    => 'Hapus',
               'keterangan'  => 'Menghapus salah satu cuti bersama'
             );
 
@@ -428,8 +428,8 @@ class Cuti extends CI_Controller {
                     'nik'         => $otorisasi->nik,
                     'id_ref'      => $id_pcuti,
                     'refrensi'    => 'Cuti',
-                    'kategori'    => 'Edit',
-                    'keterangan'  => 'Mengedit Cuti Baru'
+                    'kategori'    => 'Ubah',
+                    'keterangan'  => 'Mengubah Cuti Baru'
                 );
 
                 $start  = new DateTime($tgl_mulai);
@@ -450,10 +450,10 @@ class Cuti extends CI_Controller {
                 $add = $this->CutiModel->edit($where, $data, $log, FALSE, $detail);
 
                 if(!$add){
-                    json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengedit data cuti'));
+                    json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal ubah data cuti'));
                 } else {
                     $this->pusher->trigger('ums', 'cuti', $log);
-                    json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengedit data cuti'));
+                    json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil ubah data cuti'));
                 }
             }
         }

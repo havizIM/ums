@@ -18,19 +18,7 @@
                     <label for="alasan" class="col-md-2 col-form-label">Pilih Bulan</label>
                     <div class="col-md-10">
                         <select name="bulan" id="bulan" class="form-control">
-                            <option value="">-- Pilih Bulan --</option>
-                            <option value="1">Januari</option>
-                            <option value="2">Februari</option>
-                            <option value="3">Maret</option>
-                            <option value="4">April</option>
-                            <option value="5">Mei</option>
-                            <option value="6">Juni</option>
-                            <option value="7">Juli</option>
-                            <option value="8">Agustus</option>
-                            <option value="9">September</option>
-                            <option value="10">Oktober</option>
-                            <option value="11">November</option>
-                            <option value="12">Desember</option>
+                            
                         </select>
                         <div class="invalid_bulan"></div>
                     </div>
@@ -61,6 +49,7 @@
         form: '#form_filter',
         nik: '#nik',
         tahun: '#tahun',
+        bulan: '#bulan',
         submit: '#submit_filter'
     }
 
@@ -89,6 +78,19 @@
                 })
 
                 $(DOM.tahun).html(html);
+            },
+            renderBulan: (data) => {
+                var monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
+                let html = `
+                    <option value="">-- Pilih Bulan --</option>
+                `
+                $.each(data, function(k,v){
+                    html += `
+                        <option value="${parseInt(v+1)}">${monthNames[v]}</option>
+                    `;
+                })
+
+                $(DOM.bulan).html(html);
             },
             renderAbsensi: (data) => {
                 let html = '';
@@ -203,6 +205,17 @@
             UI.renderTahun(years);
         }
 
+        const getBulan = () => {
+            var today = new Date();
+            var last3Months = []
+
+            for (i = 0; i < 3; i++) {
+                last3Months.push((today.getMonth() - i));
+            }
+
+            UI.renderBulan(last3Months);
+        }
+
         const submitFilter = () => {
             $(DOM.form).validate({
                 rules: {
@@ -270,6 +283,7 @@
                 getTahun();
                 submitFilter();
                 printAbsen();
+                getBulan();
             }
         }
     })(cetakAbsenUI);

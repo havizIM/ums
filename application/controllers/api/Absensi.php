@@ -59,13 +59,15 @@ class Absensi extends CI_Controller {
 
                                     if($check != null){
                                         $nik        = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-                                        $tgl_absen  = $worksheet->getCellByColumnAndRow(1, $row)->getFormattedValue();
-                                        $jam_masuk  = $worksheet->getCellByColumnAndRow(2, $row)->getFormattedValue();
-                                        $jam_keluar = $worksheet->getCellByColumnAndRow(3, $row)->getFormattedValue();
+                                        $nama       = $worksheet->getCellByColumnAndRow(1, $row)->getFormattedValue();
+                                        $tgl_absen  = $worksheet->getCellByColumnAndRow(2, $row)->getFormattedValue();
+                                        $jam_masuk  = $worksheet->getCellByColumnAndRow(3, $row)->getFormattedValue();
+                                        $jam_keluar = $worksheet->getCellByColumnAndRow(4, $row)->getFormattedValue();
                                 
 
                                         $data[] = array(
                                             'nik'         => $nik,
+                                            'nama'        => $nama,
                                             'tgl_absen'   => $tgl_absen,
                                             'jam_masuk'   => $jam_masuk,
                                             'jam_keluar'  => $jam_keluar

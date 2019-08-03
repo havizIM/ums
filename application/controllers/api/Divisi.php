@@ -171,7 +171,7 @@ class Divisi extends CI_Controller {
                 'nik'         => $otorisasi->nik,
                 'id_ref'      => $id_divisi,
                 'refrensi'    => 'Divisi',
-                'kategori'    => 'Delete',
+                'kategori'    => 'Hapus',
                 'keterangan'  => 'Menghapus salah satu divisi'
               );
 

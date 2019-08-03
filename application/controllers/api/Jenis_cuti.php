@@ -158,7 +158,7 @@ class Jenis_cuti extends CI_Controller {
                 'nik'         => $otorisasi->nik,
                 'id_ref'      => $id_cuti,
                 'refrensi'    => 'Jenis Cuti',
-                'kategori'    => 'Delete',
+                'kategori'    => 'Hapus',
                 'keterangan'  => 'Menghapus salah satu jenis cuti'
               );
 

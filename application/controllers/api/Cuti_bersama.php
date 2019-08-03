@@ -153,7 +153,7 @@ class Cuti_bersama extends CI_Controller {
                 'nik'         => $otorisasi->nik,
                 'id_ref'      => $id_cuti_bersama,
                 'refrensi'    => 'Cuti Bersama',
-                'kategori'    => 'Delete',
+                'kategori'    => 'Hapus',
                 'keterangan'  => 'Menghapus salah satu cuti bersama'
               );
 

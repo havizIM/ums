@@ -193,17 +193,17 @@ class Izin extends CI_Controller {
                     'nik'         => $otorisasi->nik,
                     'id_ref'      => $id_pizin,
                     'refrensi'    => 'Cuti',
-                    'kategori'    => 'Edit',
-                    'keterangan'  => 'Mengedit Cuti Baru'
+                    'kategori'    => 'Ubah',
+                    'keterangan'  => 'Mengubah Cuti Baru'
                 );
 
                 $add = $this->IzinModel->edit($where, $data, $log, FALSE, $lampiran);
 
                 if(!$add){
-                    json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengedit data cuti'));
+                    json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengubah data cuti'));
                 } else {
                     $this->pusher->trigger('ums', 'cuti', $log);
-                    json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengedit data cuti'));
+                    json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengubah data cuti'));
                 }
             }
         }

@@ -107,9 +107,9 @@ class Approval_revisi extends CI_Controller {
               $log = array(
                 'nik'         => $otorisasi->nik,
                 'id_ref'      => $id_previsi,
-                'refrensi'    => 'Revisi Absen',
+                'refrensi'    => 'Koreksi Absen',
                 'kategori'    => 'Tolak',
-                'keterangan'  => 'Menolak Revisi Absen'
+                'keterangan'  => 'Menolak Koreksi Absen'
               );
 
               $approval = array(
@@ -121,10 +121,10 @@ class Approval_revisi extends CI_Controller {
               $update = $this->RevisiModel->edit($where, $data, $log, $approval, FALSE, FALSE);
 
               if(!$update){
-                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menolak revisi absen'));
+                json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal menolak Koreksi absen'));
               } else {
                 $this->pusher->trigger('ums', 'revisi_absen', $log);
-                json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menolak revisi absen'));
+                json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil menolak Koreksi absen'));
               }
             }
         }
@@ -174,9 +174,9 @@ class Approval_revisi extends CI_Controller {
                 $log = array(
                   'nik'         => $otorisasi->nik,
                   'id_ref'      => $id_previsi,
-                  'refrensi'    => 'Revisi Absen',
+                  'refrensi'    => 'Koreksi Absen',
                   'kategori'    => 'Approve',
-                  'keterangan'  => 'Menyetujui Revisi Absen'
+                  'keterangan'  => 'Menyetujui Koreksi Absen'
                 );
 
                 $approval = array(
@@ -197,10 +197,10 @@ class Approval_revisi extends CI_Controller {
                 $update = $this->RevisiModel->edit($where, $data, $log, $approval, $where_ab, $absen);
 
                 if(!$update){
-                  json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal Menyetujui revisi absen'));
+                  json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal Menyetujui koreksi absen'));
                 } else {
                   $this->pusher->trigger('ums', 'revisi_absen', $log);
-                  json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil Menyetujui revisi absen'));
+                  json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil Menyetujui koreksi absen'));
                 }
               }
             }

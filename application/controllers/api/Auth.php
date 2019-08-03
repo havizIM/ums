@@ -284,17 +284,17 @@ class Auth extends CI_Controller {
               'nik'         => $nik,
               'id_ref'      => $nik,
               'refrensi'    => 'User',
-              'kategori'    => 'Edit',
-              'keterangan'  => 'Mengedit Profile Karyawan'
+              'kategori'    => 'Ubah',
+              'keterangan'  => 'Mengubah Profile Karyawan'
             );
 
             $edit = $this->KaryawanModel->edit($nik, $karyawan, $user, $log);
 
             if(!$edit){
-              json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengedit data karyawan'));
+              json_output(400, array('status' => 400, 'description' => 'Gagal', 'message' => 'Gagal mengubah data karyawan'));
             } else {
               $this->pusher->trigger('ums', 'karyawan', $log);
-              json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengedit data karyawan'));
+              json_output(200, array('status' => 200, 'description' => 'Berhasil', 'message' => 'Berhasil mengubah data karyawan'));
             }
           }
         }

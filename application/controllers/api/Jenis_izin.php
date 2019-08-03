@@ -148,7 +148,7 @@ class Jenis_izin extends CI_Controller {
                 'nik'         => $otorisasi->nik,
                 'id_ref'      => $id_izin,
                 'refrensi'    => 'Jenis Izin',
-                'kategori'    => 'Delete',
+                'kategori'    => 'Hapus',
                 'keterangan'  => 'Menghapus salah satu jenis izin'
               );
 

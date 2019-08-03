@@ -262,7 +262,7 @@
                     success: function(response){
                     if(response.status === 200){
                         toastr.info(response.message, response.description)
-                        t_divisi.ajax.reload();
+                        TABLE.ajax.reload();
                     } else {
                         $(this).removeClass('disabled').html(`<i class="fa fa-trash" ></i>`)
                         toastr.error(response.message, response.description)
@@ -288,18 +288,18 @@
                     $('#submit_divisi').addClass('disabled').html(`<i class="fa fa-spinner fa-spin"></i>`)
                     },
                     success: function(response){
-                    if(response.status === 200){
-                        toastr.info(response.message, response.description)
-                        t_divisi.ajax.reload();
-                        $('#add_divisi')[0].reset();
-                    } else {
-                        toastr.error(response.message, response.description)
-                    }
+                      if(response.status === 200){
+                          toastr.info(response.message, response.description)
+                          TABLE.ajax.reload();
+                          $('#add_divisi')[0].reset();
+                      } else {
+                          toastr.error(response.message, response.description)
+                      }
                     $('#submit_divisi').removeClass('disabled').html(`<i class="fa fa-plus" ></i> Tambah`)
                     },
                     error: function(){
-                    toastr.error('Tidak dapat mengakses server', 'Error')
-                    $('#submit_divisi').removeClass('disabled').html(`<i class="fa fa-plus" ></i> Tambah`)
+                      toastr.error('Tidak dapat mengakses server', 'Error')
+                      $('#submit_divisi').removeClass('disabled').html(`<i class="fa fa-plus" ></i> Tambah`)
                     }
 
                 })

@@ -58,6 +58,7 @@
                                     <thead>
                                         <tr>
                                             <th>NIK</th>
+                                            <th>Nama Karyawan</th>
                                             <th>Tanggal</th>
                                             <th>Jam Masuk</th>
                                             <th>Jam Keluar</th>
@@ -71,6 +72,9 @@
                                                 <td>
                                                     ${v.nik}
                                                     <input type="hidden" name="nik[]" value="${v.nik}">
+                                                </td>
+                                                <td>
+                                                    ${v.nama}
                                                 </td>
                                                 <td>
                                                     ${v.tgl_absen}

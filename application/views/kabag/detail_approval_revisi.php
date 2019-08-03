@@ -88,7 +88,7 @@
                                 <div class="alert-message">
                                 <span>
                                     <strong>Perhatian</strong><br/>
-                                    Dengan mengapprove Data Revisi Absen ini maka anda menyetujui pemohon melakukan revisi absen. 
+                                    Dengan mengapprove Data Koreksi Absen ini maka anda menyetujui pemohon melakukan revisi absen. 
                                 </span>
                                 </div>
                             </div>
