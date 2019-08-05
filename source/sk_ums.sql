@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Jul 2019 pada 18.42
+-- Waktu pembuatan: 06 Agu 2019 pada 00.33
 -- Versi server: 10.1.40-MariaDB
 -- Versi PHP: 7.1.29
 
@@ -134,14 +134,6 @@ CREATE TABLE `divisi` (
   `nama_divisi` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `divisi`
---
-
-INSERT INTO `divisi` (`id_divisi`, `nama_divisi`) VALUES
-('DV0001', 'HRD'),
-('DV0002', 'Finance');
-
 -- --------------------------------------------------------
 
 --
@@ -206,13 +198,6 @@ CREATE TABLE `karyawan` (
   `id_divisi` varchar(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `karyawan`
---
-
-INSERT INTO `karyawan` (`nik`, `nama`, `tmp_lahir`, `tgl_lahir`, `kelamin`, `status_kawin`, `pendidikan`, `alamat`, `telepon`, `tgl_masuk`, `status_karyawan`, `jabatan`, `id_divisi`) VALUES
-('06142', 'Haviz Indra Maulana', 'Jakarta', '1992-10-10', 'Laki-laki', 'Kawin', 'S1', 'Jl. KH Moch Mansyur RT. 010 Rw. 05 Kel. Tanah Sereal Kec. Tambora Jakarta Barat', '081355754092', '2019-07-26', 'Aktif', 'HRIS HRD', 'DV0001');
-
 -- --------------------------------------------------------
 
 --
@@ -255,14 +240,6 @@ CREATE TABLE `log` (
   `tgl_log` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `log`
---
-
-INSERT INTO `log` (`id_log`, `nik`, `id_ref`, `refrensi`, `kategori`, `keterangan`, `tgl_log`) VALUES
-(537, '06142', '-', 'Auth', 'Login', 'User login', '2019-07-26 15:51:37'),
-(538, '06142', '-', 'Auth', 'Logout', 'User logout', '2019-07-26 16:12:40');
-
 -- --------------------------------------------------------
 
 --
@@ -296,13 +273,6 @@ CREATE TABLE `user` (
   `foto` text NOT NULL,
   `token` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `user`
---
-
-INSERT INTO `user` (`nik`, `email`, `password`, `level`, `tgl_registrasi`, `foto`, `token`) VALUES
-('06142', 'viz.ndinq@gmail.com', 'ztow1', 'Admin', '2019-07-26 15:50:38', '06142.jpg', '839c6526e243cdc');
 
 --
 -- Indexes for dumped tables
@@ -439,49 +409,49 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id_absen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_absen` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `approval_absen`
 --
 ALTER TABLE `approval_absen`
-  MODIFY `id_app_absen` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_app_absen` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `approval_cuti`
 --
 ALTER TABLE `approval_cuti`
-  MODIFY `id_app_cuti` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_app_cuti` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `approval_izin`
 --
 ALTER TABLE `approval_izin`
-  MODIFY `id_app_izin` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_app_izin` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `cuti_bersama`
 --
 ALTER TABLE `cuti_bersama`
-  MODIFY `id_cuti_bersama` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_cuti_bersama` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `lampiran_cuti`
 --
 ALTER TABLE `lampiran_cuti`
-  MODIFY `id_lampiran_cuti` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_lampiran_cuti` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `lampiran_izin`
 --
 ALTER TABLE `lampiran_izin`
-  MODIFY `id_lampiran_izin` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_lampiran_izin` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `log`
 --
 ALTER TABLE `log`
-  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=539;
+  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
