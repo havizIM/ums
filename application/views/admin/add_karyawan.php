@@ -55,7 +55,7 @@
                         </div>
                         <div class="form-group">
                             <label>Telepon</label>
-                            <input type="number" name="telepon" id="telepon" class="form-control" />
+                            <input type="text" name="telepon" id="telepon" class="form-control" />
                             <div class="invalid_telepon"></div>
                         </div>
                         <div class="form-group">
@@ -314,7 +314,10 @@
                 tmp_lahir: "required",
                 tgl_lahir: "required",
                 status_kawin: "required",
-                telepon: "required",
+                telepon: {
+                    digits: true,
+                    maxlength: 13
+                },
                 alamat : "required",
                 nik: "required",
                 pendidikan: "required",
@@ -332,7 +335,10 @@
                 tmp_lahir: "Field wajib diisi",
                 tgl_lahir: "Field wajib diisi",
                 status_kawin: "Field wajib diisi",
-                telepon: "Field wajib diisi",
+                telepon: {
+                    digits: 'Field ini hanya menerima angka',
+                    maxlength: 'Maksimal 13 karakter'
+                },
                 alamat : "Field wajib diisi",
                 nik: "Field wajib diisi",
                 pendidikan: "Field wajib diisi",

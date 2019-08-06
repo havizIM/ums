@@ -224,6 +224,7 @@
   <link href="<?= base_url() ?>assets/plugins/toastr/toastr.min.css" rel="stylesheet"/>
 
   <script src="<?= base_url() ?>assets/plugins/sweetalert/sweetalert.min.js"></script>
+  <script src="<?= base_url() ?>assets/plugins/jquery.PrintArea.js"></script>
   <script src="<?= base_url() ?>assets/plugins/Chart.js/Chart.min.js"></script>
 
 
