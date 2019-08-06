@@ -55,7 +55,7 @@
                         </div>
                         <div class="form-group">
                             <label>Telepon</label>
-                            <input type="text" name="telepon" id="telepon" class="form-control" />
+                            <input type="number" name="telepon" id="telepon" class="form-control" />
                             <div class="invalid_telepon"></div>
                         </div>
                         <div class="form-group">
