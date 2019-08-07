@@ -188,7 +188,7 @@
                         },
                         success: function(response){
                             if(response.status === 200){
-                                if(response.data.length > 1){
+                                if(response.data.length !== 0){
                                     UI.renderIzin(response);
                                 } else {
                                     UI.renderNoIzin();

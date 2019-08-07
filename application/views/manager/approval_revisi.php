@@ -19,7 +19,7 @@
              <thead>
                <tr>
                  <th>Tanggal</th>
-                 <th>ID Revisi</th>
+                 <th>ID Koreksi</th>
                  <th>NIK</th>
                  <th>Nama</th>
                  <th>Absensi</th>

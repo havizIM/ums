@@ -20,7 +20,7 @@
         
             content += `<div class="col-md-4">
                             <div class="card">
-                                <div class="card-header" id="id_content">Detail Revisi - ${data.id}</div>
+                                <div class="card-header" id="id_content">Detail Koreksi - ${data.id}</div>
                                 <div class="card-body">`;
 
             if(data.status === 'Proses'){
@@ -168,7 +168,7 @@
 
             swal({
                 title: "Apa Anda yakin ingin membatalkan?",
-                text: "Data cuti akan dibatalkan secara permanen",
+                text: "Data koreksi akan dibatalkan secara permanen",
                 icon: "warning",
                 dangerMode: true,
                 showCancelButton: true,

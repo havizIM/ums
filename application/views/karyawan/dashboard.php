@@ -155,8 +155,8 @@
                         if(v.status === 'Approve 3'){
                              var obj = {
                                 title: v.jenis_cuti.nama_cuti,
-                                start: v.tgl_mulai,
-                                end: v.tgl_selesai,
+                                start: v.tgl_mulai+' 01:00:00',
+                                end: `${v.tgl_selesai} 23:59:00`,
                                 className: 'bg-info'
                             };
                             events_array.push(obj); 

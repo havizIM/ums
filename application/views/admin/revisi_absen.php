@@ -18,14 +18,14 @@
    <div class="col-md-12">
      <div class="card">
        <div class="card-body">
-         <h5 class="card-title">Data Revisi Absen</h5>
+         <h5 class="card-title">Data Koreksi Absen</h5>
 
          <div class="table-responsive">
            <table id="table_revisi" class="table table-striped table-hover js-basic-example dataTable table-custom">
              <thead>
                <tr>
                  <th>Tanggal</th>
-                 <th>ID Revisi</th>
+                 <th>ID Koreksi</th>
                  <th>Absensi</th>
                  <th>Alasan</th>
                  <th>Status</th>

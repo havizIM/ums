@@ -25,7 +25,7 @@
              <thead>
                <tr>
                  <th>Tanggal</th>
-                 <th>ID Revisi</th>
+                 <th>ID Koreksi</th>
                  <th>Absensi</th>
                  <th>Alasan</th>
                  <th>Status</th>
